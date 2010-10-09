@@ -67,6 +67,13 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property Signature_0e_BW() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Signature_0e_BW", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend ReadOnly Property Signature_0e_HGSS() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Signature_0e_HGSS", resourceCulture)

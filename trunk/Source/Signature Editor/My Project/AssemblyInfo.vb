@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 ' Vérifiez les valeurs des attributs de l'assembly
 
 <Assembly: AssemblyTitle("Pokémon Signature Editor")> 
-<Assembly: AssemblyDescription("Éditeur de Signature pour Pokémon 4G")> 
+<Assembly: AssemblyDescription("Éditeur de Signature pour les jeux Pokémon 4G sur NDS")> 
 <Assembly: AssemblyCompany("M@T")> 
 <Assembly: AssemblyProduct("Pokémon Signature Editor")> 
 <Assembly: AssemblyCopyright("M@T 2009-2010 - PokemonTrash.com")> 
@@ -33,7 +33,7 @@ Imports System.Runtime.InteropServices
 ' en utilisant '*', comme indiqué ci-dessous :
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("4.0")> 
-<Assembly: AssemblyFileVersion("4.0")> 
+<Assembly: AssemblyVersion("4.9.2010.0910")> 
+<Assembly: AssemblyFileVersion("4.9.2010.0910")> 
 
 <Assembly: NeutralResourcesLanguageAttribute("fr-FR")> 
