@@ -126,6 +126,12 @@
   <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>155, -1</value>
   </metadata>
+  <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>155, -1</value>
+  </metadata>
+  <metadata name="ToolTip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>155, 22</value>
+  </metadata>
   <metadata name="ContextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>533, 13</value>
   </metadata>
@@ -134,19 +140,6 @@
 
 Vous pouvez enregistrer l'image qui se trouve dans ce cadre en faisant un clic-droit dessus.
 Il est également possible de charger cette image dans la partie du haut, afin d'en faire un code AR.</value>
-  </data>
-  <data name="lbl_Warning.Text" xml:space="preserve">
-    <value>/!\ Attention ! /!\
-La sauvegarde choisie est pour la version Black ou
-White.
-Ce programme est encore en version bêta pour ces jeux,
-car la méthode de calcul du checksum a été totalement
-modifiée.
-La sauvegarde sera donc très certainement reconnue
-comme corrompue par le jeu.
-
-Pour corriger le checksum, il faudra la charger dans
-Pokesav ou PokéGen, puis la réenregistrer.</value>
   </data>
   <metadata name="SaveFileDialog2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>261, 23</value>

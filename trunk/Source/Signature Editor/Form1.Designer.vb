@@ -57,7 +57,6 @@ Partial Class Form1
         Me.TabPage1 = New System.Windows.Forms.TabPage
         Me.GroupBox4 = New System.Windows.Forms.GroupBox
         Me.TabPage2 = New System.Windows.Forms.TabPage
-        Me.lbl_Warning = New System.Windows.Forms.Label
         Me.GroupBox2 = New System.Windows.Forms.GroupBox
         Me.lbl_Taille = New System.Windows.Forms.Label
         Me.lbl_Bloc_Courant = New System.Windows.Forms.Label
@@ -70,6 +69,7 @@ Partial Class Form1
         Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog
+        Me.Label4 = New System.Windows.Forms.Label
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -272,7 +272,7 @@ Partial Class Form1
         '
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Items.AddRange(New Object() {"Diamant/Perle", "Platine", "HeartGold/SoulSilver", "Black", "White"})
+        Me.ComboBox1.Items.AddRange(New Object() {"Diamant/Perle", "Platine", "HeartGold/SoulSilver", "Black/White"})
         Me.ComboBox1.Location = New System.Drawing.Point(6, 19)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(125, 21)
@@ -420,7 +420,7 @@ Partial Class Form1
         'TabPage2
         '
         Me.TabPage2.BackColor = System.Drawing.SystemColors.Control
-        Me.TabPage2.Controls.Add(Me.lbl_Warning)
+        Me.TabPage2.Controls.Add(Me.Label4)
         Me.TabPage2.Controls.Add(Me.b_Import)
         Me.TabPage2.Controls.Add(Me.PictureBox2)
         Me.TabPage2.Controls.Add(Me.b_Sauver)
@@ -433,18 +433,6 @@ Partial Class Form1
         Me.TabPage2.Size = New System.Drawing.Size(491, 335)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Modificateur de sauvegarde"
-        '
-        'lbl_Warning
-        '
-        Me.lbl_Warning.AutoSize = True
-        Me.lbl_Warning.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.lbl_Warning.ForeColor = System.Drawing.Color.Red
-        Me.lbl_Warning.Location = New System.Drawing.Point(218, 155)
-        Me.lbl_Warning.Name = "lbl_Warning"
-        Me.lbl_Warning.Size = New System.Drawing.Size(273, 143)
-        Me.lbl_Warning.TabIndex = 2001
-        Me.lbl_Warning.Text = resources.GetString("lbl_Warning.Text")
-        Me.lbl_Warning.Visible = False
         '
         'GroupBox2
         '
@@ -571,6 +559,16 @@ Partial Class Form1
         Me.OpenFileDialog2.SupportMultiDottedExtensions = True
         Me.OpenFileDialog2.Title = "Ouvrir une sauvegarde..."
         '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(6, 166)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(110, 13)
+        Me.Label4.TabIndex = 2001
+        Me.Label4.Text = "(aucun fichier chargé)"
+        '
         'Form1
         '
         Me.AcceptButton = Me.b_Ouvrir
@@ -578,8 +576,8 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(523, 494)
         Me.Controls.Add(Me.TabControl1)
-        Me.Controls.Add(Me.b_About)
         Me.Controls.Add(Me.b_Ouvrir)
+        Me.Controls.Add(Me.b_About)
         Me.Controls.Add(Me.b_Previs)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.PictureBox1)
@@ -652,6 +650,6 @@ Partial Class Form1
     Friend WithEvents ComboBox2 As System.Windows.Forms.ComboBox
     Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
     Friend WithEvents rb_BW_sav As System.Windows.Forms.RadioButton
-    Friend WithEvents lbl_Warning As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
 
 End Class
