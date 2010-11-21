@@ -27,8 +27,8 @@
     'Retourne image Bitmap qui est un aperçu de la signature
     'en fonction de l'image monochrome et du nombre d'étoiles voulu sur la carte de dresseur
     Private Function Preview(ByVal img As Bitmap, ByVal nbStars As Integer) As Bitmap
-        If (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage1) AndAlso Form1.ComboBox1.SelectedIndex = Form1.VersionsAR.HGSS) OrElse _
-           (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage2) AndAlso Form1.saveVersion = Form1.SaveVersions.HGSS) Then
+        If (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage1) AndAlso Form1.ComboBox1.SelectedIndex = Form1.Versions.HGSS) OrElse _
+           (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage2) AndAlso Form1.saveVersion = Form1.Versions.HGSS) Then
             'Si la version sélectionnée est HG/SS
             Select Case nbStars
                 Case 0
@@ -61,8 +61,8 @@
             Label1.Location = New Point(134, 91)
             NumericUpDown1.Location = New Point(231, 89)
 
-        ElseIf (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage1) AndAlso (Form1.ComboBox1.SelectedIndex = Form1.VersionsAR.BLACK OrElse Form1.ComboBox1.SelectedIndex = Form1.VersionsAR.WHITE)) OrElse _
-               (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage2) AndAlso Form1.saveVersion = Form1.SaveVersions.BW) Then
+        ElseIf (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage1) AndAlso Form1.ComboBox1.SelectedIndex = Form1.Versions.BW) OrElse _
+               (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage2) AndAlso Form1.saveVersion = Form1.Versions.BW) Then
             'Sinon, si la version sélectionnée est B/W
             Select Case nbStars
                 Case 0
@@ -159,8 +159,8 @@
     'À l'affichage de ce formulaire
     Private Sub Form3_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'B/W only in beta state :
-        If (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage1) AndAlso (Form1.ComboBox1.SelectedIndex = Form1.VersionsAR.BLACK OrElse Form1.ComboBox1.SelectedIndex = Form1.VersionsAR.WHITE)) OrElse _
-               (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage2) AndAlso Form1.saveVersion = Form1.SaveVersions.BW) Then
+        If (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage1) AndAlso Form1.ComboBox1.SelectedIndex = Form1.Versions.BW) OrElse _
+               (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage2) AndAlso Form1.saveVersion = Form1.Versions.BW) Then
             NumericUpDown1.Value = 0
             NumericUpDown1.Enabled = False
         Else

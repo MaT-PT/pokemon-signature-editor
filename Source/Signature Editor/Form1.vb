@@ -8,14 +8,16 @@ Public Class Form1
     'Par M@T, pour PokémonTrash.com
 
     ' -- TODO 5.0 --
-    ' - Beta -
-    ' * Traduction EN (?) -> demander sur IRC PP.org si ça les intéresse
-    '
     ' - Final -
-    ' * Checksum B/W
-    ' * Images signature >= 1* B/W
+    ' * [!] Images signature >= 1* B/W
+    ' * [!] Image animée 2 frames si B/W
+    ' * [.] MàJ icône pour B/W
+    ' * [!] Drag&Drop pour image et save
+    ' * [?] Si la sauvegarde est corrompue, vérifier l'autre block (et vérifier le comportement IG)
+    ' * [!] Traduction EN (?) -> demander sur IRC PP.org si ça les intéresse
 
-    Const IS_BETA As Boolean = True
+    Const IS_BETA As Boolean = False
+    Const IS_RC As Boolean = True
 
 #Region "Declarations"
 
@@ -36,12 +38,12 @@ Public Class Form1
     Dim mustGen As Boolean = False
 
     'Indique si une image a été chargée
-    Public imgLoaded As Boolean = False
+    Friend imgLoaded As Boolean = False
 
     Dim formLoaded As Boolean = False
 
     'Définit les parties constantes du code
-    Public codeTrigger As String = "94000130 FCFF0000" & newLine
+    Friend codeTrigger As String = "94000130 FCFF0000" & newLine
     Dim pointer As String = "B2101F20 00000000" & newLine
     Dim addr1 As String = "E0005BBC"
     Dim addr2 As String = "E0005EBC"
@@ -51,17 +53,17 @@ Public Class Form1
     '02237E0C (+300h)
 
 
-    Public saveVersion As SaveVersions = SaveVersions.UNKNOWN
+    Friend saveVersion As Versions = Versions.Unknown
 
-    Dim pos As OffsetsSign = OffsetsSign.PLATINUM
+    Dim position As OffsetsSign = OffsetsSign.PLATINUM
 
     Dim offsetBlock As BlockOffsets = BlockOffsets.BLOCK_1
 
     Dim initialOffset As Byte = 0
 
-    Dim offsetSavCnt As OffsetsSavCnt = OffsetsSavCnt.PLATINUM
+    Dim offsetSavCnt As OffsetsSavCnt = OffsetsSavCnt.Platinum
 
-    Dim blockSize As BlockSizes = BlockSizes.PLATINUM
+    Dim blockSize As BlockSizes = BlockSizes.Platinum
 
     Dim offsetChkSumFooter As ChkSumFooterOffsets = ChkSumFooterOffsets.DP_PT
 
@@ -69,10 +71,17 @@ Public Class Form1
 
     Dim sav256ko As Boolean = False
 
-    Public saveLoaded As Boolean = False
+    Friend saveLoaded As Boolean = False
 
     Dim codeIsForBW As Boolean = False
     Dim saveIsBW As Boolean = False
+
+
+    Const bw_footer_offset As Integer = &H23F00
+    Const bw_footer_signature_chkSum_offset As Integer = &H23F42
+    Const bw_footer_chkSum_offset As Integer = &H23F9A
+    Const bw_signature_block_size As Integer = &H658
+    Const bw_footer_size As Integer = &H8C
 
     Dim comp() As Byte = {&HFE, &HCA, &HEF, &HBE}
 
@@ -109,24 +118,15 @@ Public Class Form1
                                  &HEF1F, &HFF3E, &HCF5D, &HDF7C, &HAF9B, &HBFBA, &H8FD9, &H9FF8, _
                                  &H6E17, &H7E36, &H4E55, &H5E74, &H2E93, &H3EB2, &HED1, &H1EF0}
 
-    Public Enum VersionsAR As Byte
-        UNKNOWN = &HFF
+    Friend Enum Versions As Byte
+        Unknown = &HFF
         DP = 0
-        PLATINUM = 1
-        HGSS = 2
-        BLACK = 3
-        WHITE = 4
-    End Enum
-
-    Public Enum SaveVersions As Byte
-        UNKNOWN = &HFF
-        DP = 0
-        PLATINUM = 1
+        Platinum = 1
         HGSS = 2
         BW = 3
     End Enum
 
-    Public Enum Langs As Byte
+    Friend Enum Langs As Byte
         Fra = 0
         USA = 1
         Jap = 2
@@ -136,36 +136,37 @@ Public Class Form1
         Kor = 6
     End Enum
 
-    Public Enum OffsetsSign As UInteger
+    Friend Enum OffsetsSign As UInteger
         DP = &H5904
-        PLATINUM = &H5BA8
+        Platinum = &H5BA8
         HGSS = &H4538
         BW = &H1C100
     End Enum
 
     'http://gbatemp.net/t255124-pokemon-black-white-hacking-documentation?view=findpost&p=3144849
 
-    Public Enum BlockOffsets As Integer
-        BLOCK_1 = &H0
-        BLOCK_2 = &H40000
-        BLOCK_2_BW = &H24000
+    Friend Enum BlockOffsets As Integer
+        Block_1 = &H0
+        Block_2 = &H40000
+        Block_2_BW = &H24000
     End Enum
 
-    Public Enum OffsetsSavCnt As UInteger
+    Friend Enum OffsetsSavCnt As UInteger
         DP = &HC0F0
-        PLATINUM = &HCF1C
+        Platinum = &HCF1C
         HGSS = &HF618
         BW = &H23F8C
     End Enum
 
-    Public Enum BlockSizes As UInteger
+    Friend Enum BlockSizes As UInteger
         DP = &HC0EC
-        PLATINUM = &HCF18
+        Platinum = &HCF18
         HGSS = &HF618
         BW = &H23F8C
+        'BW = &H658
     End Enum
 
-    Public Enum ChkSumFooterOffsets As Byte
+    Friend Enum ChkSumFooterOffsets As Byte
         DP_PT = &H12
         HGSS = &HE
         BW = &HE
@@ -240,7 +241,6 @@ Public Class Form1
         'MsgBox("Génération terminée.")
     End Sub
 
-
     'Fonction qui convertit une image Bitmap couleur en Bitmap monochrome, avec la sensibilité au noir spécifiée
     '(plus la sensibilité est élevée, plus l'image sera sombre)
     Private Function BMP2Mono(ByVal img As Bitmap, Optional ByVal sens As Double = 0.5) As Bitmap
@@ -266,7 +266,7 @@ Public Class Form1
     End Function
 
     'Vérifie qu'une image est bien chargée et qu'il faut générer le code, et dans ce cas appelle la fonction Generer()
-    Public Sub genVerif()
+    Friend Sub genVerif()
         If imgLoaded AndAlso mustGen Then generateARCode(PictureBox1.Image, CheckBox1.Checked)
     End Sub
 
@@ -297,7 +297,11 @@ Public Class Form1
             End If
         End With
 
-        If IS_BETA Then VersionProg &= " bêta"
+        If IS_RC Then
+            VersionProg &= " RC"
+        ElseIf IS_BETA Then
+            VersionProg &= " bêta"
+        End If
     End Function
 
     Private Function n2x(ByVal n As Integer) As Integer
@@ -308,16 +312,17 @@ Public Class Form1
         Return ((n Mod 64) \ 8) + 8 * (n \ 1536)
     End Function
 
-    Function Dec2Bin(ByVal n As Byte) As String
+    Friend Function Dec2Bin(ByVal n As Byte) As String
         Dec2Bin = ""
 
         For i = 1 To 8
-            If (n Mod 2) Then Dec2Bin = "1" & Dec2Bin Else Dec2Bin = "0" & Dec2Bin
+            'If (n Mod 2) Then Dec2Bin = "1" & Dec2Bin Else Dec2Bin = "0" & Dec2Bin
+            Dec2Bin = (n Mod 2) & Dec2Bin
             n = n \ CByte(2)
         Next i
     End Function
 
-    Private Function ByteArrayEqual(ByVal a As Byte(), ByVal b As Byte()) As Boolean
+    Private Function ByteArraysEqual(ByVal a As Byte(), ByVal b As Byte()) As Boolean
         If Not a.Length = b.Length Then
             Return False
         End If
@@ -331,29 +336,29 @@ Public Class Form1
         Return True
     End Function
 
-    Private Function GetVersion(ByVal path As String, ByVal offset As Byte) As SaveVersions
+    Private Function GetVersion(ByVal path As String, ByVal offset As Byte) As Versions
         Using sav As New BinaryReader(New FileStream(path, FileMode.Open))
             sav.BaseStream.Seek(&H12DC + offset, SeekOrigin.Begin)
 
-            If ByteArrayEqual(sav.ReadBytes(4), comp) Then
-                GetVersion = SaveVersions.DP
+            If ByteArraysEqual(sav.ReadBytes(4), comp) Then
+                GetVersion = Versions.DP
             Else
                 sav.BaseStream.Seek(&H1328 + offset, SeekOrigin.Begin)
 
-                If ByteArrayEqual(sav.ReadBytes(4), comp) Then
-                    GetVersion = SaveVersions.PLATINUM
+                If ByteArraysEqual(sav.ReadBytes(4), comp) Then
+                    GetVersion = Versions.Platinum
                 Else
                     sav.BaseStream.Seek(&H12B8 + offset, SeekOrigin.Begin)
 
-                    If ByteArrayEqual(sav.ReadBytes(4), comp) Then
-                        GetVersion = SaveVersions.HGSS
+                    If ByteArraysEqual(sav.ReadBytes(4), comp) Then
+                        GetVersion = Versions.HGSS
                     Else
                         sav.BaseStream.Seek(&H21600 + offset, SeekOrigin.Begin)
 
-                        If ByteArrayEqual(sav.ReadBytes(4), comp) Then
-                            GetVersion = SaveVersions.BW
+                        If ByteArraysEqual(sav.ReadBytes(4), comp) Then
+                            GetVersion = Versions.BW
                         Else
-                            GetVersion = SaveVersions.UNKNOWN
+                            GetVersion = Versions.Unknown
                         End If
                     End If
                 End If
@@ -398,33 +403,33 @@ Public Class Form1
         saveVersion = GetVersion(path, GetOffset(path))
 
         Select Case saveVersion
-            Case SaveVersions.DP
+            Case Versions.DP
                 rb_DP_sav.Checked() = True
-                pos = OffsetsSign.DP
+                position = OffsetsSign.DP
                 offsetSavCnt = OffsetsSavCnt.DP
                 blockSize = BlockSizes.DP
                 offsetChkSumFooter = ChkSumFooterOffsets.DP_PT
                 saveIsBW = False
 
-            Case SaveVersions.PLATINUM
+            Case Versions.Platinum
                 rb_Plat_sav.Checked() = True
-                pos = OffsetsSign.PLATINUM
-                offsetSavCnt = OffsetsSavCnt.PLATINUM
-                blockSize = BlockSizes.PLATINUM
+                position = OffsetsSign.PLATINUM
+                offsetSavCnt = OffsetsSavCnt.Platinum
+                blockSize = BlockSizes.Platinum
                 offsetChkSumFooter = ChkSumFooterOffsets.DP_PT
                 saveIsBW = False
 
-            Case SaveVersions.HGSS
+            Case Versions.HGSS
                 rb_HGSS_sav.Checked() = True
-                pos = OffsetsSign.HGSS
+                position = OffsetsSign.HGSS
                 offsetSavCnt = OffsetsSavCnt.HGSS
                 blockSize = BlockSizes.HGSS
                 offsetChkSumFooter = ChkSumFooterOffsets.HGSS
                 saveIsBW = False
 
-            Case SaveVersions.BW
+            Case Versions.BW
                 rb_BW_sav.Checked() = True
-                pos = OffsetsSign.BW
+                position = OffsetsSign.BW
                 offsetSavCnt = OffsetsSavCnt.BW
                 blockSize = BlockSizes.BW
                 offsetChkSumFooter = ChkSumFooterOffsets.BW
@@ -437,9 +442,10 @@ Public Class Form1
                 Exit Sub
         End Select
 
-        lbl_Warning.Visible = saveIsBW
-
         saveLoaded = True
+
+        Label4.Text = path
+        Label4.Font = New Font(Label4.Font, FontStyle.Regular)
 
         initialOffset = GetOffset(filePath)
 
@@ -452,15 +458,12 @@ Public Class Form1
               bmp As New System.Drawing.Bitmap(192, 64), _
               gr As Graphics = Graphics.FromImage(bmp)
 
-            gr.Clear(Color.White)
-            gr.Save()
-
             If sav256ko Then
                 offsetBlock = BlockOffsets.BLOCK_1
                 lbl_Bloc_Courant.Text = ""
                 lbl_Taille.Text = "Taille : 256 ko"
             Else
-                Dim offsetBlock2 As UInteger = 0
+                Dim offsetBlock2 As UInteger
 
                 If saveIsBW Then
                     offsetBlock2 = BlockOffsets.BLOCK_2_BW
@@ -485,17 +488,52 @@ Public Class Form1
                 lbl_Taille.Text = "Taille : 512 ko"
             End If
 
-            sav.BaseStream.Seek(initialOffset + offsetBlock, SeekOrigin.Begin)
-            Dim chkSum As UShort = GetCheckSum(sav.ReadBytes(blockSize))
-            sav.BaseStream.Seek(offsetChkSumFooter, SeekOrigin.Current)
+            Dim corrupt As Boolean = False
 
-            If (Not saveIsBW) AndAlso (Not chkSum = sav.ReadUInt16()) AndAlso (Not MsgBox("La sauvegarde est corrompue !" & newLine & "Voulez-vous la charger quand même ?", MsgBoxStyle.Exclamation Or MsgBoxStyle.YesNo, "Attention : Sauvegarde corrompue") = MsgBoxResult.Yes) Then
+            If saveIsBW Then
+                '0x1C75A = ChkSum(0x1C100|0x658)
+                '0x23F42 = ChkSum(0x1C100|0x658)
+                '0x23F9A = ChkSum(0x23F00|0x8C)
+
+                sav.BaseStream.Seek(initialOffset + OffsetsSign.BW, SeekOrigin.Begin)
+                Dim bwSignBlockChkSum As UShort = GetCheckSum(sav.ReadBytes(bw_signature_block_size))
+                sav.BaseStream.Seek(2, SeekOrigin.Current)
+                Dim bwSignBlockActualChkSum As UShort = sav.ReadUInt16()
+                sav.BaseStream.Seek(initialOffset + bw_footer_signature_chkSum_offset, SeekOrigin.Begin)
+                Dim bwFooterSignActualChkSum As UShort = sav.ReadUInt16()
+
+                sav.BaseStream.Seek(initialOffset + bw_footer_offset, SeekOrigin.Begin)
+                Dim bwFooterChkSum As UShort = GetCheckSum(sav.ReadBytes(bw_footer_size))
+                sav.BaseStream.Seek(initialOffset + bw_footer_chkSum_offset, SeekOrigin.Begin)
+                Dim bwFooterActualChkSum As UShort = sav.ReadUInt16()
+
+                corrupt = Not ((bwSignBlockChkSum = bwSignBlockActualChkSum) And _
+                              (bwSignBlockChkSum = bwFooterSignActualChkSum) And _
+                              (bwFooterChkSum = bwFooterActualChkSum))
+
+                'MsgBox("bwSignBlockChkSum : " & bwSignBlockChkSum.ToString("X4") & newLine & _
+                '       "bwSignBlockActualChkSum : " & bwSignBlockActualChkSum.ToString("X4") & newLine & _
+                '       "bwFooterSignActualChkSum : " & bwFooterSignActualChkSum.ToString("X4") & newLine & _
+                '       "bwFooterChkSum : " & bwFooterChkSum.ToString("X4") & newLine & _
+                '       "bwFooterActualChkSum : " & bwFooterActualChkSum.ToString("X4") & newLine)
+                'Application.Exit()
+            Else
+                sav.BaseStream.Seek(initialOffset + offsetBlock, SeekOrigin.Begin)
+                Dim chkSum As UShort = GetCheckSum(sav.ReadBytes(blockSize))
+                sav.BaseStream.Seek(offsetChkSumFooter, SeekOrigin.Current)
+
+                corrupt = Not (chkSum = sav.ReadUInt16())
+            End If
+
+            If corrupt AndAlso (Not MsgBox("La sauvegarde est corrompue !" & newLine & "Voulez-vous la charger quand même ?", MsgBoxStyle.Exclamation Or MsgBoxStyle.YesNo, "Attention : Sauvegarde corrompue") = MsgBoxResult.Yes) Then
                 reset()
-
                 Exit Sub
             End If
 
-            sav.BaseStream.Seek(initialOffset + offsetBlock + pos, SeekOrigin.Begin)
+            sav.BaseStream.Seek(initialOffset + offsetBlock + position, SeekOrigin.Begin)
+
+            gr.Clear(Color.White)
+            gr.Save()
 
             Dim sign() As Byte = sav.ReadBytes(&H600)
             Dim tempBin As String = ""
@@ -519,7 +557,7 @@ Public Class Form1
         End Using
     End Sub
 
-    Private Function Image2Sign(ByVal bmp As Bitmap) As Byte()
+    Private Function Image2SignBytes(ByVal bmp As Bitmap) As Byte()
         Dim binTemp As String = ""
         Dim lst As New List(Of Byte)
 
@@ -538,7 +576,7 @@ Public Class Form1
         Return lst.ToArray
     End Function
 
-    Public Function GetCheckSum(ByVal data As Byte()) As UShort
+    Friend Function GetCheckSum(ByVal data As Byte()) As UShort
         Dim sum As UShort = &HFFFF
 
         For i As Integer = 0 To data.Length - 1
@@ -595,11 +633,12 @@ Public Class Form1
         cb_NoGBA.Checked = False
         lbl_Bloc_Courant.Text = "Bloc courant :"
         lbl_Taille.Text = "Taille :"
-        lbl_Warning.Visible = False
 
-        saveVersion = SaveVersions.UNKNOWN
+        saveVersion = Versions.Unknown
         saveLoaded = False
         path = ""
+        Label4.Text = "(aucun fichier chargé)"
+        Label4.Font = New Font(Label4.Font, FontStyle.Italic)
 
         PictureBox2.Image = Nothing
     End Sub
@@ -608,35 +647,32 @@ Public Class Form1
         '                             Français    EN/US/Aus   Japanese    Español     Italiano    Deutch      Korean
         Dim pointers As String(,) = {{"B21C4EA8", "B21C4D28", "B21C6588", "B21C4EC8", "B21C4E08", "B21C4E68", "B21C2328"}, _
                                      {"B2101F20", "B2101D40", "B2101140", "B2101F40", "B2101EA0", "B2101EE0", "B2102C40"}, _
-                                     {"B21118A0", "B2111880", "B2110DC0", "B21118C0", "B2111820", "B2111860", "B2112280"}}
+                                     {"B21118A0", "B2111880", "B2110DC0", "B21118C0", "B2111820", "B2111860", "B2112280"}, _
+                                     {"B2000024", "B2000024", "B2000024", "B2000024", "B2000024", "B2000024", "B2000024"}}
 
-        If ComboBox1.SelectedIndex >= 3 Then 'B/W
-            pointer = ""
-        Else 'D/P/Pt/HG/SS
-            pointer = pointers(ComboBox1.SelectedIndex(), ComboBox2.SelectedIndex()) & " 00000000" & newLine
-        End If
+        'If ComboBox1.SelectedIndex >= 3 Then 'B/W
+        'pointer = ""
+        'Else 'D/P/Pt/HG/SS
+        pointer = pointers(ComboBox1.SelectedIndex(), ComboBox2.SelectedIndex()) & " 00000000" & newLine
+        'End If
 
         Select Case ComboBox1.SelectedIndex()
-            Case VersionsAR.DP
+            Case Versions.DP
                 addr1 = "E0005B70"
                 addr2 = "E0005E70"
                 pointer &= "B0000004 00000000" & newLine
 
-            Case VersionsAR.PLATINUM
+            Case Versions.Platinum
                 addr1 = "E0005BBC"
                 addr2 = "E0005EBC"
 
-            Case VersionsAR.HGSS
+            Case Versions.HGSS
                 addr1 = "E0004548"
                 addr2 = "E0004848"
 
-            Case VersionsAR.BLACK
-                addr1 = "E2237B0C"
-                addr2 = "E2237E0C"
-
-            Case VersionsAR.WHITE
-                addr1 = "E2237B2C"
-                addr2 = "E2237E2C"
+            Case Versions.BW
+                addr1 = "E001C9BC"
+                addr2 = "E001CCBC"
 
             Case Else
                 ComboBox1.SelectedIndex = 1
@@ -653,7 +689,7 @@ Public Class Form1
         OpenFileDialog1.InitialDirectory = My.Computer.FileSystem.SpecialDirectories.MyPictures
         Me.Text = "Pokémon Signature Editor v" & VersionProg() & " - by M@T"
 
-        ComboBox1.SelectedIndex = VersionsAR.PLATINUM
+        ComboBox1.SelectedIndex = Versions.Platinum
         ComboBox2.SelectedIndex = Langs.Fra
 
         formLoaded = True
@@ -832,21 +868,8 @@ Public Class Form1
     End Sub
 
     Private Sub b_Sauver_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Sauver.Click
-
-        If saveIsBW AndAlso Not MsgBox("/!\ ATTENTION ! /!\" & newLine & newLine & _
-                                       "La sauvegarde sélectionnée est pour la version Black ou White." & newLine & _
-                                       "Or, la fonctionnalité de calcul du checksum n'ayant pas encore été implémentée, la sauvegarde risque d'être reconnue comme corrompue par le jeu." & newLine & _
-                                       "Pour la réparer, il faudra la charger dans Pokesav ou PokéGen, puis l'enregistrer sans rien toucher." & newLine & newLine & _
-                                       "Êtes-vous certain de vouloir continuer ?", MsgBoxStyle.Exclamation Or MsgBoxStyle.YesNo Or MsgBoxStyle.DefaultButton2, "Attention : ceci est toujours une version bêta !") = MsgBoxResult.Yes Then
-
-            MsgBox("L'opération a été annulée.", MsgBoxStyle.Information, "Enregistrement annulé")
-
-            Exit Sub
-        End If
-
         If Not saveLoaded Then
             MsgBox("Il faut d'abord charger une sauvegarde !", MsgBoxStyle.Critical, "Erreur : aucune sauvegarde chargée")
-
             Exit Sub
         End If
 
@@ -875,23 +898,41 @@ Public Class Form1
 
             Dim gh As GCHandle = GCHandle.Alloc(save, GCHandleType.Pinned)
 
-            Dim signBytes As Byte() = Image2Sign(PictureBox2.Image)
+            Dim signBytes As Byte() = Image2SignBytes(PictureBox2.Image)
 
-            Marshal.Copy(signBytes, 0, New IntPtr(gh.AddrOfPinnedObject().ToInt32() + offsetBlock + pos), &H600)
+            Marshal.Copy(signBytes, 0, New IntPtr(gh.AddrOfPinnedObject().ToInt32() + offsetBlock + position), &H600)
 
-            If saveIsBW AndAlso offsetBlock = BlockOffsets.BLOCK_1 Then
-                Marshal.Copy(signBytes, 0, New IntPtr(gh.AddrOfPinnedObject().ToInt32() + BlockOffsets.BLOCK_2_BW + pos), &H600)
-            End If
+            'If saveIsBW AndAlso offsetBlock = BlockOffsets.BLOCK_1 Then
+            'Marshal.Copy(signBytes, 0, New IntPtr(gh.AddrOfPinnedObject().ToInt32() + BlockOffsets.Block_2_BW + position), &H600)
+            'End If
 
             gh.Free()
 
             savOut.Write(save)
 
-            tmpBR.BaseStream.Seek(offsetBlock, SeekOrigin.Begin)
+            If saveIsBW Then
+                '0x1C75A = ChkSum(0x1C100|0x658)
+                '0x23F42 = ChkSum(0x1C100|0x658)
+                '0x23F9A = ChkSum(0x23F00|0x8C)
 
-            Dim chkSum As UShort = GetCheckSum(tmpBR.ReadBytes(blockSize))
-            tmpBR.BaseStream.Seek(offsetChkSumFooter, SeekOrigin.Current)
-            savOut.Write(chkSum)
+                tmpBR.BaseStream.Seek(initialOffset + OffsetsSign.BW, SeekOrigin.Begin)
+                Dim bwSignBlockChkSum As UShort = GetCheckSum(tmpBR.ReadBytes(bw_signature_block_size))
+                tmpBR.BaseStream.Seek(2, SeekOrigin.Current)
+                savOut.Write(bwSignBlockChkSum)
+                tmpBR.BaseStream.Seek(initialOffset + bw_footer_signature_chkSum_offset, SeekOrigin.Begin)
+                savOut.Write(bwSignBlockChkSum)
+
+                tmpBR.BaseStream.Seek(initialOffset + bw_footer_offset, SeekOrigin.Begin)
+                Dim bwFooterChkSum As UShort = GetCheckSum(tmpBR.ReadBytes(bw_footer_size))
+                tmpBR.BaseStream.Seek(initialOffset + bw_footer_chkSum_offset, SeekOrigin.Begin)
+                savOut.Write(bwFooterChkSum)
+            Else
+                tmpBR.BaseStream.Seek(initialOffset + offsetBlock, SeekOrigin.Begin)
+
+                Dim chkSum As UShort = GetCheckSum(tmpBR.ReadBytes(blockSize))
+                tmpBR.BaseStream.Seek(offsetChkSumFooter, SeekOrigin.Current)
+                savOut.Write(chkSum)
+            End If
 
             savIn.Close()
             savOut.Flush()
@@ -938,7 +979,7 @@ Public Class Form1
 
     Private Sub ComboBox_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles ComboBox1.SelectedIndexChanged, ComboBox2.SelectedIndexChanged
         If sender.Equals(ComboBox1) Then
-            Dim gen_ As Boolean = mustGen
+            Dim _gen As Boolean = mustGen
 
             mustGen = False
 
@@ -952,7 +993,7 @@ Public Class Form1
                 ComboBox2.SelectedIndex = 0
             End If
 
-            mustGen = gen_
+            mustGen = _gen
         End If
 
         If formLoaded Then
