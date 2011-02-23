@@ -69,13 +69,13 @@
                     bmp_preview = My.Resources.Signature_0e_BW
 
                 Case 1
-                    bmp_preview = My.Resources.Signature_0e_BW
+                    bmp_preview = My.Resources.Signature_1e_BW
 
                 Case 2
-                    bmp_preview = My.Resources.Signature_0e_BW
+                    bmp_preview = My.Resources.Signature_2e_BW
 
                 Case 3
-                    bmp_preview = My.Resources.Signature_0e_BW
+                    bmp_preview = My.Resources.Signature_3e_BW
 
                 Case 4
                     bmp_preview = My.Resources.Signature_0e_BW
@@ -161,10 +161,10 @@
         'B/W only in beta state :
         If (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage1) AndAlso Form1.ComboBox1.SelectedIndex = Form1.Versions.BW) OrElse _
                (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage2) AndAlso Form1.saveVersion = Form1.Versions.BW) Then
-            NumericUpDown1.Value = 0
-            NumericUpDown1.Enabled = False
+            NumericUpDown1.Value = Math.Min(NumericUpDown1.Value, 3)
+            NumericUpDown1.Maximum = 3
         Else
-            NumericUpDown1.Enabled = True
+            NumericUpDown1.Maximum = 5
         End If
 
         'On rafraîchit l'aperçu
