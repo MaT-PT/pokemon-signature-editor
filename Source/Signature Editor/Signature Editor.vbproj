@@ -183,6 +183,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\Play.png" />
+    <None Include="Resources\Pause.png" />
     <None Include="Resources\Signature 3e_half_BW.png" />
     <None Include="Resources\Signature 3e_BW.png" />
     <None Include="Resources\Signature 2e_half_BW.png" />
