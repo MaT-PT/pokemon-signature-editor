@@ -60,6 +60,20 @@ Namespace My.Resources
             End Set
         End Property
         
+        Friend ReadOnly Property Pause() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Pause", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Play() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Play", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend ReadOnly Property Signature_0e() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Signature_0e", resourceCulture)
