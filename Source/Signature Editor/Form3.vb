@@ -84,13 +84,13 @@
                         bmp_preview = My.Resources.Signature_3e_half_BW
 
                     Case 4
-                        bmp_preview = My.Resources.Signature_0e_half_BW
+                        bmp_preview = My.Resources.Signature_3e_half_BW
 
                     Case 5
-                        bmp_preview = My.Resources.Signature_0e_half_BW
+                        bmp_preview = My.Resources.Signature_3e_half_BW
 
-                    Case Else 'Si il y a un problème avec la valeur, on choisit 5 étoiles par défaut (ne devrait pas arriver)
-                        bmp_preview = My.Resources.Signature_0e_half_BW
+                    Case Else
+                        bmp_preview = My.Resources.Signature_3e_half_BW
                 End Select
 
                 orig = New Point(73, 4)
@@ -109,13 +109,13 @@
                         bmp_preview = My.Resources.Signature_3e_BW
 
                     Case 4
-                        bmp_preview = My.Resources.Signature_0e_BW
+                        bmp_preview = My.Resources.Signature_3e_BW
 
                     Case 5
-                        bmp_preview = My.Resources.Signature_0e_BW
+                        bmp_preview = My.Resources.Signature_3e_BW
 
-                    Case Else 'Si il y a un problème avec la valeur, on choisit 5 étoiles par défaut (ne devrait pas arriver)
-                        bmp_preview = My.Resources.Signature_0e_BW
+                    Case Else
+                        bmp_preview = My.Resources.Signature_3e_BW
                 End Select
 
                 orig = New Point(25, 4)
@@ -129,6 +129,7 @@
             NumericUpDown1.Location = New Point(221, 95)
 
             PictureBox2.Visible = True
+            Label2.Visible = True
         Else
             'Sinon, c'est pour D/P/Pt
             Select Case nbStars
@@ -217,7 +218,9 @@
 
     Private Sub resetAnimateButton()
         PictureBox2.Visible = False
+        Label2.Visible = False
         PictureBox2.Image = My.Resources.Play
+        Label2.Text = "Animer !"
         animateBW = False
         Timer1.Enabled = False
     End Sub
@@ -228,7 +231,6 @@
 
     'À l'affichage de ce formulaire
     Private Sub Form3_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        'B/W only in beta state :
         If (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage1) AndAlso Form1.ComboBox1.SelectedIndex = Form1.Versions.BW) OrElse _
                (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage2) AndAlso Form1.saveVersion = Form1.Versions.BW) Then
             NumericUpDown1.Value = Math.Min(NumericUpDown1.Value, 3)
@@ -237,14 +239,14 @@
             NumericUpDown1.Maximum = 5
         End If
 
+        secondFrame = False
+
         'On rafraîchit l'aperçu
         refreshPreview()
 
         If animateBW Then
             Timer1.Enabled = True
         End If
-
-        secondFrame = False
     End Sub
 
     'Lorsque le nombre d'étoiles est modifié
@@ -264,10 +266,13 @@
 
         If animateBW Then
             PictureBox2.Image = My.Resources.Play
+            Label2.Text = "Animer !"
             Timer1.Enabled = False
             animateBW = False
+            secondFrame = False
         Else
             PictureBox2.Image = My.Resources.Pause
+            Label2.Text = "Arrêter"
             Timer1.Enabled = True
             animateBW = True
         End If

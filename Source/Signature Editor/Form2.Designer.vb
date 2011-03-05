@@ -168,6 +168,7 @@ Partial Class Form2
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Form2"
+        Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
