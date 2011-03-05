@@ -57,6 +57,7 @@ Partial Class Form1
         Me.TabPage1 = New System.Windows.Forms.TabPage
         Me.GroupBox4 = New System.Windows.Forms.GroupBox
         Me.TabPage2 = New System.Windows.Forms.TabPage
+        Me.Label4 = New System.Windows.Forms.Label
         Me.GroupBox2 = New System.Windows.Forms.GroupBox
         Me.lbl_Taille = New System.Windows.Forms.Label
         Me.lbl_Bloc_Courant = New System.Windows.Forms.Label
@@ -69,7 +70,6 @@ Partial Class Form1
         Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog
-        Me.Label4 = New System.Windows.Forms.Label
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -85,9 +85,10 @@ Partial Class Form1
         '
         'b_Generer
         '
+        Me.b_Generer.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.b_Generer.Location = New System.Drawing.Point(6, 6)
         Me.b_Generer.Name = "b_Generer"
-        Me.b_Generer.Size = New System.Drawing.Size(97, 23)
+        Me.b_Generer.Size = New System.Drawing.Size(114, 23)
         Me.b_Generer.TabIndex = 70
         Me.b_Generer.Text = "Générer le code !"
         Me.ToolTip2.SetToolTip(Me.b_Generer, "Générer le code Action Replay à partir de l'image monochrome choisie.")
@@ -272,11 +273,12 @@ Partial Class Form1
         '
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Items.AddRange(New Object() {"Diamant/Perle", "Platine", "HeartGold/SoulSilver", "Black/White"})
+        Me.ComboBox1.Items.AddRange(New Object() {"Diamant/Perle", "Platine", "HeartGold/SoulSilver", "Noire/Blanche"})
         Me.ComboBox1.Location = New System.Drawing.Point(6, 19)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(125, 21)
         Me.ComboBox1.TabIndex = 30
+        Me.ToolTip2.SetToolTip(Me.ComboBox1, "La version du jeu pour laquelle le code AR sera généré.")
         '
         'b_Previs
         '
@@ -371,6 +373,7 @@ Partial Class Form1
         Me.ComboBox2.Name = "ComboBox2"
         Me.ComboBox2.Size = New System.Drawing.Size(125, 21)
         Me.ComboBox2.TabIndex = 40
+        Me.ToolTip2.SetToolTip(Me.ComboBox2, "La langue du jeu pour laquelle le code AR sera généré.")
         '
         'TabControl1
         '
@@ -419,6 +422,7 @@ Partial Class Form1
         '
         'TabPage2
         '
+        Me.TabPage2.AllowDrop = True
         Me.TabPage2.BackColor = System.Drawing.SystemColors.Control
         Me.TabPage2.Controls.Add(Me.Label4)
         Me.TabPage2.Controls.Add(Me.b_Import)
@@ -433,6 +437,16 @@ Partial Class Form1
         Me.TabPage2.Size = New System.Drawing.Size(491, 335)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Modificateur de sauvegarde"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(6, 166)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(110, 13)
+        Me.Label4.TabIndex = 2001
+        Me.Label4.Text = "(aucun fichier chargé)"
         '
         'GroupBox2
         '
@@ -559,22 +573,12 @@ Partial Class Form1
         Me.OpenFileDialog2.SupportMultiDottedExtensions = True
         Me.OpenFileDialog2.Title = "Ouvrir une sauvegarde..."
         '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(6, 166)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(110, 13)
-        Me.Label4.TabIndex = 2001
-        Me.Label4.Text = "(aucun fichier chargé)"
-        '
         'Form1
         '
         Me.AcceptButton = Me.b_Ouvrir
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(523, 494)
+        Me.ClientSize = New System.Drawing.Size(523, 496)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.b_Ouvrir)
         Me.Controls.Add(Me.b_About)

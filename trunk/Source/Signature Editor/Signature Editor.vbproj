@@ -19,7 +19,7 @@
     <OptionInfer>On</OptionInfer>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Zuruggu.ico</ApplicationIcon>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -182,7 +182,7 @@
     <None Include="Resources\Signature 5e.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icon.ico" />
+    <Content Include="Zuruggu.ico" />
     <None Include="Resources\Play.png" />
     <None Include="Resources\Pause.png" />
     <None Include="Resources\Signature 3e_half_BW.png" />

@@ -17,7 +17,7 @@ Public Class Form1
     ' * [!] Traduction EN (?) -> demander sur IRC PP.org si ça les intéresse
 
     Const IS_BETA As Boolean = False
-    Const IS_RC As Boolean = True
+    Const IS_RC As Boolean = False
 
 #Region "Declarations"
 
@@ -679,6 +679,53 @@ Public Class Form1
                 Exit Sub
         End Select
     End Sub
+
+    Private Sub openImage(ByVal imagePath As String)
+        Try
+            'On essaye de créer une nouvelle image à partir du chemin spécifié
+            bmp0 = New Bitmap(imagePath)
+        Catch
+            'Si une exception est levée, c'est que le fichier n'est pas une image valide, donc on affiche un message d'erreur
+            MsgBox("Le fichier sélectionné n'est pas une image valide.", MsgBoxStyle.Critical, "Erreur : image invalide")
+            imgLoaded = False
+            PictureBox1.Image = Nothing
+            TextBox1.Text = ""
+            TextBox2.Text = ""
+
+            'Et on quitte la procédure
+            Exit Sub
+        End Try
+
+        If Not bmp0.Size = New Size(192, 64) Then
+            'Si l'image ne fait pas 192x64 pixels, on affiche une erreur
+            MsgBox("L'image doit faire exactement 192x64 pixels !", MsgBoxStyle.Critical, "Erreur : dimensions incorrectes")
+            imgLoaded = False
+            PictureBox1.Image = Nothing
+            TextBox1.Text = ""
+            TextBox2.Text = ""
+
+            Exit Sub
+        End If
+
+        'On efface les anciens codes au chargement de la nouvelle image
+        TextBox1.Text = ""
+        TextBox2.Text = ""
+
+        'On indique qu'il ne faut pas générer le code automatiquement pour l'instant
+        mustGen = False
+
+        'On met à jour l'aperçu avec la nouvelle image
+        PictureBox1.Image = New Bitmap(BMP2Mono(bmp0, TrackBar1.Value / TrackBar1.Maximum))
+
+        'On libère les ressources utilisées par les images
+        bmp0.Dispose()
+
+        'On indique qu'une image a été chargée
+        imgLoaded = True
+
+        'On sélectionne le bouton "Générer"
+        b_Generer.Select()
+    End Sub
 #End Region
 
 
@@ -691,6 +738,8 @@ Public Class Form1
 
         ComboBox1.SelectedIndex = Versions.Platinum
         ComboBox2.SelectedIndex = Langs.Fra
+
+        PictureBox1.AllowDrop = True
 
         formLoaded = True
     End Sub
@@ -735,52 +784,11 @@ Public Class Form1
     'Quand le bouton "Ouvrir une image" est cliqué
     Private Sub b_Ouvrir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Ouvrir.Click
         'Si l'utilisateur annule, on quitte
-        If Not OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then Exit Sub
-
-        Try
-            'On essaye de créer une nouvelle image à partir du chemin spécifié
-            bmp0 = New Bitmap(OpenFileDialog1.FileName)
-        Catch
-            'Si une exception est levée, c'est que le fichier n'est pas une image valide, donc on affiche un message d'erreur
-            MsgBox("Le fichier sélectionné n'est pas une image valide.", MsgBoxStyle.Critical, "Erreur : image invalide")
-            imgLoaded = False
-            PictureBox1.Image = Nothing
-            TextBox1.Text = ""
-            TextBox2.Text = ""
-
-            'Et on quitte la procédure
-            Exit Sub
-        End Try
-
-        If Not bmp0.Size = New Size(192, 64) Then
-            'Si l'image ne fait pas 192x64 pixels, on affiche une erreur
-            MsgBox("L'image doit faire exactement 192x64 pixels !", MsgBoxStyle.Critical, "Erreur : dimensions incorrectes")
-            imgLoaded = False
-            PictureBox1.Image = Nothing
-            TextBox1.Text = ""
-            TextBox2.Text = ""
-
+        If Not OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
             Exit Sub
         End If
 
-        'On efface les anciens codes au chargement de la nouvelle image
-        TextBox1.Text = ""
-        TextBox2.Text = ""
-
-        'On indique qu'il ne faut pas générer le code automatiquement pour l'instant
-        mustGen = False
-
-        'On met à jour l'aperçu avec la nouvelle image
-        PictureBox1.Image = New Bitmap(BMP2Mono(bmp0, TrackBar1.Value / TrackBar1.Maximum))
-
-        'On libère les ressources utilisées par les images
-        bmp0.Dispose()
-
-        'On indique qu'une image a été chargée
-        imgLoaded = True
-
-        'On sélectionne le bouton "Générer"
-        b_Generer.Select()
+        openImage(OpenFileDialog1.FileName)
     End Sub
 
     'Quand la valeur de la barre de sensibilité change
@@ -978,28 +986,38 @@ Public Class Form1
     End Sub
 
     Private Sub ComboBox_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles ComboBox1.SelectedIndexChanged, ComboBox2.SelectedIndexChanged
-        If sender.Equals(ComboBox1) Then
-            Dim _gen As Boolean = mustGen
-
-            mustGen = False
-
-            If sender.SelectedIndex >= 3 Then 'Black/White
-                ComboBox2.Items.Clear()
-                ComboBox2.Items.Add("日本語 (Japanese)")
-                ComboBox2.SelectedIndex = 0
-            Else 'D/P/Pt/HG/SS
-                ComboBox2.Items.Clear()
-                ComboBox2.Items.AddRange(New String() {"Français", "English/USA/AUS", "日本語 (Japanese)", "Español", "Italiano", "Deutch", "한국인 (Korean)"})
-                ComboBox2.SelectedIndex = 0
-            End If
-
-            mustGen = _gen
-        End If
-
         If formLoaded Then
             'On régénère le code en vérifiant si les paramètres le permettent
             genVerif()
         End If
     End Sub
+
+    Private Sub PictureBox1_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles PictureBox1.DragDrop
+        Dim fileNames As String() = DirectCast(e.Data.GetData(DataFormats.FileDrop), String())
+        openImage(fileNames(0))
+    End Sub
+
+    Private Sub PictureBox1_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles PictureBox1.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        Else
+            e.Effect = DragDropEffects.None
+        End If
+    End Sub
+
+    Private Sub TabPage2_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles TabPage2.DragDrop
+        Dim fileNames As String() = DirectCast(e.Data.GetData(DataFormats.FileDrop), String())
+        path = fileNames(0)
+        loadSave(path)
+    End Sub
+
+    Private Sub TabPage2_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles TabPage2.DragEnter
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        Else
+            e.Effect = DragDropEffects.None
+        End If
+    End Sub
+
 #End Region
 End Class
