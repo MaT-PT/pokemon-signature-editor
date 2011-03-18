@@ -24,43 +24,43 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Me.b_Generer = New System.Windows.Forms.Button
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox
+        Me.b_GenerateAR = New System.Windows.Forms.Button
         Me.TextBox1 = New System.Windows.Forms.TextBox
-        Me.b_Copier1 = New System.Windows.Forms.Button
-        Me.b_Ouvrir = New System.Windows.Forms.Button
+        Me.b_Copy1 = New System.Windows.Forms.Button
+        Me.b_OpenImage = New System.Windows.Forms.Button
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog
         Me.TrackBar1 = New System.Windows.Forms.TrackBar
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox
+        Me.lbl_Sensib = New System.Windows.Forms.Label
+        Me.cb_SplitCode = New System.Windows.Forms.CheckBox
         Me.TextBox2 = New System.Windows.Forms.TextBox
-        Me.b_Copier2 = New System.Windows.Forms.Button
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
+        Me.b_Copy2 = New System.Windows.Forms.Button
+        Me.lbl_1stPart = New System.Windows.Forms.Label
+        Me.lbl_2ndPart = New System.Windows.Forms.Label
         Me.b_Activ = New System.Windows.Forms.Button
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.b_About = New System.Windows.Forms.Button
         Me.ToolTip2 = New System.Windows.Forms.ToolTip(Me.components)
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox
-        Me.b_Previs = New System.Windows.Forms.Button
-        Me.b_Import = New System.Windows.Forms.Button
+        Me.cmb_Version = New System.Windows.Forms.ComboBox
+        Me.b_Preview = New System.Windows.Forms.Button
+        Me.b_ImportImage = New System.Windows.Forms.Button
+        Me.b_SaveAs = New System.Windows.Forms.Button
+        Me.b_OpenSave = New System.Windows.Forms.Button
+        Me.b_ReloadSave = New System.Windows.Forms.Button
+        Me.cmb_Language = New System.Windows.Forms.ComboBox
         Me.PictureBox2 = New System.Windows.Forms.PictureBox
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.EnregistrerLimageSousToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ChargerLimageDansLaPartieDuHautPourEnFaireUnCodeARToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.b_Sauver = New System.Windows.Forms.Button
-        Me.b_OuvrirSav = New System.Windows.Forms.Button
-        Me.b_Recharger = New System.Windows.Forms.Button
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox
+        Me.tsmi_SaveImageAs = New System.Windows.Forms.ToolStripMenuItem
+        Me.tsmi_LoadImageAbove = New System.Windows.Forms.ToolStripMenuItem
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox
         Me.TabControl1 = New System.Windows.Forms.TabControl
         Me.TabPage1 = New System.Windows.Forms.TabPage
         Me.GroupBox4 = New System.Windows.Forms.GroupBox
         Me.TabPage2 = New System.Windows.Forms.TabPage
-        Me.Label4 = New System.Windows.Forms.Label
+        Me.lbl_FilePath = New System.Windows.Forms.Label
         Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.lbl_Taille = New System.Windows.Forms.Label
-        Me.lbl_Bloc_Courant = New System.Windows.Forms.Label
+        Me.lbl_Size = New System.Windows.Forms.Label
+        Me.lbl_CurrentBlock = New System.Windows.Forms.Label
         Me.GroupBox3 = New System.Windows.Forms.GroupBox
         Me.rb_BW_sav = New System.Windows.Forms.RadioButton
         Me.rb_HGSS_sav = New System.Windows.Forms.RadioButton
@@ -70,40 +70,31 @@ Partial Class Form1
         Me.SaveFileDialog2 = New System.Windows.Forms.SaveFileDialog
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog
         Me.OpenFileDialog2 = New System.Windows.Forms.OpenFileDialog
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PictureBox3 = New System.Windows.Forms.PictureBox
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'b_Generer
+        'b_GenerateAR
         '
-        Me.b_Generer.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.b_Generer.Location = New System.Drawing.Point(6, 6)
-        Me.b_Generer.Name = "b_Generer"
-        Me.b_Generer.Size = New System.Drawing.Size(114, 23)
-        Me.b_Generer.TabIndex = 70
-        Me.b_Generer.Text = "Générer le code !"
-        Me.ToolTip2.SetToolTip(Me.b_Generer, "Générer le code Action Replay à partir de l'image monochrome choisie.")
-        Me.b_Generer.UseVisualStyleBackColor = True
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox1.Location = New System.Drawing.Point(117, 12)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(194, 66)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-        Me.PictureBox1.TabIndex = 1
-        Me.PictureBox1.TabStop = False
-        Me.ToolTip2.SetToolTip(Me.PictureBox1, "L'image qui servira de nouvelle signature.")
+        Me.b_GenerateAR.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.b_GenerateAR.Location = New System.Drawing.Point(6, 6)
+        Me.b_GenerateAR.Name = "b_GenerateAR"
+        Me.b_GenerateAR.Size = New System.Drawing.Size(114, 23)
+        Me.b_GenerateAR.TabIndex = 70
+        Me.b_GenerateAR.Text = "Générer le code !"
+        Me.ToolTip2.SetToolTip(Me.b_GenerateAR, "Générer le code Action Replay à partir de l'image monochrome choisie.")
+        Me.b_GenerateAR.UseVisualStyleBackColor = True
         '
         'TextBox1
         '
@@ -118,27 +109,27 @@ Partial Class Form1
         Me.TextBox1.Size = New System.Drawing.Size(165, 252)
         Me.TextBox1.TabIndex = 75
         '
-        'b_Copier1
+        'b_Copy1
         '
-        Me.b_Copier1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.b_Copier1.Location = New System.Drawing.Point(6, 306)
-        Me.b_Copier1.Name = "b_Copier1"
-        Me.b_Copier1.Size = New System.Drawing.Size(149, 23)
-        Me.b_Copier1.TabIndex = 80
-        Me.b_Copier1.Text = "Copier la première partie"
-        Me.ToolTip2.SetToolTip(Me.b_Copier1, "Copier la première partie du code dans le presse-papiers.")
-        Me.b_Copier1.UseVisualStyleBackColor = True
+        Me.b_Copy1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.b_Copy1.Location = New System.Drawing.Point(6, 306)
+        Me.b_Copy1.Name = "b_Copy1"
+        Me.b_Copy1.Size = New System.Drawing.Size(149, 23)
+        Me.b_Copy1.TabIndex = 80
+        Me.b_Copy1.Text = "Copier la première partie"
+        Me.ToolTip2.SetToolTip(Me.b_Copy1, "Copier la première partie du code dans le presse-papiers.")
+        Me.b_Copy1.UseVisualStyleBackColor = True
         '
-        'b_Ouvrir
+        'b_OpenImage
         '
-        Me.b_Ouvrir.Location = New System.Drawing.Point(12, 12)
-        Me.b_Ouvrir.Name = "b_Ouvrir"
-        Me.b_Ouvrir.Size = New System.Drawing.Size(99, 23)
-        Me.b_Ouvrir.TabIndex = 0
-        Me.b_Ouvrir.Text = "Ouvrir une image"
-        Me.ToolTip2.SetToolTip(Me.b_Ouvrir, "Choisir une image à convertir en signature." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "L'image doit mesurer exactement 192x" & _
+        Me.b_OpenImage.Location = New System.Drawing.Point(12, 12)
+        Me.b_OpenImage.Name = "b_OpenImage"
+        Me.b_OpenImage.Size = New System.Drawing.Size(99, 23)
+        Me.b_OpenImage.TabIndex = 0
+        Me.b_OpenImage.Text = "Ouvrir une image"
+        Me.ToolTip2.SetToolTip(Me.b_OpenImage, "Choisir une image à convertir en signature." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "L'image doit mesurer exactement 192x" & _
                 "64 pixels." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Elle sera automatiquement convertie en monochrome.")
-        Me.b_Ouvrir.UseVisualStyleBackColor = True
+        Me.b_OpenImage.UseVisualStyleBackColor = True
         '
         'OpenFileDialog1
         '
@@ -160,26 +151,26 @@ Partial Class Form1
                 "est élevée, plus l'image sera sombre.")
         Me.TrackBar1.Value = 50
         '
-        'Label1
+        'lbl_Sensib
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(433, 44)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(78, 13)
-        Me.Label1.TabIndex = 11
-        Me.Label1.Text = "Sensibilité : 0,5"
+        Me.lbl_Sensib.AutoSize = True
+        Me.lbl_Sensib.Location = New System.Drawing.Point(433, 44)
+        Me.lbl_Sensib.Name = "lbl_Sensib"
+        Me.lbl_Sensib.Size = New System.Drawing.Size(78, 13)
+        Me.lbl_Sensib.TabIndex = 11
+        Me.lbl_Sensib.Text = "Sensibilité : 0,5"
         '
-        'CheckBox1
+        'cb_SplitCode
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(348, 229)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(139, 30)
-        Me.CheckBox1.TabIndex = 50
-        Me.CheckBox1.Text = "Couper le code en deux" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(No$GBA)"
-        Me.ToolTip2.SetToolTip(Me.CheckBox1, "Diviser le code en deux parties plus courtes afin de pouvoir le mettre sur un ému" & _
+        Me.cb_SplitCode.AutoSize = True
+        Me.cb_SplitCode.Location = New System.Drawing.Point(348, 229)
+        Me.cb_SplitCode.Name = "cb_SplitCode"
+        Me.cb_SplitCode.Size = New System.Drawing.Size(139, 30)
+        Me.cb_SplitCode.TabIndex = 50
+        Me.cb_SplitCode.Text = "Couper le code en deux" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(No$GBA)"
+        Me.ToolTip2.SetToolTip(Me.cb_SplitCode, "Diviser le code en deux parties plus courtes afin de pouvoir le mettre sur un ému" & _
                 "lateur comme No$GBA." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Entrez chaque partie comme un code distinct.")
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.cb_SplitCode.UseVisualStyleBackColor = True
         '
         'TextBox2
         '
@@ -195,41 +186,41 @@ Partial Class Form1
         Me.TextBox2.Size = New System.Drawing.Size(165, 252)
         Me.TextBox2.TabIndex = 85
         '
-        'b_Copier2
+        'b_Copy2
         '
-        Me.b_Copier2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.b_Copier2.Enabled = False
-        Me.b_Copier2.Location = New System.Drawing.Point(177, 306)
-        Me.b_Copier2.Name = "b_Copier2"
-        Me.b_Copier2.Size = New System.Drawing.Size(149, 23)
-        Me.b_Copier2.TabIndex = 90
-        Me.b_Copier2.Text = "Copier la deuxième partie"
-        Me.ToolTip2.SetToolTip(Me.b_Copier2, "Copier la seconde partie du code dans le presse-papiers.")
-        Me.b_Copier2.UseVisualStyleBackColor = True
+        Me.b_Copy2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.b_Copy2.Enabled = False
+        Me.b_Copy2.Location = New System.Drawing.Point(177, 306)
+        Me.b_Copy2.Name = "b_Copy2"
+        Me.b_Copy2.Size = New System.Drawing.Size(149, 23)
+        Me.b_Copy2.TabIndex = 90
+        Me.b_Copy2.Text = "Copier la deuxième partie"
+        Me.ToolTip2.SetToolTip(Me.b_Copy2, "Copier la seconde partie du code dans le presse-papiers.")
+        Me.b_Copy2.UseVisualStyleBackColor = True
         '
-        'Label2
+        'lbl_1stPart
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(6, 32)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(125, 13)
-        Me.Label2.TabIndex = 1001
-        Me.Label2.Text = "Première partie du code :"
+        Me.lbl_1stPart.AutoSize = True
+        Me.lbl_1stPart.Location = New System.Drawing.Point(6, 32)
+        Me.lbl_1stPart.Name = "lbl_1stPart"
+        Me.lbl_1stPart.Size = New System.Drawing.Size(125, 13)
+        Me.lbl_1stPart.TabIndex = 1001
+        Me.lbl_1stPart.Text = "Première partie du code :"
         '
-        'Label3
+        'lbl_2ndPart
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Enabled = False
-        Me.Label3.Location = New System.Drawing.Point(174, 32)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(89, 13)
-        Me.Label3.TabIndex = 1002
-        Me.Label3.Text = "Deuxième partie :"
+        Me.lbl_2ndPart.AutoSize = True
+        Me.lbl_2ndPart.Enabled = False
+        Me.lbl_2ndPart.Location = New System.Drawing.Point(174, 32)
+        Me.lbl_2ndPart.Name = "lbl_2ndPart"
+        Me.lbl_2ndPart.Size = New System.Drawing.Size(89, 13)
+        Me.lbl_2ndPart.TabIndex = 1002
+        Me.lbl_2ndPart.Text = "Deuxième partie :"
         '
         'b_Activ
         '
         Me.b_Activ.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.b_Activ.Location = New System.Drawing.Point(370, 48)
+        Me.b_Activ.Location = New System.Drawing.Point(370, 6)
         Me.b_Activ.Name = "b_Activ"
         Me.b_Activ.Size = New System.Drawing.Size(98, 23)
         Me.b_Activ.TabIndex = 60
@@ -260,8 +251,8 @@ Partial Class Form1
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.ComboBox1)
-        Me.GroupBox1.Location = New System.Drawing.Point(348, 104)
+        Me.GroupBox1.Controls.Add(Me.cmb_Version)
+        Me.GroupBox1.Location = New System.Drawing.Point(348, 102)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(137, 46)
         Me.GroupBox1.TabIndex = 30
@@ -269,38 +260,80 @@ Partial Class Form1
         Me.GroupBox1.Text = "Version"
         Me.ToolTip2.SetToolTip(Me.GroupBox1, "Choisissez votre version de Pokémon...")
         '
-        'ComboBox1
+        'cmb_Version
         '
-        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Items.AddRange(New Object() {"Diamant/Perle", "Platine", "HeartGold/SoulSilver", "Noire/Blanche"})
-        Me.ComboBox1.Location = New System.Drawing.Point(6, 19)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(125, 21)
-        Me.ComboBox1.TabIndex = 30
-        Me.ToolTip2.SetToolTip(Me.ComboBox1, "La version du jeu pour laquelle le code AR sera généré.")
+        Me.cmb_Version.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmb_Version.FormattingEnabled = True
+        Me.cmb_Version.Items.AddRange(New Object() {"Diamant/Perle", "Platine", "HeartGold/SoulSilver", "Noire/Blanche"})
+        Me.cmb_Version.Location = New System.Drawing.Point(6, 19)
+        Me.cmb_Version.Name = "cmb_Version"
+        Me.cmb_Version.Size = New System.Drawing.Size(125, 21)
+        Me.cmb_Version.TabIndex = 30
+        Me.ToolTip2.SetToolTip(Me.cmb_Version, "La version du jeu pour laquelle le code AR sera généré.")
         '
-        'b_Previs
+        'b_Preview
         '
-        Me.b_Previs.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.b_Previs.Location = New System.Drawing.Point(368, 63)
-        Me.b_Previs.Name = "b_Previs"
-        Me.b_Previs.Size = New System.Drawing.Size(116, 23)
-        Me.b_Previs.TabIndex = 15
-        Me.b_Previs.Text = "Prévisualisation..."
-        Me.ToolTip2.SetToolTip(Me.b_Previs, "Prévisualiser le résultat avec les contours d'une vraie carte de dresseur")
-        Me.b_Previs.UseVisualStyleBackColor = True
+        Me.b_Preview.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.b_Preview.Location = New System.Drawing.Point(368, 63)
+        Me.b_Preview.Name = "b_Preview"
+        Me.b_Preview.Size = New System.Drawing.Size(116, 23)
+        Me.b_Preview.TabIndex = 15
+        Me.b_Preview.Text = "Prévisualisation..."
+        Me.ToolTip2.SetToolTip(Me.b_Preview, "Prévisualiser le résultat avec les contours d'une vraie carte de dresseur")
+        Me.b_Preview.UseVisualStyleBackColor = True
         '
-        'b_Import
+        'b_ImportImage
         '
-        Me.b_Import.Location = New System.Drawing.Point(125, 14)
-        Me.b_Import.Name = "b_Import"
-        Me.b_Import.Size = New System.Drawing.Size(148, 23)
-        Me.b_Import.TabIndex = 40
-        Me.b_Import.Text = "v  Importer l'image  v"
-        Me.ToolTip2.SetToolTip(Me.b_Import, "Recopier l'image ouverte au-dessus dans la boîte ci-dessous." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "La sauvegarde ne se" & _
+        Me.b_ImportImage.Location = New System.Drawing.Point(125, 14)
+        Me.b_ImportImage.Name = "b_ImportImage"
+        Me.b_ImportImage.Size = New System.Drawing.Size(148, 23)
+        Me.b_ImportImage.TabIndex = 40
+        Me.b_ImportImage.Text = "v  Importer l'image  v"
+        Me.ToolTip2.SetToolTip(Me.b_ImportImage, "Recopier l'image ouverte au-dessus dans la boîte ci-dessous." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "La sauvegarde ne se" & _
                 "ra pas modifiée tant que vous n'aurez pas utilisé le bouton ""Enregistrer"".")
-        Me.b_Import.UseVisualStyleBackColor = True
+        Me.b_ImportImage.UseVisualStyleBackColor = True
+        '
+        'b_SaveAs
+        '
+        Me.b_SaveAs.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.b_SaveAs.Location = New System.Drawing.Point(101, 129)
+        Me.b_SaveAs.Name = "b_SaveAs"
+        Me.b_SaveAs.Size = New System.Drawing.Size(194, 23)
+        Me.b_SaveAs.TabIndex = 50
+        Me.b_SaveAs.Text = "Enregistrer sous..."
+        Me.ToolTip2.SetToolTip(Me.b_SaveAs, "Enregistrer la sauvegarde avec la nouvelle signature")
+        Me.b_SaveAs.UseVisualStyleBackColor = True
+        '
+        'b_OpenSave
+        '
+        Me.b_OpenSave.Location = New System.Drawing.Point(6, 6)
+        Me.b_OpenSave.Name = "b_OpenSave"
+        Me.b_OpenSave.Size = New System.Drawing.Size(89, 38)
+        Me.b_OpenSave.TabIndex = 30
+        Me.b_OpenSave.Text = "Ouvrir une sauvegarde..."
+        Me.ToolTip2.SetToolTip(Me.b_OpenSave, "Sélectionner la sauvegarde à modifier.")
+        Me.b_OpenSave.UseVisualStyleBackColor = True
+        '
+        'b_ReloadSave
+        '
+        Me.b_ReloadSave.Location = New System.Drawing.Point(374, 6)
+        Me.b_ReloadSave.Name = "b_ReloadSave"
+        Me.b_ReloadSave.Size = New System.Drawing.Size(89, 38)
+        Me.b_ReloadSave.TabIndex = 60
+        Me.b_ReloadSave.Text = "Recharger la sauvegarde"
+        Me.ToolTip2.SetToolTip(Me.b_ReloadSave, "Recharger la signature de la sauvegarde pour annuler les modifications.")
+        Me.b_ReloadSave.UseVisualStyleBackColor = True
+        '
+        'cmb_Language
+        '
+        Me.cmb_Language.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmb_Language.FormattingEnabled = True
+        Me.cmb_Language.Items.AddRange(New Object() {"Français", "English/USA/AUS", "日本語 (Japanese)", "Español", "Italiano", "Deutch", "한국인 (Korean)"})
+        Me.cmb_Language.Location = New System.Drawing.Point(6, 19)
+        Me.cmb_Language.Name = "cmb_Language"
+        Me.cmb_Language.Size = New System.Drawing.Size(125, 21)
+        Me.cmb_Language.TabIndex = 40
+        Me.ToolTip2.SetToolTip(Me.cmb_Language, "La langue du jeu pour laquelle le code AR sera généré.")
         '
         'PictureBox2
         '
@@ -316,64 +349,33 @@ Partial Class Form1
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnregistrerLimageSousToolStripMenuItem, Me.ChargerLimageDansLaPartieDuHautPourEnFaireUnCodeARToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmi_SaveImageAs, Me.tsmi_LoadImageAbove})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.ShowImageMargin = False
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(385, 48)
         '
-        'EnregistrerLimageSousToolStripMenuItem
+        'tsmi_SaveImageAs
         '
-        Me.EnregistrerLimageSousToolStripMenuItem.Name = "EnregistrerLimageSousToolStripMenuItem"
-        Me.EnregistrerLimageSousToolStripMenuItem.Size = New System.Drawing.Size(384, 22)
-        Me.EnregistrerLimageSousToolStripMenuItem.Text = "Enregistrer l'image sous..."
+        Me.tsmi_SaveImageAs.Name = "tsmi_SaveImageAs"
+        Me.tsmi_SaveImageAs.Size = New System.Drawing.Size(384, 22)
+        Me.tsmi_SaveImageAs.Text = "Enregistrer l'image sous..."
         '
-        'ChargerLimageDansLaPartieDuHautPourEnFaireUnCodeARToolStripMenuItem
+        'tsmi_LoadImageAbove
         '
-        Me.ChargerLimageDansLaPartieDuHautPourEnFaireUnCodeARToolStripMenuItem.Name = "ChargerLimageDansLaPartieDuHautPourEnFaireUnCodeARToolStripMenuItem"
-        Me.ChargerLimageDansLaPartieDuHautPourEnFaireUnCodeARToolStripMenuItem.Size = New System.Drawing.Size(384, 22)
-        Me.ChargerLimageDansLaPartieDuHautPourEnFaireUnCodeARToolStripMenuItem.Text = "Charger l'image dans la partie du haut pour en faire un code AR"
+        Me.tsmi_LoadImageAbove.Name = "tsmi_LoadImageAbove"
+        Me.tsmi_LoadImageAbove.Size = New System.Drawing.Size(384, 22)
+        Me.tsmi_LoadImageAbove.Text = "Charger l'image dans la partie du haut pour en faire un code AR"
         '
-        'b_Sauver
+        'PictureBox1
         '
-        Me.b_Sauver.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.b_Sauver.Location = New System.Drawing.Point(101, 129)
-        Me.b_Sauver.Name = "b_Sauver"
-        Me.b_Sauver.Size = New System.Drawing.Size(194, 23)
-        Me.b_Sauver.TabIndex = 50
-        Me.b_Sauver.Text = "Enregistrer sous..."
-        Me.ToolTip2.SetToolTip(Me.b_Sauver, "Enregistrer la sauvegarde avec la nouvelle signature")
-        Me.b_Sauver.UseVisualStyleBackColor = True
-        '
-        'b_OuvrirSav
-        '
-        Me.b_OuvrirSav.Location = New System.Drawing.Point(6, 6)
-        Me.b_OuvrirSav.Name = "b_OuvrirSav"
-        Me.b_OuvrirSav.Size = New System.Drawing.Size(89, 38)
-        Me.b_OuvrirSav.TabIndex = 30
-        Me.b_OuvrirSav.Text = "Ouvrir une sauvegarde..."
-        Me.ToolTip2.SetToolTip(Me.b_OuvrirSav, "Sélectionner la sauvegarde à modifier.")
-        Me.b_OuvrirSav.UseVisualStyleBackColor = True
-        '
-        'b_Recharger
-        '
-        Me.b_Recharger.Location = New System.Drawing.Point(357, 6)
-        Me.b_Recharger.Name = "b_Recharger"
-        Me.b_Recharger.Size = New System.Drawing.Size(89, 38)
-        Me.b_Recharger.TabIndex = 60
-        Me.b_Recharger.Text = "Recharger la sauvegarde"
-        Me.ToolTip2.SetToolTip(Me.b_Recharger, "Recharger la signature de la sauvegarde pour annuler les modifications.")
-        Me.b_Recharger.UseVisualStyleBackColor = True
-        '
-        'ComboBox2
-        '
-        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Items.AddRange(New Object() {"Français", "English/USA/AUS", "日本語 (Japanese)", "Español", "Italiano", "Deutch", "한국인 (Korean)"})
-        Me.ComboBox2.Location = New System.Drawing.Point(6, 19)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(125, 21)
-        Me.ComboBox2.TabIndex = 40
-        Me.ToolTip2.SetToolTip(Me.ComboBox2, "La langue du jeu pour laquelle le code AR sera généré.")
+        Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PictureBox1.Location = New System.Drawing.Point(117, 12)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(194, 66)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+        Me.PictureBox1.TabIndex = 1
+        Me.PictureBox1.TabStop = False
+        Me.ToolTip2.SetToolTip(Me.PictureBox1, "L'image qui servira de nouvelle signature.")
         '
         'TabControl1
         '
@@ -384,6 +386,7 @@ Partial Class Form1
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.HotTrack = True
         Me.TabControl1.Location = New System.Drawing.Point(12, 92)
+        Me.TabControl1.Multiline = True
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.Size = New System.Drawing.Size(499, 361)
@@ -391,18 +394,17 @@ Partial Class Form1
         '
         'TabPage1
         '
-        Me.TabPage1.BackColor = System.Drawing.Color.Transparent
         Me.TabPage1.Controls.Add(Me.GroupBox4)
         Me.TabPage1.Controls.Add(Me.TextBox1)
-        Me.TabPage1.Controls.Add(Me.b_Copier1)
+        Me.TabPage1.Controls.Add(Me.b_Copy1)
         Me.TabPage1.Controls.Add(Me.GroupBox1)
-        Me.TabPage1.Controls.Add(Me.CheckBox1)
+        Me.TabPage1.Controls.Add(Me.cb_SplitCode)
         Me.TabPage1.Controls.Add(Me.TextBox2)
         Me.TabPage1.Controls.Add(Me.b_Activ)
-        Me.TabPage1.Controls.Add(Me.b_Copier2)
-        Me.TabPage1.Controls.Add(Me.b_Generer)
-        Me.TabPage1.Controls.Add(Me.Label3)
-        Me.TabPage1.Controls.Add(Me.Label2)
+        Me.TabPage1.Controls.Add(Me.b_Copy2)
+        Me.TabPage1.Controls.Add(Me.b_GenerateAR)
+        Me.TabPage1.Controls.Add(Me.lbl_2ndPart)
+        Me.TabPage1.Controls.Add(Me.lbl_1stPart)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
@@ -412,8 +414,8 @@ Partial Class Form1
         '
         'GroupBox4
         '
-        Me.GroupBox4.Controls.Add(Me.ComboBox2)
-        Me.GroupBox4.Location = New System.Drawing.Point(348, 156)
+        Me.GroupBox4.Controls.Add(Me.cmb_Language)
+        Me.GroupBox4.Location = New System.Drawing.Point(348, 154)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(137, 46)
         Me.GroupBox4.TabIndex = 40
@@ -424,13 +426,13 @@ Partial Class Form1
         '
         Me.TabPage2.AllowDrop = True
         Me.TabPage2.BackColor = System.Drawing.SystemColors.Control
-        Me.TabPage2.Controls.Add(Me.Label4)
-        Me.TabPage2.Controls.Add(Me.b_Import)
-        Me.TabPage2.Controls.Add(Me.PictureBox2)
-        Me.TabPage2.Controls.Add(Me.b_Sauver)
-        Me.TabPage2.Controls.Add(Me.b_OuvrirSav)
-        Me.TabPage2.Controls.Add(Me.b_Recharger)
+        Me.TabPage2.Controls.Add(Me.lbl_FilePath)
+        Me.TabPage2.Controls.Add(Me.b_ImportImage)
+        Me.TabPage2.Controls.Add(Me.b_SaveAs)
+        Me.TabPage2.Controls.Add(Me.b_OpenSave)
+        Me.TabPage2.Controls.Add(Me.b_ReloadSave)
         Me.TabPage2.Controls.Add(Me.GroupBox2)
+        Me.TabPage2.Controls.Add(Me.PictureBox2)
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
@@ -438,20 +440,20 @@ Partial Class Form1
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Modificateur de sauvegarde"
         '
-        'Label4
+        'lbl_FilePath
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(6, 166)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(110, 13)
-        Me.Label4.TabIndex = 2001
-        Me.Label4.Text = "(aucun fichier chargé)"
+        Me.lbl_FilePath.AutoSize = True
+        Me.lbl_FilePath.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_FilePath.Location = New System.Drawing.Point(6, 166)
+        Me.lbl_FilePath.Name = "lbl_FilePath"
+        Me.lbl_FilePath.Size = New System.Drawing.Size(110, 13)
+        Me.lbl_FilePath.TabIndex = 2001
+        Me.lbl_FilePath.Text = "(aucun fichier chargé)"
         '
         'GroupBox2
         '
-        Me.GroupBox2.Controls.Add(Me.lbl_Taille)
-        Me.GroupBox2.Controls.Add(Me.lbl_Bloc_Courant)
+        Me.GroupBox2.Controls.Add(Me.lbl_Size)
+        Me.GroupBox2.Controls.Add(Me.lbl_CurrentBlock)
         Me.GroupBox2.Controls.Add(Me.GroupBox3)
         Me.GroupBox2.Controls.Add(Me.cb_NoGBA)
         Me.GroupBox2.Location = New System.Drawing.Point(6, 193)
@@ -461,23 +463,23 @@ Partial Class Form1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Infos sur la sauvegarde"
         '
-        'lbl_Taille
+        'lbl_Size
         '
-        Me.lbl_Taille.AutoSize = True
-        Me.lbl_Taille.Location = New System.Drawing.Point(121, 38)
-        Me.lbl_Taille.Name = "lbl_Taille"
-        Me.lbl_Taille.Size = New System.Drawing.Size(38, 13)
-        Me.lbl_Taille.TabIndex = 2010
-        Me.lbl_Taille.Text = "Taille :"
+        Me.lbl_Size.AutoSize = True
+        Me.lbl_Size.Location = New System.Drawing.Point(121, 38)
+        Me.lbl_Size.Name = "lbl_Size"
+        Me.lbl_Size.Size = New System.Drawing.Size(38, 13)
+        Me.lbl_Size.TabIndex = 2010
+        Me.lbl_Size.Text = "Taille :"
         '
-        'lbl_Bloc_Courant
+        'lbl_CurrentBlock
         '
-        Me.lbl_Bloc_Courant.AutoSize = True
-        Me.lbl_Bloc_Courant.Location = New System.Drawing.Point(121, 61)
-        Me.lbl_Bloc_Courant.Name = "lbl_Bloc_Courant"
-        Me.lbl_Bloc_Courant.Size = New System.Drawing.Size(73, 13)
-        Me.lbl_Bloc_Courant.TabIndex = 2020
-        Me.lbl_Bloc_Courant.Text = "Bloc courant :"
+        Me.lbl_CurrentBlock.AutoSize = True
+        Me.lbl_CurrentBlock.Location = New System.Drawing.Point(121, 61)
+        Me.lbl_CurrentBlock.Name = "lbl_CurrentBlock"
+        Me.lbl_CurrentBlock.Size = New System.Drawing.Size(73, 13)
+        Me.lbl_CurrentBlock.TabIndex = 2020
+        Me.lbl_CurrentBlock.Text = "Bloc courant :"
         '
         'GroupBox3
         '
@@ -498,10 +500,10 @@ Partial Class Form1
         Me.rb_BW_sav.Enabled = False
         Me.rb_BW_sav.Location = New System.Drawing.Point(6, 88)
         Me.rb_BW_sav.Name = "rb_BW_sav"
-        Me.rb_BW_sav.Size = New System.Drawing.Size(85, 17)
+        Me.rb_BW_sav.Size = New System.Drawing.Size(94, 17)
         Me.rb_BW_sav.TabIndex = 2301
         Me.rb_BW_sav.TabStop = True
-        Me.rb_BW_sav.Text = "Black/White"
+        Me.rb_BW_sav.Text = "Noire/Blanche"
         Me.rb_BW_sav.UseVisualStyleBackColor = True
         '
         'rb_HGSS_sav
@@ -573,28 +575,38 @@ Partial Class Form1
         Me.OpenFileDialog2.SupportMultiDottedExtensions = True
         Me.OpenFileDialog2.Title = "Ouvrir une sauvegarde..."
         '
+        'PictureBox3
+        '
+        Me.PictureBox3.Image = Global.Signature_Editor.My.Resources.Resources.Zuruggu_Anim
+        Me.PictureBox3.Location = New System.Drawing.Point(412, 164)
+        Me.PictureBox3.Name = "PictureBox3"
+        Me.PictureBox3.Size = New System.Drawing.Size(37, 42)
+        Me.PictureBox3.TabIndex = 1003
+        Me.PictureBox3.TabStop = False
+        '
         'Form1
         '
-        Me.AcceptButton = Me.b_Ouvrir
+        Me.AcceptButton = Me.b_OpenImage
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(523, 496)
+        Me.Controls.Add(Me.PictureBox3)
         Me.Controls.Add(Me.TabControl1)
-        Me.Controls.Add(Me.b_Ouvrir)
+        Me.Controls.Add(Me.b_OpenImage)
         Me.Controls.Add(Me.b_About)
-        Me.Controls.Add(Me.b_Previs)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.b_Preview)
+        Me.Controls.Add(Me.lbl_Sensib)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.TrackBar1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(539, 532)
         Me.Name = "Form1"
         Me.Text = "Pokémon Signature Editor - by M@T"
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
@@ -605,55 +617,57 @@ Partial Class Form1
         Me.GroupBox2.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents b_Generer As System.Windows.Forms.Button
+    Friend WithEvents b_GenerateAR As System.Windows.Forms.Button
     Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
-    Friend WithEvents b_Copier1 As System.Windows.Forms.Button
-    Friend WithEvents b_Ouvrir As System.Windows.Forms.Button
+    Friend WithEvents b_Copy1 As System.Windows.Forms.Button
+    Friend WithEvents b_OpenImage As System.Windows.Forms.Button
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
     Friend WithEvents TrackBar1 As System.Windows.Forms.TrackBar
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
+    Friend WithEvents lbl_Sensib As System.Windows.Forms.Label
+    Friend WithEvents cb_SplitCode As System.Windows.Forms.CheckBox
     Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
-    Friend WithEvents b_Copier2 As System.Windows.Forms.Button
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents b_Copy2 As System.Windows.Forms.Button
+    Friend WithEvents lbl_1stPart As System.Windows.Forms.Label
+    Friend WithEvents lbl_2ndPart As System.Windows.Forms.Label
     Friend WithEvents b_Activ As System.Windows.Forms.Button
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
     Friend WithEvents b_About As System.Windows.Forms.Button
     Friend WithEvents ToolTip2 As System.Windows.Forms.ToolTip
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-    Friend WithEvents b_Previs As System.Windows.Forms.Button
+    Friend WithEvents b_Preview As System.Windows.Forms.Button
     Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
     Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
     Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
-    Friend WithEvents b_Import As System.Windows.Forms.Button
+    Friend WithEvents b_ImportImage As System.Windows.Forms.Button
     Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
-    Friend WithEvents b_Sauver As System.Windows.Forms.Button
-    Friend WithEvents b_OuvrirSav As System.Windows.Forms.Button
-    Friend WithEvents b_Recharger As System.Windows.Forms.Button
+    Friend WithEvents b_SaveAs As System.Windows.Forms.Button
+    Friend WithEvents b_OpenSave As System.Windows.Forms.Button
+    Friend WithEvents b_ReloadSave As System.Windows.Forms.Button
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
-    Friend WithEvents lbl_Taille As System.Windows.Forms.Label
-    Friend WithEvents lbl_Bloc_Courant As System.Windows.Forms.Label
+    Friend WithEvents lbl_Size As System.Windows.Forms.Label
+    Friend WithEvents lbl_CurrentBlock As System.Windows.Forms.Label
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Friend WithEvents rb_HGSS_sav As System.Windows.Forms.RadioButton
     Friend WithEvents rb_DP_sav As System.Windows.Forms.RadioButton
     Friend WithEvents rb_Plat_sav As System.Windows.Forms.RadioButton
     Friend WithEvents cb_NoGBA As System.Windows.Forms.CheckBox
     Friend WithEvents ContextMenuStrip1 As System.Windows.Forms.ContextMenuStrip
-    Friend WithEvents EnregistrerLimageSousToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tsmi_SaveImageAs As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SaveFileDialog2 As System.Windows.Forms.SaveFileDialog
     Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
     Friend WithEvents OpenFileDialog2 As System.Windows.Forms.OpenFileDialog
-    Friend WithEvents ChargerLimageDansLaPartieDuHautPourEnFaireUnCodeARToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
-    Friend WithEvents ComboBox2 As System.Windows.Forms.ComboBox
+    Friend WithEvents tsmi_LoadImageAbove As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents cmb_Version As System.Windows.Forms.ComboBox
+    Friend WithEvents cmb_Language As System.Windows.Forms.ComboBox
     Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
     Friend WithEvents rb_BW_sav As System.Windows.Forms.RadioButton
-    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents lbl_FilePath As System.Windows.Forms.Label
+    Friend WithEvents PictureBox3 As System.Windows.Forms.PictureBox
 
 End Class
