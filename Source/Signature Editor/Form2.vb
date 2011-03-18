@@ -1,12 +1,12 @@
 ﻿Public Class Form2
 
-    'Form2.vb
-    'Boîte de dialogue pour les activateurs du code
+    '''Form2.vb
+    '''Boîte de dialogue pour les activateurs du code
 
-    'Par M@T, pour PokémonTrash
+    '''Par M@T, pour PokémonTrash
 
 
-    'Déclaration des variables :
+    ''Déclaration des variables :
 
     Dim newLine As String = Environment.NewLine()
 
@@ -27,30 +27,24 @@
         SELEC = &HFFFB
     End Enum
 
-    'Définition de la touche par défaut
+    'Activateur par défaut
     Dim triggerCode As Integer = NDSKeys.L And NDSKeys.R
 
-    'Définition de la liste de l'état des CheckBox
+    'Liste de l'état des CheckBox
     Dim controlsState As New List(Of Boolean)
 
     'Renvoie la partie du code correspondant à l'activateur en fonction des touches sélectionnées
     Private Function TriggersCode() As String
         TriggersCode = ""
 
-        If cb_A.Checked OrElse _
-           cb_B.Checked OrElse _
-           cb_Bas.Checked OrElse _
-           cb_Droite.Checked OrElse _
-           cb_Gauche.Checked OrElse _
-           cb_Haut.Checked OrElse _
-           cb_L.Checked OrElse _
-           cb_R.Checked OrElse _
-           cb_Select.Checked OrElse _
-           cb_Start.Checked Then
+        If cb_A.Checked OrElse cb_B.Checked OrElse _
+           cb_Haut.Checked OrElse cb_Bas.Checked OrElse _
+           cb_Droite.Checked OrElse cb_Gauche.Checked OrElse _
+           cb_L.Checked OrElse cb_R.Checked OrElse _
+           cb_Select.Checked OrElse cb_Start.Checked Then
 
             'Si une touche autre que X ou Y est sélectionnée (touches GBA),
-            'on calcule le code hexa correspondant à l'ensemble des touches sélectionnées
-            'grâce à l'opération binaire "And"
+            'on calcule le code hexa correspondant à l'ensemble des touches sélectionnées grâce à l'opération binaire "And".
             triggerCode = NDSKeys.NONE
             triggerCode = triggerCode And If(cb_Haut.Checked, NDSKeys.UP, NDSKeys.NONE)
             triggerCode = triggerCode And If(cb_Bas.Checked, NDSKeys.DOWN, NDSKeys.NONE)
@@ -63,15 +57,15 @@
             triggerCode = triggerCode And If(cb_Start.Checked, NDSKeys.START, NDSKeys.NONE)
             triggerCode = triggerCode And If(cb_Select.Checked, NDSKeys.SELEC, NDSKeys.NONE)
 
-            TriggersCode = "94000130 " & Hex(triggerCode) & "0000" & newLine
+            TriggersCode = "94000130 " & triggerCode.ToString("X4") & "0000" & newLine
         End If
 
         If cb_X.Checked OrElse cb_Y.Checked Then
             'Si la touche X ou Y est sélectionnée (touches NDS), on fait de même en modifiant l'adresse mémoire
             TriggersCode &= "94000136 " & _
-                           Hex(If(cb_X.Checked, NDSKeys.X, NDSKeys.NONE) And _
-                               If(cb_Y.Checked, NDSKeys.Y, NDSKeys.NONE)) & _
-                                    "0000" & newLine
+                            CInt((If(cb_X.Checked, NDSKeys.X, NDSKeys.NONE) And _
+                                  If(cb_Y.Checked, NDSKeys.Y, NDSKeys.NONE))).ToString("X4") & _
+                            "0000" & newLine
         End If
     End Function
 
@@ -79,7 +73,6 @@
     Private Function ReadTriggers() As String
         ReadTriggers = ""
 
-        'Parcourt les contrôles de GroupBox1
         For Each cb As CheckBox In GroupBox1.Controls
             If cb.Checked Then
                 'Si la CheckBox est cochée, on ajoute son nom au début de la chaîne résultat
@@ -91,7 +84,6 @@
             'Si le résultat n'est pas vide, on renvoie la chaîne sans le "+" final
             ReadTriggers = ReadTriggers.Substring(0, ReadTriggers.LastIndexOf("+"))
         Else
-            'Sinon, on renvoie "aucune touche"
             ReadTriggers = "aucune touche"
         End If
     End Function
@@ -136,7 +128,7 @@
         'Réinitialise la liste de l'état des CheckBox
         controlsState.Clear()
 
-        'Parcourt les CheckBox et ajoute leur état à la liste etatControles
+        'Parcourt les CheckBox et ajoute leur état à la liste controlsState
         For Each cb As CheckBox In GroupBox1.Controls
             controlsState.Add(cb.Checked)
         Next
@@ -144,31 +136,26 @@
         'Met à jour la chaîne correspondant aux activateurs du code sur le formulaire principal
         Form1.codeTrigger = TriggersCode()
 
-        'Génère le code si besoin
         Form1.genVerif()
 
         'Met à jour l'info-bulle indiquant les touches à presser
         Form1.ToolTip1.SetToolTip(Form1.b_Activ, ReadTriggers)
 
-        'Ferme le formulaire
         Me.Close()
     End Sub
 
-    'À la fermeture du formulaire
     Private Sub Form2_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-        'On rétablit les contrôles comme ils sont définis :
-        'Si l'utilisateur a validé, ils ne changeront pas
-        'si il a quitté sans valider, ils seront rétablis comme ils étaient à l'affichage du formulaire
+        'Rétablit les contrôles comme ils sont définis :
+        '  Si l'utilisateur a validé, ils ne changeront pas
+        '  Si il a quitté sans valider, ils seront rétablis comme ils étaient à l'affichage du formulaire
         resetTriggers()
     End Sub
 
-    'Quand une touche du clavier est pressée
     Private Sub Form2_KeyPress(ByVal sender As System.Object, ByVal e As KeyEventArgs) Handles MyBase.KeyDown
         'Si la touche Echap est pressée, on ferme le formulaire
         If e.KeyCode = Keys.Escape Then Close()
     End Sub
 
-    'À l'affichage du formulaire
     Private Sub Form2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'Sélectionne le bouton de validation
         b_Valider.Select()
@@ -182,9 +169,8 @@
         Next
     End Sub
 
-    'Quand le bouton "Rétablir" est cliqué
     Private Sub b_Retablir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Retablir.Click
-        'On rétablit l'état des contrôles comme ils étaient à l'affichage du formulaire
+        'Rétablit l'état des contrôles comme ils étaient à l'affichage du formulaire
         resetTriggers()
     End Sub
 End Class

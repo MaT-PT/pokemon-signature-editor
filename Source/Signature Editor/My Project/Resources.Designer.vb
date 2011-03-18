@@ -67,6 +67,13 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property Pause_Pressed() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Pause_Pressed", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend ReadOnly Property Play() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Play", resourceCulture)
@@ -74,142 +81,240 @@ Namespace My.Resources
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_0e() As System.Drawing.Bitmap
+        Friend ReadOnly Property Play_Pressed() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_0e", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Play_Pressed", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_0e_BW() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_Black_0s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_0e_BW", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_Black_0s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_0e_half_BW() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_Black_0s_half() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_0e_half_BW", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_Black_0s_half", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_0e_HGSS() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_Black_1s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_0e_HGSS", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_Black_1s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_1e() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_Black_1s_half() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_1e", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_Black_1s_half", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_1e_BW() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_Black_2s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_1e_BW", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_Black_2s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_1e_half_BW() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_Black_2s_half() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_1e_half_BW", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_Black_2s_half", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_1e_HGSS() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_Black_3s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_1e_HGSS", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_Black_3s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_2e() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_Black_3s_half() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_2e", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_Black_3s_half", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_2e_BW() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_Black_4s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_2e_BW", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_Black_4s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_2e_half_BW() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_Black_4s_half() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_2e_half_BW", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_Black_4s_half", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_2e_HGSS() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_DPPt_0s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_2e_HGSS", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_DPPt_0s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_3e() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_DPPt_1s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_3e", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_DPPt_1s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_3e_BW() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_DPPt_2s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_3e_BW", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_DPPt_2s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_3e_half_BW() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_DPPt_3s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_3e_half_BW", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_DPPt_3s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_3e_HGSS() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_DPPt_4s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_3e_HGSS", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_DPPt_4s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_4e() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_DPPt_5s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_4e", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_DPPt_5s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_4e_HGSS() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_HGSS_0s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_4e_HGSS", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_HGSS_0s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_5e() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_HGSS_1s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_5e", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_HGSS_1s", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property Signature_5e_HGSS() As System.Drawing.Bitmap
+        Friend ReadOnly Property TC_HGSS_2s() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("Signature_5e_HGSS", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TC_HGSS_2s", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_HGSS_3s() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_HGSS_3s", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_HGSS_4s() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_HGSS_4s", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_HGSS_5s() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_HGSS_5s", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_White_0s() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_White_0s", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_White_0s_half() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_White_0s_half", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_White_1s() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_White_1s", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_White_1s_half() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_White_1s_half", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_White_2s() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_White_2s", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_White_2s_half() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_White_2s_half", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_White_3s() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_White_3s", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_White_3s_half() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_White_3s_half", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_White_4s() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_White_4s", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_White_4s_half() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_White_4s_half", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Zuruggu_Anim() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Zuruggu_Anim", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

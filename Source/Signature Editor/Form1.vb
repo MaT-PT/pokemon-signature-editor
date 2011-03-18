@@ -2,19 +2,15 @@
 
 Public Class Form1
 
-    'Form1.vb
-    'Fenêtre principale
+    '''Form1.vb
+    '''Fenêtre principale
 
-    'Par M@T, pour PokémonTrash.com
+    '''Par M@T, pour PokémonTrash.com
 
-    ' -- TODO 5.0 --
-    ' - Final -
-    ' * [!] Images signature >= 1* B/W
-    ' * [!] Image animée 2 frames si B/W
-    ' * [.] MàJ icône pour B/W
-    ' * [!] Drag&Drop pour image et save
+    '' -- TODO --
+    ' * [!] Images signature 5* B/W
     ' * [?] Si la sauvegarde est corrompue, vérifier l'autre block (et vérifier le comportement IG)
-    ' * [!] Traduction EN (?) -> demander sur IRC PP.org si ça les intéresse
+    ' * [!] Traduction EN
 
     Const IS_BETA As Boolean = False
     Const IS_RC As Boolean = False
@@ -23,41 +19,32 @@ Public Class Form1
 
     Dim newLine As String = Environment.NewLine()
 
-    'Déclaration des variables :
+    ''Déclaration des variables :
 
-    'Images pour les aperçus
-    Dim bmp0 As Bitmap
+    Dim bmp0 As Bitmap 'Image pour les aperçus
 
-    'Chaîne intermédiaire pour le parcours des pixels de l'image
-    Dim codeTemp As String
+    Dim codeTemp As String 'Chaîne intermédiaire pour le parcours des pixels de l'image
 
-    'Variables pour le code final
-    Dim code, code2 As String
+    Dim code, code2 As String 'Variables pour le code final
 
-    'Indique si il faut générer automatiquement le code ou non
-    Dim mustGen As Boolean = False
+    Dim mustGen As Boolean = False 'Indique s'il faut générer automatiquement le code ou non
 
-    'Indique si une image a été chargée
-    Friend imgLoaded As Boolean = False
+    Friend imgLoaded As Boolean = False 'Indique si une image a été chargée
+
+    Dim imgPath As String = "" 'Chemin du fichier d'image
 
     Dim formLoaded As Boolean = False
 
     'Définit les parties constantes du code
     Friend codeTrigger As String = "94000130 FCFF0000" & newLine
-    Dim pointer As String = "B2101F20 00000000" & newLine
-    Dim addr1 As String = "E0005BBC"
-    Dim addr2 As String = "E0005EBC"
-
-    'Adresses mémoire Black :
-    '02237B0C (+0h)
-    '02237E0C (+300h)
+    Dim pointer, addr1, addr2 As String
 
 
     Friend saveVersion As Versions = Versions.Unknown
 
-    Dim position As OffsetsSign = OffsetsSign.PLATINUM
+    Dim position As OffsetsSign = OffsetsSign.Platinum
 
-    Dim offsetBlock As BlockOffsets = BlockOffsets.BLOCK_1
+    Dim blockOffset As BlockOffsets = BlockOffsets.Block_1
 
     Dim initialOffset As Byte = 0
 
@@ -67,13 +54,12 @@ Public Class Form1
 
     Dim offsetChkSumFooter As ChkSumFooterOffsets = ChkSumFooterOffsets.DP_PT
 
-    Dim path As String = ""
+    Dim savePath As String = ""
 
     Dim sav256ko As Boolean = False
 
     Friend saveLoaded As Boolean = False
 
-    Dim codeIsForBW As Boolean = False
     Dim saveIsBW As Boolean = False
 
 
@@ -163,7 +149,6 @@ Public Class Form1
         Platinum = &HCF18
         HGSS = &HF618
         BW = &H23F8C
-        'BW = &H658
     End Enum
 
     Friend Enum ChkSumFooterOffsets As Byte
@@ -178,7 +163,6 @@ Public Class Form1
     'Génère le code AR à partir de l'image passée en paramètre
     '(on peut aussi indiquer si on veut séparer le code en deux)
     Private Sub generateARCode(ByVal bmp As Bitmap, Optional ByVal mustSplitCode As Boolean = False)
-        'MsgBox("Génération commencée...")
         regenGameParameters()
 
         codeTemp = ""
@@ -203,7 +187,6 @@ Public Class Form1
                     codeTemp = ""
                 Next pY
 
-                'On est au milieu de la ligne, donc on ajoute un espace
                 code &= " "
 
                 For pY = 7 + cY To 4 + cY Step -1
@@ -216,7 +199,6 @@ Public Class Form1
                     codeTemp = ""
                 Next pY
 
-                'C'est la fin de la ligne, donc on ajoute un retour chariot
                 code &= newLine
         Next cX, cY
 
@@ -234,11 +216,8 @@ Public Class Form1
             code = codeTrigger & pointer & addr1 & " 00000600" & newLine & code & "D2000000 00000000"
         End If
 
-        'Enfin, on affiche le tout dans les TextBox prévues à cet effet
         TextBox1.Text = code
         TextBox2.Text = code2
-
-        'MsgBox("Génération terminée.")
     End Sub
 
     'Fonction qui convertit une image Bitmap couleur en Bitmap monochrome, avec la sensibilité au noir spécifiée
@@ -257,7 +236,6 @@ Public Class Form1
                     End If
             Next x, y
 
-            'On libère les ressources utilisées par l'image
             img.Dispose()
 
             BMP2Mono = New Bitmap(bm)
@@ -267,7 +245,7 @@ Public Class Form1
 
     'Vérifie qu'une image est bien chargée et qu'il faut générer le code, et dans ce cas appelle la fonction Generer()
     Friend Sub genVerif()
-        If imgLoaded AndAlso mustGen Then generateARCode(PictureBox1.Image, CheckBox1.Checked)
+        If imgLoaded AndAlso mustGen Then generateARCode(PictureBox1.Image, cb_SplitCode.Checked)
     End Sub
 
     'Récupère le n° de version et le retourne formaté comme ceci :
@@ -316,7 +294,6 @@ Public Class Form1
         Dec2Bin = ""
 
         For i = 1 To 8
-            'If (n Mod 2) Then Dec2Bin = "1" & Dec2Bin Else Dec2Bin = "0" & Dec2Bin
             Dec2Bin = (n Mod 2) & Dec2Bin
             n = n \ CByte(2)
         Next i
@@ -336,7 +313,9 @@ Public Class Form1
         Return True
     End Function
 
-    Private Function GetVersion(ByVal path As String, ByVal offset As Byte) As Versions
+    Private Function GetVersion(ByVal path As String) As Versions
+        Dim offset As Byte = GetOffset(savePath)
+
         Using sav As New BinaryReader(New FileStream(path, FileMode.Open))
             sav.BaseStream.Seek(&H12DC + offset, SeekOrigin.Begin)
 
@@ -400,7 +379,7 @@ Public Class Form1
             Exit Sub
         End If
 
-        saveVersion = GetVersion(path, GetOffset(path))
+        saveVersion = GetVersion(savePath)
 
         Select Case saveVersion
             Case Versions.DP
@@ -413,7 +392,7 @@ Public Class Form1
 
             Case Versions.Platinum
                 rb_Plat_sav.Checked() = True
-                position = OffsetsSign.PLATINUM
+                position = OffsetsSign.Platinum
                 offsetSavCnt = OffsetsSavCnt.Platinum
                 blockSize = BlockSizes.Platinum
                 offsetChkSumFooter = ChkSumFooterOffsets.DP_PT
@@ -444,8 +423,8 @@ Public Class Form1
 
         saveLoaded = True
 
-        Label4.Text = path
-        Label4.Font = New Font(Label4.Font, FontStyle.Regular)
+        lbl_FilePath.Text = savePath
+        lbl_FilePath.Font = New Font(lbl_FilePath.Font, FontStyle.Regular)
 
         initialOffset = GetOffset(filePath)
 
@@ -459,16 +438,16 @@ Public Class Form1
               gr As Graphics = Graphics.FromImage(bmp)
 
             If sav256ko Then
-                offsetBlock = BlockOffsets.BLOCK_1
-                lbl_Bloc_Courant.Text = ""
-                lbl_Taille.Text = "Taille : 256 ko"
+                blockOffset = BlockOffsets.Block_1
+                lbl_CurrentBlock.Text = ""
+                lbl_Size.Text = "Taille : 256 ko"
             Else
                 Dim offsetBlock2 As UInteger
 
                 If saveIsBW Then
-                    offsetBlock2 = BlockOffsets.BLOCK_2_BW
+                    offsetBlock2 = BlockOffsets.Block_2_BW
                 Else
-                    offsetBlock2 = BlockOffsets.BLOCK_2
+                    offsetBlock2 = BlockOffsets.Block_2
                 End If
 
                 sav.BaseStream.Seek(initialOffset + offsetSavCnt, SeekOrigin.Begin)
@@ -478,17 +457,17 @@ Public Class Form1
                 Dim compteurSauv2 As Integer = sav.ReadInt32()
 
                 If compteurSauv1 >= compteurSauv2 Then
-                    offsetBlock = BlockOffsets.BLOCK_1
-                    lbl_Bloc_Courant.Text = "Bloc courant : 1"
+                    blockOffset = BlockOffsets.Block_1
+                    lbl_CurrentBlock.Text = "Bloc courant : 1"
                 Else
-                    offsetBlock = offsetBlock2
-                    lbl_Bloc_Courant.Text = "Bloc courant : 2"
+                    blockOffset = offsetBlock2
+                    lbl_CurrentBlock.Text = "Bloc courant : 2"
                 End If
 
-                lbl_Taille.Text = "Taille : 512 ko"
+                lbl_Size.Text = "Taille : 512 ko"
             End If
 
-            Dim corrupt As Boolean = False
+            Dim corrupted As Boolean = False
 
             If saveIsBW Then
                 '0x1C75A = ChkSum(0x1C100|0x658)
@@ -507,30 +486,24 @@ Public Class Form1
                 sav.BaseStream.Seek(initialOffset + bw_footer_chkSum_offset, SeekOrigin.Begin)
                 Dim bwFooterActualChkSum As UShort = sav.ReadUInt16()
 
-                corrupt = Not ((bwSignBlockChkSum = bwSignBlockActualChkSum) And _
-                              (bwSignBlockChkSum = bwFooterSignActualChkSum) And _
-                              (bwFooterChkSum = bwFooterActualChkSum))
+                corrupted = Not ((bwSignBlockChkSum = bwSignBlockActualChkSum) And _
+                                 (bwSignBlockChkSum = bwFooterSignActualChkSum) And _
+                                    (bwFooterChkSum = bwFooterActualChkSum))
 
-                'MsgBox("bwSignBlockChkSum : " & bwSignBlockChkSum.ToString("X4") & newLine & _
-                '       "bwSignBlockActualChkSum : " & bwSignBlockActualChkSum.ToString("X4") & newLine & _
-                '       "bwFooterSignActualChkSum : " & bwFooterSignActualChkSum.ToString("X4") & newLine & _
-                '       "bwFooterChkSum : " & bwFooterChkSum.ToString("X4") & newLine & _
-                '       "bwFooterActualChkSum : " & bwFooterActualChkSum.ToString("X4") & newLine)
-                'Application.Exit()
             Else
-                sav.BaseStream.Seek(initialOffset + offsetBlock, SeekOrigin.Begin)
+                sav.BaseStream.Seek(initialOffset + blockOffset, SeekOrigin.Begin)
                 Dim chkSum As UShort = GetCheckSum(sav.ReadBytes(blockSize))
                 sav.BaseStream.Seek(offsetChkSumFooter, SeekOrigin.Current)
 
-                corrupt = Not (chkSum = sav.ReadUInt16())
+                corrupted = Not (chkSum = sav.ReadUInt16())
             End If
 
-            If corrupt AndAlso (Not MsgBox("La sauvegarde est corrompue !" & newLine & "Voulez-vous la charger quand même ?", MsgBoxStyle.Exclamation Or MsgBoxStyle.YesNo, "Attention : Sauvegarde corrompue") = MsgBoxResult.Yes) Then
+            If corrupted AndAlso (Not MsgBox("La sauvegarde est corrompue !" & newLine & "Voulez-vous la charger quand même ?", MsgBoxStyle.Exclamation Or MsgBoxStyle.YesNo, "Attention : Sauvegarde corrompue") = MsgBoxResult.Yes) Then
                 reset()
                 Exit Sub
             End If
 
-            sav.BaseStream.Seek(initialOffset + offsetBlock + position, SeekOrigin.Begin)
+            sav.BaseStream.Seek(initialOffset + blockOffset + position, SeekOrigin.Begin)
 
             gr.Clear(Color.White)
             gr.Save()
@@ -573,7 +546,7 @@ Public Class Form1
                 Next pY
         Next cX, cY
 
-        Return lst.ToArray
+        Return lst.ToArray()
     End Function
 
     Friend Function GetCheckSum(ByVal data As Byte()) As UShort
@@ -583,7 +556,7 @@ Public Class Form1
             sum = (sum << 8) Xor SeedTable(CByte(data(i) Xor CByte(sum >> 8)))
         Next i
 
-        Return CUShort(sum)
+        Return sum
     End Function
 
     Private Sub saveImageAs()
@@ -631,14 +604,14 @@ Public Class Form1
         rb_HGSS_sav.Checked = False
         rb_BW_sav.Checked = False
         cb_NoGBA.Checked = False
-        lbl_Bloc_Courant.Text = "Bloc courant :"
-        lbl_Taille.Text = "Taille :"
+        lbl_CurrentBlock.Text = "Bloc courant :"
+        lbl_Size.Text = "Taille :"
 
         saveVersion = Versions.Unknown
         saveLoaded = False
-        path = ""
-        Label4.Text = "(aucun fichier chargé)"
-        Label4.Font = New Font(Label4.Font, FontStyle.Italic)
+        savePath = ""
+        lbl_FilePath.Text = "(aucun fichier chargé)"
+        lbl_FilePath.Font = New Font(lbl_FilePath.Font, FontStyle.Italic)
 
         PictureBox2.Image = Nothing
     End Sub
@@ -650,13 +623,9 @@ Public Class Form1
                                      {"B21118A0", "B2111880", "B2110DC0", "B21118C0", "B2111820", "B2111860", "B2112280"}, _
                                      {"B2000024", "B2000024", "B2000024", "B2000024", "B2000024", "B2000024", "B2000024"}}
 
-        'If ComboBox1.SelectedIndex >= 3 Then 'B/W
-        'pointer = ""
-        'Else 'D/P/Pt/HG/SS
-        pointer = pointers(ComboBox1.SelectedIndex(), ComboBox2.SelectedIndex()) & " 00000000" & newLine
-        'End If
+        pointer = pointers(cmb_Version.SelectedIndex(), cmb_Language.SelectedIndex()) & " 00000000" & newLine
 
-        Select Case ComboBox1.SelectedIndex()
+        Select Case cmb_Version.SelectedIndex()
             Case Versions.DP
                 addr1 = "E0005B70"
                 addr2 = "E0005E70"
@@ -675,15 +644,14 @@ Public Class Form1
                 addr2 = "E001CCBC"
 
             Case Else
-                ComboBox1.SelectedIndex = 1
+                cmb_Version.SelectedIndex = Versions.BW
                 Exit Sub
         End Select
     End Sub
 
-    Private Sub openImage(ByVal imagePath As String)
+    Private Sub openImage()
         Try
-            'On essaye de créer une nouvelle image à partir du chemin spécifié
-            bmp0 = New Bitmap(imagePath)
+            bmp0 = New Bitmap(imgPath) 'Essaye de créer une nouvelle image à partir du chemin spécifié
         Catch
             'Si une exception est levée, c'est que le fichier n'est pas une image valide, donc on affiche un message d'erreur
             MsgBox("Le fichier sélectionné n'est pas une image valide.", MsgBoxStyle.Critical, "Erreur : image invalide")
@@ -692,7 +660,6 @@ Public Class Form1
             TextBox1.Text = ""
             TextBox2.Text = ""
 
-            'Et on quitte la procédure
             Exit Sub
         End Try
 
@@ -707,45 +674,43 @@ Public Class Form1
             Exit Sub
         End If
 
-        'On efface les anciens codes au chargement de la nouvelle image
         TextBox1.Text = ""
         TextBox2.Text = ""
 
-        'On indique qu'il ne faut pas générer le code automatiquement pour l'instant
-        mustGen = False
+        mustGen = False 'Indique qu'il ne faut pas générer le code automatiquement pour l'instant
 
-        'On met à jour l'aperçu avec la nouvelle image
         PictureBox1.Image = New Bitmap(BMP2Mono(bmp0, TrackBar1.Value / TrackBar1.Maximum))
 
-        'On libère les ressources utilisées par les images
         bmp0.Dispose()
 
-        'On indique qu'une image a été chargée
-        imgLoaded = True
+        imgLoaded = True 'Indique qu'une image a été chargée
 
-        'On sélectionne le bouton "Générer"
-        b_Generer.Select()
+        b_GenerateAR.Select() 'Sélectionne le bouton "Générer"
     End Sub
 #End Region
 
 
 #Region "Events"
-    'Au lancement du programme
+
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'Définit le répertoire initial dans la boîte de dialogue "Ouvrir" comme le dossier "Mes Images" par défaut
         OpenFileDialog1.InitialDirectory = My.Computer.FileSystem.SpecialDirectories.MyPictures
         Me.Text = "Pokémon Signature Editor v" & VersionProg() & " - by M@T"
 
-        ComboBox1.SelectedIndex = Versions.Platinum
-        ComboBox2.SelectedIndex = Langs.Fra
+        cmb_Version.SelectedIndex = Versions.BW
+        cmb_Language.SelectedIndex = Langs.Fra
 
         PictureBox1.AllowDrop = True
 
         formLoaded = True
     End Sub
 
-    'Quand le bouton "Générer" est cliqué
-    Private Sub b_Generer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Generer.Click
+    Private Sub Form1_Activated(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Activated
+        'Workaround for a bug in Windows Vista where the animation stops if the form loses focus and doesn't restart correctly 
+        PictureBox3.Invalidate()
+    End Sub
+
+    Private Sub b_GenerateAR_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_GenerateAR.Click
         If Not imgLoaded Then
             'Si l'image n'est pas chargée, on affiche un message d'erreur puis on quitte
             MsgBox("Veuillez sélectionner une image !", MsgBoxStyle.Critical, "Erreur : Aucune image sélectionnée !")
@@ -753,14 +718,12 @@ Public Class Form1
             Exit Sub
         End If
 
-        'On génère le code
-        generateARCode(PictureBox1.Image, CheckBox1.Checked())
+        generateARCode(PictureBox1.Image, cb_SplitCode.Checked()) 'Génère le code
 
         mustGen = True 'Indique que le code devra se mettre à jour automatiquement
     End Sub
 
-    'Quand le premier bouton "Copier" est cliqué
-    Private Sub b_Copier1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Copier1.Click
+    Private Sub b_Copy1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Copy1.Click
         If TextBox1.Text = "" Then
             'Si il n'y a pas de code généré, alors on affiche une erreur
             MsgBox("Veuillez d'abord générer un code.", MsgBoxStyle.Exclamation, "Attention : aucun code à copier")
@@ -770,8 +733,7 @@ Public Class Form1
         End If
     End Sub
 
-    'Quand le second bouton "Copier" est cliqué
-    Private Sub b_Copier2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Copier2.Click
+    Private Sub b_Copy2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Copy2.Click
         If TextBox2.Text = "" Then
             'Si il n'y a pas de code généré, alors on affiche une erreur
             MsgBox("Veuillez d'abord générer un code.", MsgBoxStyle.Exclamation, "Attention : aucun code à copier")
@@ -781,66 +743,53 @@ Public Class Form1
         End If
     End Sub
 
-    'Quand le bouton "Ouvrir une image" est cliqué
-    Private Sub b_Ouvrir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Ouvrir.Click
+    Private Sub b_OpenImage_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_OpenImage.Click
         'Si l'utilisateur annule, on quitte
         If Not OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
             Exit Sub
         End If
 
-        openImage(OpenFileDialog1.FileName)
+        imgPath = OpenFileDialog1.FileName()
+        openImage()
     End Sub
 
-    'Quand la valeur de la barre de sensibilité change
     Private Sub TrackBar1_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TrackBar1.ValueChanged
-        Label1.Text = "Sensibilité : " & CDbl(TrackBar1.Value / TrackBar1.Maximum).ToString
+        lbl_Sensib.Text = "Sensibilité : " & CDbl(TrackBar1.Value / TrackBar1.Maximum).ToString
 
         If imgLoaded Then
-            'Si une image a été chargée
-            bmp0 = New Bitmap(OpenFileDialog1.FileName)
+            bmp0 = New Bitmap(imgPath)
 
-            'On met à jour l'aperçu
-            PictureBox1.Image = New Bitmap(BMP2Mono(bmp0, TrackBar1.Value / TrackBar1.Maximum))
+            PictureBox1.Image = New Bitmap(BMP2Mono(bmp0, TrackBar1.Value / TrackBar1.Maximum)) 'Met à jour l'aperçu
 
-            'On rafraîchit l'affichage les contrôles
             PictureBox1.Refresh()
-            Label1.Refresh()
+            lbl_Sensib.Refresh()
 
-            'On libère les ressources utilisées par les images
             bmp0.Dispose()
         End If
     End Sub
 
-    'Quand l'état de CheckBox "Couper le code en deux" change
-    Private Sub CheckBox1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox1.CheckedChanged
-        'On régénère le code en vérifiant si les paramètres le permettent
-        genVerif()
+    Private Sub cb_SplitCode_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cb_SplitCode.CheckedChanged
+        genVerif() 'Régénère le code en vérifiant si les paramètres le permettent
 
-        'On adapte la zone pour le second code en fonction de l'état de cette CheckBox
-        Label3.Enabled() = CheckBox1.Checked()
-        TextBox2.Enabled() = CheckBox1.Checked()
-        b_Copier2.Enabled() = CheckBox1.Checked()
+        'Adapte la zone pour le second code en fonction de l'état de cette CheckBox
+        lbl_2ndPart.Enabled() = cb_SplitCode.Checked()
+        TextBox2.Enabled() = cb_SplitCode.Checked()
+        b_Copy2.Enabled() = cb_SplitCode.Checked()
     End Sub
 
-    'Quand le bouton "Activateurs" est cliqué
     Private Sub b_Activ_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Activ.Click
-        'On montre la boîte de dialogue pour définir les activateurs
         Form2.ShowDialog()
     End Sub
 
-    'Quand le bouton "À propos" est cliqué
     Private Sub b_About_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_About.Click
-        'On affiche les crédits
         MsgBox("Pokémon Signature Editor v" & VersionProg() & newLine & _
-               "pour Pokémon version Diamant, Perle, Platine, HeartGold, SoulSilver, Black & White" & newLine & newLine & _
-               "par M@T aka. lVl477l-l13Ll" & newLine & newLine & _
+               "pour Pokémon versions Diamant, Perle, Platine, HeartGold, SoulSilver, Noire & Blanche" & newLine & newLine & _
+               "Par M@T." & newLine & newLine & _
                "Source libre, si vous la modifiez merci de me prévenir et de laisser les crédits ! ;)" & newLine & newLine & _
                "http://www.pokemontrash.com/", MsgBoxStyle.Information, "À propos...")
     End Sub
 
-    'Quand le bouton de prévisualisation est cliqué
-    Private Sub b_Previs_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Previs.Click
-        'On affiche la boîte de dialogue de prévisualisation
+    Private Sub b_Preview_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Preview.Click
         Form3.ShowDialog()
     End Sub
 
@@ -851,17 +800,17 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub b_OuvrirSav_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_OuvrirSav.Click
+    Private Sub b_OpenSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_OpenSave.Click
         If Not OpenFileDialog2.ShowDialog() = Windows.Forms.DialogResult.OK Then
             Exit Sub
         End If
 
-        path = OpenFileDialog2.FileName
+        savePath = OpenFileDialog2.FileName
 
-        loadSave(path)
+        loadSave(savePath)
     End Sub
 
-    Private Sub b_Import_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Import.Click
+    Private Sub b_ImportImage_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_ImportImage.Click
         If Not imgLoaded Then
             MsgBox("Il faut d'abord ouvrir une image !", MsgBoxStyle.Critical, "Erreur : aucune image chargée")
             Exit Sub
@@ -875,13 +824,13 @@ Public Class Form1
         PictureBox2.Image = New Bitmap(PictureBox1.Image)
     End Sub
 
-    Private Sub b_Sauver_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Sauver.Click
+    Private Sub b_SaveAs_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_SaveAs.Click
         If Not saveLoaded Then
             MsgBox("Il faut d'abord charger une sauvegarde !", MsgBoxStyle.Critical, "Erreur : aucune sauvegarde chargée")
             Exit Sub
         End If
 
-        Dim saveFileInfo As New FileInfo(path)
+        Dim saveFileInfo As New FileInfo(savePath)
 
         SaveFileDialog2.InitialDirectory = saveFileInfo.DirectoryName()
         SaveFileDialog2.FileName = saveFileInfo.Name()
@@ -893,7 +842,7 @@ Public Class Form1
         Dim dest As String = SaveFileDialog2.FileName()
         Dim pathOut As String = dest & ".tmp"
 
-        Using savIn As New BinaryReader(New FileStream(path, FileMode.Open, FileAccess.Read)), _
+        Using savIn As New BinaryReader(New FileStream(savePath, FileMode.Open, FileAccess.Read)), _
               savOut As New BinaryWriter(New FileStream(pathOut, FileMode.Create, FileAccess.ReadWrite)), _
               tmpBR As New BinaryReader(savOut.BaseStream)
 
@@ -908,11 +857,7 @@ Public Class Form1
 
             Dim signBytes As Byte() = Image2SignBytes(PictureBox2.Image)
 
-            Marshal.Copy(signBytes, 0, New IntPtr(gh.AddrOfPinnedObject().ToInt32() + offsetBlock + position), &H600)
-
-            'If saveIsBW AndAlso offsetBlock = BlockOffsets.BLOCK_1 Then
-            'Marshal.Copy(signBytes, 0, New IntPtr(gh.AddrOfPinnedObject().ToInt32() + BlockOffsets.Block_2_BW + position), &H600)
-            'End If
+            Marshal.Copy(signBytes, 0, New IntPtr(gh.AddrOfPinnedObject().ToInt32() + blockOffset + position), &H600)
 
             gh.Free()
 
@@ -935,7 +880,7 @@ Public Class Form1
                 tmpBR.BaseStream.Seek(initialOffset + bw_footer_chkSum_offset, SeekOrigin.Begin)
                 savOut.Write(bwFooterChkSum)
             Else
-                tmpBR.BaseStream.Seek(initialOffset + offsetBlock, SeekOrigin.Begin)
+                tmpBR.BaseStream.Seek(initialOffset + blockOffset, SeekOrigin.Begin)
 
                 Dim chkSum As UShort = GetCheckSum(tmpBR.ReadBytes(blockSize))
                 tmpBR.BaseStream.Seek(offsetChkSumFooter, SeekOrigin.Current)
@@ -957,20 +902,20 @@ Public Class Form1
         MsgBox("La sauvegarde a bien été modifiée !", MsgBoxStyle.Information, "Enregistrement effectué")
     End Sub
 
-    Private Sub b_Recharger_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Recharger.Click
+    Private Sub b_ReloadSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_ReloadSave.Click
         If Not saveLoaded Then
             MsgBox("Il faut d'abord charger une sauvegarde !", MsgBoxStyle.Critical, "Erreur : aucune sauvegarde chargée")
             Exit Sub
         End If
 
-        loadSave(path)
+        loadSave(savePath)
     End Sub
 
-    Private Sub EnregistrerLimageSousToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles EnregistrerLimageSousToolStripMenuItem.Click
+    Private Sub tsmi_SaveImageAs_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_SaveImageAs.Click
         saveImageAs()
     End Sub
 
-    Private Sub ChargerLimageDansLaPartieDuHautPourEnFaireUnCodeARToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChargerLimageDansLaPartieDuHautPourEnFaireUnCodeARToolStripMenuItem.Click
+    Private Sub tsmi_LoadImageAbove_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmi_LoadImageAbove.Click
         If Not saveLoaded Then
             MsgBox("Il faut d'abord charger une sauvegarde !", MsgBoxStyle.Critical, "Erreur : aucune sauvegarde chargée")
 
@@ -985,7 +930,7 @@ Public Class Form1
         imgLoaded = True
     End Sub
 
-    Private Sub ComboBox_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles ComboBox1.SelectedIndexChanged, ComboBox2.SelectedIndexChanged
+    Private Sub ComboBox_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles cmb_Version.SelectedIndexChanged, cmb_Language.SelectedIndexChanged
         If formLoaded Then
             'On régénère le code en vérifiant si les paramètres le permettent
             genVerif()
@@ -994,7 +939,8 @@ Public Class Form1
 
     Private Sub PictureBox1_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles PictureBox1.DragDrop
         Dim fileNames As String() = DirectCast(e.Data.GetData(DataFormats.FileDrop), String())
-        openImage(fileNames(0))
+        imgPath = fileNames(0)
+        openImage()
     End Sub
 
     Private Sub PictureBox1_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles PictureBox1.DragEnter
@@ -1007,8 +953,8 @@ Public Class Form1
 
     Private Sub TabPage2_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles TabPage2.DragDrop
         Dim fileNames As String() = DirectCast(e.Data.GetData(DataFormats.FileDrop), String())
-        path = fileNames(0)
-        loadSave(path)
+        savePath = fileNames(0)
+        loadSave(savePath)
     End Sub
 
     Private Sub TabPage2_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles TabPage2.DragEnter
