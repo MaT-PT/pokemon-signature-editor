@@ -757,7 +757,13 @@ Public Class Form1
         lbl_Sensib.Text = "Sensibilité : " & CDbl(TrackBar1.Value / TrackBar1.Maximum).ToString
 
         If imgLoaded Then
-            bmp0 = New Bitmap(imgPath)
+            If imgPath = "" Then
+                If PictureBox2.Image Is Nothing Then Exit Sub
+
+                bmp0 = New Bitmap(PictureBox2.Image)
+            Else
+                bmp0 = New Bitmap(imgPath)
+            End If
 
             PictureBox1.Image = New Bitmap(BMP2Mono(bmp0, TrackBar1.Value / TrackBar1.Maximum)) 'Met à jour l'aperçu
 

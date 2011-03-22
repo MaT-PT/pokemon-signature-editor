@@ -158,6 +158,20 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property TC_Black_5s() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_Black_5s", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_Black_5s_half() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_Black_5s_half", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend ReadOnly Property TC_DPPt_0s() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("TC_DPPt_0s", resourceCulture)
@@ -308,6 +322,20 @@ Namespace My.Resources
         Friend ReadOnly Property TC_White_4s_half() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("TC_White_4s_half", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_White_5s() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_White_5s", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property TC_White_5s_half() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("TC_White_5s_half", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
