@@ -160,6 +160,12 @@
   <data name="TC_Black_4s_half" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TC_Black_4s_half.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TC_Black_5s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TC_Black_5s.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TC_Black_5s_half" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TC_Black_5s_half.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="TC_DPPt_0s" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TC_DPPt_0s.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -225,6 +231,12 @@
   </data>
   <data name="TC_White_4s_half" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TC_White_4s_half.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TC_White_5s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TC_White_5s.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TC_White_5s_half" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TC_White_5s_half.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Zuruggu_Anim" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\zuruggu_anim.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

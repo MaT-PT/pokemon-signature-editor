@@ -90,10 +90,10 @@
                             bmpTCPreview = My.Resources.TC_Black_4s_half
 
                         Case 5
-                            bmpTCPreview = My.Resources.TC_Black_4s_half
+                            bmpTCPreview = My.Resources.TC_Black_5s_half
 
                         Case Else
-                            bmpTCPreview = My.Resources.TC_Black_4s_half
+                            bmpTCPreview = My.Resources.TC_Black_5s_half
                     End Select
                 Else
                     Select Case nbStars
@@ -113,10 +113,10 @@
                             bmpTCPreview = My.Resources.TC_White_4s_half
 
                         Case 5
-                            bmpTCPreview = My.Resources.TC_White_4s_half
+                            bmpTCPreview = My.Resources.TC_White_5s_half
 
                         Case Else
-                            bmpTCPreview = My.Resources.TC_White_4s_half
+                            bmpTCPreview = My.Resources.TC_White_5s_half
                     End Select
                 End If
 
@@ -140,10 +140,10 @@
                             bmpTCPreview = My.Resources.TC_Black_4s
 
                         Case 5
-                            bmpTCPreview = My.Resources.TC_Black_4s
+                            bmpTCPreview = My.Resources.TC_Black_5s
 
                         Case Else
-                            bmpTCPreview = My.Resources.TC_Black_4s
+                            bmpTCPreview = My.Resources.TC_Black_5s
                     End Select
                 Else
                     Select Case nbStars
@@ -163,10 +163,10 @@
                             bmpTCPreview = My.Resources.TC_White_4s
 
                         Case 5
-                            bmpTCPreview = My.Resources.TC_White_4s
+                            bmpTCPreview = My.Resources.TC_White_5s
 
                         Case Else
-                            bmpTCPreview = My.Resources.TC_White_4s
+                            bmpTCPreview = My.Resources.TC_White_5s
                     End Select
                 End If
 
