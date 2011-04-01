@@ -23,42 +23,42 @@ Partial Class Form2
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.gb_ActivatorList = New System.Windows.Forms.GroupBox
         Me.cb_Select = New System.Windows.Forms.CheckBox
         Me.cb_Start = New System.Windows.Forms.CheckBox
         Me.cb_R = New System.Windows.Forms.CheckBox
         Me.cb_L = New System.Windows.Forms.CheckBox
         Me.cb_B = New System.Windows.Forms.CheckBox
-        Me.cb_Bas = New System.Windows.Forms.CheckBox
-        Me.cb_Droite = New System.Windows.Forms.CheckBox
+        Me.cb_Down = New System.Windows.Forms.CheckBox
+        Me.cb_Right = New System.Windows.Forms.CheckBox
         Me.cb_A = New System.Windows.Forms.CheckBox
-        Me.cb_Gauche = New System.Windows.Forms.CheckBox
-        Me.cb_Haut = New System.Windows.Forms.CheckBox
+        Me.cb_Left = New System.Windows.Forms.CheckBox
+        Me.cb_Up = New System.Windows.Forms.CheckBox
         Me.cb_Y = New System.Windows.Forms.CheckBox
         Me.cb_X = New System.Windows.Forms.CheckBox
-        Me.b_ToutDecoch = New System.Windows.Forms.Button
-        Me.b_Valider = New System.Windows.Forms.Button
-        Me.b_Retablir = New System.Windows.Forms.Button
-        Me.GroupBox1.SuspendLayout()
+        Me.b_UncheckAll = New System.Windows.Forms.Button
+        Me.b_Validate = New System.Windows.Forms.Button
+        Me.b_Reset = New System.Windows.Forms.Button
+        Me.gb_ActivatorList.SuspendLayout()
         Me.SuspendLayout()
         '
-        'GroupBox1
+        'gb_ActivatorList
         '
-        Me.GroupBox1.Controls.Add(Me.cb_Select)
-        Me.GroupBox1.Controls.Add(Me.cb_Start)
-        Me.GroupBox1.Controls.Add(Me.cb_R)
-        Me.GroupBox1.Controls.Add(Me.cb_L)
-        Me.GroupBox1.Controls.Add(Me.cb_B)
-        Me.GroupBox1.Controls.Add(Me.cb_Bas)
-        Me.GroupBox1.Controls.Add(Me.cb_Droite)
-        Me.GroupBox1.Controls.Add(Me.cb_A)
-        Me.GroupBox1.Controls.Add(Me.cb_Gauche)
-        Me.GroupBox1.Controls.Add(Me.cb_Haut)
-        Me.GroupBox1.Controls.Add(Me.cb_Y)
-        Me.GroupBox1.Controls.Add(Me.cb_X)
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.TabStop = False
+        Me.gb_ActivatorList.Controls.Add(Me.cb_Select)
+        Me.gb_ActivatorList.Controls.Add(Me.cb_Start)
+        Me.gb_ActivatorList.Controls.Add(Me.cb_R)
+        Me.gb_ActivatorList.Controls.Add(Me.cb_L)
+        Me.gb_ActivatorList.Controls.Add(Me.cb_B)
+        Me.gb_ActivatorList.Controls.Add(Me.cb_Down)
+        Me.gb_ActivatorList.Controls.Add(Me.cb_Right)
+        Me.gb_ActivatorList.Controls.Add(Me.cb_A)
+        Me.gb_ActivatorList.Controls.Add(Me.cb_Left)
+        Me.gb_ActivatorList.Controls.Add(Me.cb_Up)
+        Me.gb_ActivatorList.Controls.Add(Me.cb_Y)
+        Me.gb_ActivatorList.Controls.Add(Me.cb_X)
+        resources.ApplyResources(Me.gb_ActivatorList, "gb_ActivatorList")
+        Me.gb_ActivatorList.Name = "gb_ActivatorList"
+        Me.gb_ActivatorList.TabStop = False
         '
         'cb_Select
         '
@@ -94,17 +94,17 @@ Partial Class Form2
         Me.cb_B.Name = "cb_B"
         Me.cb_B.UseVisualStyleBackColor = True
         '
-        'cb_Bas
+        'cb_Down
         '
-        resources.ApplyResources(Me.cb_Bas, "cb_Bas")
-        Me.cb_Bas.Name = "cb_Bas"
-        Me.cb_Bas.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.cb_Down, "cb_Down")
+        Me.cb_Down.Name = "cb_Down"
+        Me.cb_Down.UseVisualStyleBackColor = True
         '
-        'cb_Droite
+        'cb_Right
         '
-        resources.ApplyResources(Me.cb_Droite, "cb_Droite")
-        Me.cb_Droite.Name = "cb_Droite"
-        Me.cb_Droite.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.cb_Right, "cb_Right")
+        Me.cb_Right.Name = "cb_Right"
+        Me.cb_Right.UseVisualStyleBackColor = True
         '
         'cb_A
         '
@@ -112,17 +112,17 @@ Partial Class Form2
         Me.cb_A.Name = "cb_A"
         Me.cb_A.UseVisualStyleBackColor = True
         '
-        'cb_Gauche
+        'cb_Left
         '
-        resources.ApplyResources(Me.cb_Gauche, "cb_Gauche")
-        Me.cb_Gauche.Name = "cb_Gauche"
-        Me.cb_Gauche.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.cb_Left, "cb_Left")
+        Me.cb_Left.Name = "cb_Left"
+        Me.cb_Left.UseVisualStyleBackColor = True
         '
-        'cb_Haut
+        'cb_Up
         '
-        resources.ApplyResources(Me.cb_Haut, "cb_Haut")
-        Me.cb_Haut.Name = "cb_Haut"
-        Me.cb_Haut.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.cb_Up, "cb_Up")
+        Me.cb_Up.Name = "cb_Up"
+        Me.cb_Up.UseVisualStyleBackColor = True
         '
         'cb_Y
         '
@@ -136,33 +136,33 @@ Partial Class Form2
         Me.cb_X.Name = "cb_X"
         Me.cb_X.UseVisualStyleBackColor = True
         '
-        'b_ToutDecoch
+        'b_UncheckAll
         '
-        resources.ApplyResources(Me.b_ToutDecoch, "b_ToutDecoch")
-        Me.b_ToutDecoch.Name = "b_ToutDecoch"
-        Me.b_ToutDecoch.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.b_UncheckAll, "b_UncheckAll")
+        Me.b_UncheckAll.Name = "b_UncheckAll"
+        Me.b_UncheckAll.UseVisualStyleBackColor = True
         '
-        'b_Valider
+        'b_Validate
         '
-        resources.ApplyResources(Me.b_Valider, "b_Valider")
-        Me.b_Valider.Name = "b_Valider"
-        Me.b_Valider.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.b_Validate, "b_Validate")
+        Me.b_Validate.Name = "b_Validate"
+        Me.b_Validate.UseVisualStyleBackColor = True
         '
-        'b_Retablir
+        'b_Reset
         '
-        resources.ApplyResources(Me.b_Retablir, "b_Retablir")
-        Me.b_Retablir.Name = "b_Retablir"
-        Me.b_Retablir.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.b_Reset, "b_Reset")
+        Me.b_Reset.Name = "b_Reset"
+        Me.b_Reset.UseVisualStyleBackColor = True
         '
         'Form2
         '
-        Me.AcceptButton = Me.b_Valider
+        Me.AcceptButton = Me.b_Validate
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.b_Retablir)
-        Me.Controls.Add(Me.b_Valider)
-        Me.Controls.Add(Me.b_ToutDecoch)
-        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.b_Reset)
+        Me.Controls.Add(Me.b_Validate)
+        Me.Controls.Add(Me.b_UncheckAll)
+        Me.Controls.Add(Me.gb_ActivatorList)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.KeyPreview = True
         Me.MaximizeBox = False
@@ -170,25 +170,25 @@ Partial Class Form2
         Me.Name = "Form2"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
+        Me.gb_ActivatorList.ResumeLayout(False)
+        Me.gb_ActivatorList.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents gb_ActivatorList As System.Windows.Forms.GroupBox
     Friend WithEvents cb_Select As System.Windows.Forms.CheckBox
     Friend WithEvents cb_Start As System.Windows.Forms.CheckBox
     Friend WithEvents cb_R As System.Windows.Forms.CheckBox
     Friend WithEvents cb_L As System.Windows.Forms.CheckBox
     Friend WithEvents cb_B As System.Windows.Forms.CheckBox
-    Friend WithEvents cb_Bas As System.Windows.Forms.CheckBox
-    Friend WithEvents cb_Droite As System.Windows.Forms.CheckBox
+    Friend WithEvents cb_Down As System.Windows.Forms.CheckBox
+    Friend WithEvents cb_Right As System.Windows.Forms.CheckBox
     Friend WithEvents cb_A As System.Windows.Forms.CheckBox
-    Friend WithEvents cb_Gauche As System.Windows.Forms.CheckBox
-    Friend WithEvents cb_Haut As System.Windows.Forms.CheckBox
+    Friend WithEvents cb_Left As System.Windows.Forms.CheckBox
+    Friend WithEvents cb_Up As System.Windows.Forms.CheckBox
     Friend WithEvents cb_Y As System.Windows.Forms.CheckBox
     Friend WithEvents cb_X As System.Windows.Forms.CheckBox
-    Friend WithEvents b_ToutDecoch As System.Windows.Forms.Button
-    Friend WithEvents b_Valider As System.Windows.Forms.Button
-    Friend WithEvents b_Retablir As System.Windows.Forms.Button
+    Friend WithEvents b_UncheckAll As System.Windows.Forms.Button
+    Friend WithEvents b_Validate As System.Windows.Forms.Button
+    Friend WithEvents b_Reset As System.Windows.Forms.Button
 End Class

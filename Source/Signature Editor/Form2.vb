@@ -8,10 +8,9 @@
 
     ''Déclaration des variables :
 
-    Dim newLine As String = Environment.NewLine()
 
     'Énumérateur pour les différentes valeurs des touches
-    Private Enum NDSKeys
+    Private Enum NDSKeys As UShort
         NONE = &HFFFF
         UP = &HFFBF
         DOWN = &HFF7F
@@ -28,28 +27,28 @@
     End Enum
 
     'Activateur par défaut
-    Dim triggerCode As Integer = NDSKeys.L And NDSKeys.R
+    Private triggerCode As UShort = NDSKeys.L And NDSKeys.R
 
     'Liste de l'état des CheckBox
-    Dim controlsState As New List(Of Boolean)
+    Private controlsState As New List(Of Boolean)
 
     'Renvoie la partie du code correspondant à l'activateur en fonction des touches sélectionnées
     Private Function TriggersCode() As String
         TriggersCode = ""
 
         If cb_A.Checked OrElse cb_B.Checked OrElse _
-           cb_Haut.Checked OrElse cb_Bas.Checked OrElse _
-           cb_Droite.Checked OrElse cb_Gauche.Checked OrElse _
+           cb_Up.Checked OrElse cb_Down.Checked OrElse _
+           cb_Right.Checked OrElse cb_Left.Checked OrElse _
            cb_L.Checked OrElse cb_R.Checked OrElse _
            cb_Select.Checked OrElse cb_Start.Checked Then
 
             'Si une touche autre que X ou Y est sélectionnée (touches GBA),
             'on calcule le code hexa correspondant à l'ensemble des touches sélectionnées grâce à l'opération binaire "And".
             triggerCode = NDSKeys.NONE
-            triggerCode = triggerCode And If(cb_Haut.Checked, NDSKeys.UP, NDSKeys.NONE)
-            triggerCode = triggerCode And If(cb_Bas.Checked, NDSKeys.DOWN, NDSKeys.NONE)
-            triggerCode = triggerCode And If(cb_Gauche.Checked, NDSKeys.LEFT, NDSKeys.NONE)
-            triggerCode = triggerCode And If(cb_Droite.Checked, NDSKeys.RIGHT, NDSKeys.NONE)
+            triggerCode = triggerCode And If(cb_Up.Checked, NDSKeys.UP, NDSKeys.NONE)
+            triggerCode = triggerCode And If(cb_Down.Checked, NDSKeys.DOWN, NDSKeys.NONE)
+            triggerCode = triggerCode And If(cb_Left.Checked, NDSKeys.LEFT, NDSKeys.NONE)
+            triggerCode = triggerCode And If(cb_Right.Checked, NDSKeys.RIGHT, NDSKeys.NONE)
             triggerCode = triggerCode And If(cb_A.Checked, NDSKeys.A, NDSKeys.NONE)
             triggerCode = triggerCode And If(cb_B.Checked, NDSKeys.B, NDSKeys.NONE)
             triggerCode = triggerCode And If(cb_L.Checked, NDSKeys.L, NDSKeys.NONE)
@@ -57,7 +56,7 @@
             triggerCode = triggerCode And If(cb_Start.Checked, NDSKeys.START, NDSKeys.NONE)
             triggerCode = triggerCode And If(cb_Select.Checked, NDSKeys.SELEC, NDSKeys.NONE)
 
-            TriggersCode = "94000130 " & triggerCode.ToString("X4") & "0000" & newLine
+            TriggersCode = "94000130 " & triggerCode.ToString("X4") & "0000" & Form1.newLine
         End If
 
         If cb_X.Checked OrElse cb_Y.Checked Then
@@ -65,7 +64,7 @@
             TriggersCode &= "94000136 " & _
                             CInt((If(cb_X.Checked, NDSKeys.X, NDSKeys.NONE) And _
                                   If(cb_Y.Checked, NDSKeys.Y, NDSKeys.NONE))).ToString("X4") & _
-                            "0000" & newLine
+                            "0000" & Form1.newLine
         End If
     End Function
 
@@ -73,7 +72,7 @@
     Private Function ReadTriggers() As String
         ReadTriggers = ""
 
-        For Each cb As CheckBox In GroupBox1.Controls
+        For Each cb As CheckBox In gb_ActivatorList.Controls
             If cb.Checked Then
                 'Si la CheckBox est cochée, on ajoute son nom au début de la chaîne résultat
                 ReadTriggers = cb.Text & "+" & ReadTriggers
@@ -92,44 +91,44 @@
     Private Sub resetTriggers()
         Dim n As Integer = 0
 
-        For Each cb As CheckBox In GroupBox1.Controls
+        For Each cb As CheckBox In gb_ActivatorList.Controls
             cb.Checked = controlsState(n)
             n += 1
         Next
     End Sub
 
     'Vérifie que l'on n'a pas les touches Gauche et Droite de sélectionnées en même temps
-    Private Sub cb_Droite_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cb_Droite.CheckedChanged
-        If cb_Gauche.Checked And cb_Droite.Checked Then cb_Gauche.Checked = False
+    Private Sub cb_Droite_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cb_Right.CheckedChanged
+        If cb_Left.Checked And cb_Right.Checked Then cb_Left.Checked = False
     End Sub
 
-    Private Sub cb_Gauche_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cb_Gauche.CheckedChanged
-        If cb_Gauche.Checked And cb_Droite.Checked Then cb_Droite.Checked = False
+    Private Sub cb_Gauche_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cb_Left.CheckedChanged
+        If cb_Left.Checked And cb_Right.Checked Then cb_Right.Checked = False
     End Sub
 
     'Vérifie que l'on n'a pas les touches Haut et Bas de sélectionnées en même temps
-    Private Sub cb_Haut_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cb_Haut.CheckedChanged
-        If cb_Haut.Checked And cb_Bas.Checked Then cb_Bas.Checked = False
+    Private Sub cb_Haut_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cb_Up.CheckedChanged
+        If cb_Up.Checked And cb_Down.Checked Then cb_Down.Checked = False
     End Sub
 
-    Private Sub cb_Bas_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cb_Bas.CheckedChanged
-        If cb_Haut.Checked And cb_Bas.Checked Then cb_Haut.Checked = False
+    Private Sub cb_Bas_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cb_Down.CheckedChanged
+        If cb_Up.Checked And cb_Down.Checked Then cb_Up.Checked = False
     End Sub
 
     'Décoche toutes les CheckBox
-    Private Sub b_ToutDecoch_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_ToutDecoch.Click
-        For Each cb As CheckBox In GroupBox1.Controls
+    Private Sub b_ToutDecoch_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_UncheckAll.Click
+        For Each cb As CheckBox In gb_ActivatorList.Controls
             cb.Checked = False
         Next cb
     End Sub
 
     'Quand le bouton "Valider" est cliqué
-    Private Sub b_Valider_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Valider.Click
+    Private Sub b_Valider_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Validate.Click
         'Réinitialise la liste de l'état des CheckBox
         controlsState.Clear()
 
         'Parcourt les CheckBox et ajoute leur état à la liste controlsState
-        For Each cb As CheckBox In GroupBox1.Controls
+        For Each cb As CheckBox In gb_ActivatorList.Controls
             controlsState.Add(cb.Checked)
         Next
 
@@ -139,7 +138,7 @@
         Form1.genVerif()
 
         'Met à jour l'info-bulle indiquant les touches à presser
-        Form1.ToolTip1.SetToolTip(Form1.b_Activ, ReadTriggers)
+        Form1.tt_Activators.SetToolTip(Form1.b_Activators, ReadTriggers)
 
         Me.Close()
     End Sub
@@ -158,18 +157,18 @@
 
     Private Sub Form2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         'Sélectionne le bouton de validation
-        b_Valider.Select()
+        b_Validate.Select()
 
         'Réinitialise la liste de l'état des CheckBox
         controlsState.Clear()
 
         'Parcourt les CheckBox et ajoute leur état à la liste etatControles
-        For Each cb As CheckBox In GroupBox1.Controls
+        For Each cb As CheckBox In gb_ActivatorList.Controls
             controlsState.Add(cb.Checked)
         Next
     End Sub
 
-    Private Sub b_Retablir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Retablir.Click
+    Private Sub b_Retablir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Reset.Click
         'Rétablit l'état des contrôles comme ils étaient à l'affichage du formulaire
         resetTriggers()
     End Sub

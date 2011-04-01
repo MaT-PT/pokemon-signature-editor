@@ -24,18 +24,18 @@ Partial Class Form3
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
         Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown
-        Me.Label1 = New System.Windows.Forms.Label
+        Me.lbl_StarNumber = New System.Windows.Forms.Label
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.Label2 = New System.Windows.Forms.Label
+        Me.lbl_Animate = New System.Windows.Forms.Label
         Me.PictureBox2 = New System.Windows.Forms.PictureBox
         Me.PictureBox1 = New System.Windows.Forms.PictureBox
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
+        Me.gb_BWPreviewVersion = New System.Windows.Forms.GroupBox
         Me.rb_PreviewWhite = New System.Windows.Forms.RadioButton
         Me.rb_PreviewBlack = New System.Windows.Forms.RadioButton
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox1.SuspendLayout()
+        Me.gb_BWPreviewVersion.SuspendLayout()
         Me.SuspendLayout()
         '
         'NumericUpDown1
@@ -46,28 +46,30 @@ Partial Class Form3
         Me.NumericUpDown1.Size = New System.Drawing.Size(33, 20)
         Me.NumericUpDown1.TabIndex = 1
         '
-        'Label1
+        'lbl_StarNumber
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(142, 104)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(91, 13)
-        Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Nombre d'étoiles :"
+        Me.lbl_StarNumber.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lbl_StarNumber.AutoSize = True
+        Me.lbl_StarNumber.Location = New System.Drawing.Point(142, 104)
+        Me.lbl_StarNumber.Name = "lbl_StarNumber"
+        Me.lbl_StarNumber.Size = New System.Drawing.Size(91, 13)
+        Me.lbl_StarNumber.TabIndex = 2
+        Me.lbl_StarNumber.Text = "Nombre d'étoiles :"
+        Me.lbl_StarNumber.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'Timer1
         '
         Me.Timer1.Interval = 345
         '
-        'Label2
+        'lbl_Animate
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(38, 104)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(45, 13)
-        Me.Label2.TabIndex = 4
-        Me.Label2.Text = "Animer !"
-        Me.Label2.Visible = False
+        Me.lbl_Animate.AutoSize = True
+        Me.lbl_Animate.Location = New System.Drawing.Point(38, 104)
+        Me.lbl_Animate.Name = "lbl_Animate"
+        Me.lbl_Animate.Size = New System.Drawing.Size(45, 13)
+        Me.lbl_Animate.TabIndex = 4
+        Me.lbl_Animate.Text = "Animer !"
+        Me.lbl_Animate.Visible = False
         '
         'PictureBox2
         '
@@ -88,16 +90,16 @@ Partial Class Form3
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
-        'GroupBox1
+        'gb_BWPreviewVersion
         '
-        Me.GroupBox1.Controls.Add(Me.rb_PreviewWhite)
-        Me.GroupBox1.Controls.Add(Me.rb_PreviewBlack)
-        Me.GroupBox1.Location = New System.Drawing.Point(77, 120)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(132, 42)
-        Me.GroupBox1.TabIndex = 5
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Version"
+        Me.gb_BWPreviewVersion.Controls.Add(Me.rb_PreviewBlack)
+        Me.gb_BWPreviewVersion.Controls.Add(Me.rb_PreviewWhite)
+        Me.gb_BWPreviewVersion.Location = New System.Drawing.Point(74, 120)
+        Me.gb_BWPreviewVersion.Name = "gb_BWPreviewVersion"
+        Me.gb_BWPreviewVersion.Size = New System.Drawing.Size(132, 42)
+        Me.gb_BWPreviewVersion.TabIndex = 5
+        Me.gb_BWPreviewVersion.TabStop = False
+        Me.gb_BWPreviewVersion.Text = "Version"
         '
         'rb_PreviewWhite
         '
@@ -127,11 +129,11 @@ Partial Class Form3
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(280, 166)
-        Me.Controls.Add(Me.GroupBox1)
-        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.lbl_Animate)
         Me.Controls.Add(Me.PictureBox2)
-        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.NumericUpDown1)
+        Me.Controls.Add(Me.gb_BWPreviewVersion)
+        Me.Controls.Add(Me.lbl_StarNumber)
         Me.Controls.Add(Me.PictureBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.KeyPreview = True
@@ -145,18 +147,18 @@ Partial Class Form3
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
+        Me.gb_BWPreviewVersion.ResumeLayout(False)
+        Me.gb_BWPreviewVersion.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
     Friend WithEvents NumericUpDown1 As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lbl_StarNumber As System.Windows.Forms.Label
     Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents lbl_Animate As System.Windows.Forms.Label
+    Friend WithEvents gb_BWPreviewVersion As System.Windows.Forms.GroupBox
     Friend WithEvents rb_PreviewWhite As System.Windows.Forms.RadioButton
     Friend WithEvents rb_PreviewBlack As System.Windows.Forms.RadioButton
     Friend WithEvents Timer1 As System.Windows.Forms.Timer

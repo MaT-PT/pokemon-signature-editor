@@ -7,60 +7,61 @@ Public Class Form1
 
     '''Par M@T, pour PokémonTrash.com
 
-    '' -- TODO --
-    ' * [!] Images signature 5* B/W
-    ' * [?] Si la sauvegarde est corrompue, vérifier l'autre block (et vérifier le comportement IG)
-    ' * [!] Traduction EN
 
-    Const IS_BETA As Boolean = False
+    Const IS_BETA As Boolean = True
     Const IS_RC As Boolean = False
 
 #Region "Declarations"
 
-    Dim newLine As String = Environment.NewLine()
+    Friend newLine As String = Environment.NewLine()
+
+    Private SettingsFile As String = Application.StartupPath & "\settings.ini"
 
     ''Déclaration des variables :
 
-    Dim bmp0 As Bitmap 'Image pour les aperçus
-
-    Dim codeTemp As String 'Chaîne intermédiaire pour le parcours des pixels de l'image
-
-    Dim code, code2 As String 'Variables pour le code final
-
-    Dim mustGen As Boolean = False 'Indique s'il faut générer automatiquement le code ou non
+    Private bmp0 As Bitmap 'Image pour les aperçus
+    Private codeTemp As String 'Chaîne intermédiaire pour le parcours des pixels de l'image
+    Private code, code2 As String 'Variables pour le code final
+    Private mustGen As Boolean = False 'Indique s'il faut générer automatiquement le code ou non
 
     Friend imgLoaded As Boolean = False 'Indique si une image a été chargée
+    Private imgPath As String = "" 'Chemin du fichier d'image
+    Private formLoaded As Boolean = False
 
-    Dim imgPath As String = "" 'Chemin du fichier d'image
-
-    Dim formLoaded As Boolean = False
-
-    'Définit les parties constantes du code
     Friend codeTrigger As String = "94000130 FCFF0000" & newLine
-    Dim pointer, addr1, addr2 As String
+    Private pointer, addr1, addr2 As String
 
 
     Friend saveVersion As Versions = Versions.Unknown
+    Private position As OffsetsSign = OffsetsSign.Platinum
+    Private blockOffset As BlockOffsets = BlockOffsets.Block_1
+    Private initialOffset As Byte = 0
+    Private offsetSavCnt As OffsetsSavCnt = OffsetsSavCnt.Platinum
+    Private blockSize As BlockSizes = BlockSizes.Platinum
+    Private offsetChkSumFooter As ChkSumFooterOffsets = ChkSumFooterOffsets.DP_PT
 
-    Dim position As OffsetsSign = OffsetsSign.Platinum
-
-    Dim blockOffset As BlockOffsets = BlockOffsets.Block_1
-
-    Dim initialOffset As Byte = 0
-
-    Dim offsetSavCnt As OffsetsSavCnt = OffsetsSavCnt.Platinum
-
-    Dim blockSize As BlockSizes = BlockSizes.Platinum
-
-    Dim offsetChkSumFooter As ChkSumFooterOffsets = ChkSumFooterOffsets.DP_PT
-
-    Dim savePath As String = ""
-
-    Dim sav256ko As Boolean = False
-
+    Private savePath As String = ""
+    Private sav256ko As Boolean = False
     Friend saveLoaded As Boolean = False
+    Private saveIsBW As Boolean = False
 
-    Dim saveIsBW As Boolean = False
+
+    Private lngFileLines As New List(Of String)
+    Private currentLocale As String = Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName()
+    Private currentLngFile As String = "default.lng"
+    Private lngFiles As New List(Of LanguageFile)
+
+    Private sensitivityText As String = "Sensibilité :"
+    Private sizeText As String = "Taille :"
+    Private currentBlockText As String = "Bloc courant :"
+    Private byteUnitSymbol As String = "o"
+    Private defaultGameLanguage As Langs = Langs.Fra
+    Private aboutBoxText As String = "Pokémon Signature Editor v{version}" & newLine & _
+                                     "pour Pokémon versions Diamant, Perle, Platine, HeartGold, SoulSilver, Noire & Blanche" & newLine & newLine & _
+                                     "Par M@T." & newLine & newLine & _
+                                     "Source libre, si vous la modifiez merci de me prévenir et de laisser les crédits ! ;)" & newLine & newLine & _
+                                     "http://www.pokemontrash.com/"
+    Private aboutBoxTitle As String = "À propos..."
 
 
     Const bw_footer_offset As Integer = &H23F00
@@ -69,9 +70,9 @@ Public Class Form1
     Const bw_signature_block_size As Integer = &H658
     Const bw_footer_size As Integer = &H8C
 
-    Dim comp() As Byte = {&HFE, &HCA, &HEF, &HBE}
+    Private comp() As Byte = {&HFE, &HCA, &HEF, &HBE}
 
-    Dim SeedTable() As UShort = {&H0, &H1021, &H2042, &H3063, &H4084, &H50A5, &H60C6, &H70E7, _
+    Private SeedTable() As UShort = {&H0, &H1021, &H2042, &H3063, &H4084, &H50A5, &H60C6, &H70E7, _
                                  &H8108, &H9129, &HA14A, &HB16B, &HC18C, &HD1AD, &HE1CE, &HF1EF, _
                                  &H1231, &H210, &H3273, &H2252, &H52B5, &H4294, &H72F7, &H62D6, _
                                  &H9339, &H8318, &HB37B, &HA35A, &HD3BD, &HC39C, &HF3FF, &HE3DE, _
@@ -156,6 +157,88 @@ Public Class Form1
         HGSS = &HE
         BW = &HE
     End Enum
+
+    Private Structure LanguageFile
+        Private _filePath As String
+        Private _fileName As String
+        Private _langName As String
+        Private _langID As String
+        Private _isValid As Boolean
+
+        Friend Sub New(ByVal filePath As String)
+            Init(filePath)
+        End Sub
+
+        Private Function Init(ByVal filePath As String) As Boolean
+            _filePath = filePath
+            _fileName = Path.GetFileName(filePath)
+
+            Dim fileLines As String() = File.ReadAllLines(filePath, System.Text.Encoding.UTF8)
+            Dim flags As Byte = &H0
+
+            For Each line As String In fileLines
+                If line.TrimStart(" ", vbTab).StartsWith("#") Then
+                    Dim l As String = line.TrimStart("#", " ", vbTab)
+
+                    If l.Contains("=") Then
+                        If l.StartsWith("LangName", StringComparison.OrdinalIgnoreCase) Then
+                            _langName = l.Substring(l.IndexOf("=") + 1).TrimStart(" ", vbTab)
+                            flags = flags Or &H1
+
+                        ElseIf l.StartsWith("LangID", StringComparison.OrdinalIgnoreCase) Then
+                            _langID = l.Substring(l.IndexOf("=") + 1).TrimStart(" ", vbTab).ToLowerInvariant
+                            flags = flags Or &H2
+                        End If
+                    End If
+                End If
+            Next line
+
+            If Not CBool(flags And CByte(&H2)) Then
+                _langID = ""
+            End If
+
+            _isValid = CBool(flags And CByte(&H1))
+            Return _isValid
+        End Function
+
+        Friend Function SetFilePath(ByVal filePath As String) As Boolean
+            If File.Exists(filePath) Then
+                Return Init(filePath)
+            Else
+                Return False
+            End If
+        End Function
+
+        Friend ReadOnly Property FilePath() As String
+            Get
+                Return _filePath
+            End Get
+        End Property
+
+        Friend ReadOnly Property FileName() As String
+            Get
+                Return _fileName
+            End Get
+        End Property
+
+        Friend ReadOnly Property LangName() As String
+            Get
+                Return _langName
+            End Get
+        End Property
+
+        Friend ReadOnly Property LangID() As String
+            Get
+                Return _langID
+            End Get
+        End Property
+
+        Friend ReadOnly Property IsValid() As Boolean
+            Get
+                Return _isValid
+            End Get
+        End Property
+    End Structure
 #End Region
 
 
@@ -223,7 +306,7 @@ Public Class Form1
     'Fonction qui convertit une image Bitmap couleur en Bitmap monochrome, avec la sensibilité au noir spécifiée
     '(plus la sensibilité est élevée, plus l'image sera sombre)
     Private Function BMP2Mono(ByVal img As Bitmap, Optional ByVal sens As Double = 0.5) As Bitmap
-        Using bm = New Bitmap(img.Width, img.Height)
+        Using bm As New Bitmap(img.Width, img.Height)
 
             For y = 0 To img.Height - 1
                 For x = 0 To img.Width - 1
@@ -245,7 +328,7 @@ Public Class Form1
 
     'Vérifie qu'une image est bien chargée et qu'il faut générer le code, et dans ce cas appelle la fonction Generer()
     Friend Sub genVerif()
-        If imgLoaded AndAlso mustGen Then generateARCode(PictureBox1.Image, cb_SplitCode.Checked)
+        If imgLoaded AndAlso mustGen Then generateARCode(pb_CodeSignatureImage.Image, cb_SplitCode.Checked)
     End Sub
 
     'Récupère le n° de version et le retourne formaté comme ceci :
@@ -278,7 +361,7 @@ Public Class Form1
         If IS_RC Then
             VersionProg &= " RC"
         ElseIf IS_BETA Then
-            VersionProg &= " bêta"
+            VersionProg &= " beta"
         End If
     End Function
 
@@ -308,7 +391,7 @@ Public Class Form1
             If Not a(i) = b(i) Then
                 Return False
             End If
-        Next
+        Next i
 
         Return True
     End Function
@@ -440,7 +523,7 @@ Public Class Form1
             If sav256ko Then
                 blockOffset = BlockOffsets.Block_1
                 lbl_CurrentBlock.Text = ""
-                lbl_Size.Text = "Taille : 256 ko"
+                lbl_Size.Text = sizeText & " 256 k" & byteUnitSymbol
             Else
                 Dim offsetBlock2 As UInteger
 
@@ -458,13 +541,13 @@ Public Class Form1
 
                 If compteurSauv1 >= compteurSauv2 Then
                     blockOffset = BlockOffsets.Block_1
-                    lbl_CurrentBlock.Text = "Bloc courant : 1"
+                    lbl_CurrentBlock.Text = currentBlockText & " 1"
                 Else
                     blockOffset = offsetBlock2
-                    lbl_CurrentBlock.Text = "Bloc courant : 2"
+                    lbl_CurrentBlock.Text = currentBlockText & " 2"
                 End If
 
-                lbl_Size.Text = "Taille : 512 ko"
+                lbl_Size.Text = sizeText & " 512 k" & byteUnitSymbol
             End If
 
             Dim corrupted As Boolean = False
@@ -523,7 +606,7 @@ Public Class Form1
                     n += 1
             Next p, b
 
-            PictureBox2.Image = bmp.Clone()
+            pb_SavefileSignatureImage.Image = bmp.Clone()
 
             sav.Close()
             bmp.Dispose()
@@ -565,15 +648,15 @@ Public Class Form1
             Exit Sub
         End If
 
-        If Not SaveFileDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
+        If Not sfd_SaveImageAs.ShowDialog = Windows.Forms.DialogResult.OK Then
             Exit Sub
         End If
 
         Dim format As ImageFormat
 
-        Dim filename = SaveFileDialog1.FileName
+        Dim filename = sfd_SaveImageAs.FileName
 
-        Dim parts = filename.ToLower.Split(".")
+        Dim parts = filename.ToLowerInvariant.Split(".")
 
         Select Case parts(parts.Length - 1)
             Case "png"
@@ -595,7 +678,7 @@ Public Class Form1
                 format = ImageFormat.Bmp()
         End Select
 
-        PictureBox2.Image.Save(filename, format)
+        pb_SavefileSignatureImage.Image.Save(filename, format)
     End Sub
 
     Private Sub reset()
@@ -613,7 +696,7 @@ Public Class Form1
         lbl_FilePath.Text = "(aucun fichier chargé)"
         lbl_FilePath.Font = New Font(lbl_FilePath.Font, FontStyle.Italic)
 
-        PictureBox2.Image = Nothing
+        pb_SavefileSignatureImage.Image = Nothing
     End Sub
 
     Private Sub regenGameParameters()
@@ -656,7 +739,7 @@ Public Class Form1
             'Si une exception est levée, c'est que le fichier n'est pas une image valide, donc on affiche un message d'erreur
             MsgBox("Le fichier sélectionné n'est pas une image valide.", MsgBoxStyle.Critical, "Erreur : image invalide")
             imgLoaded = False
-            PictureBox1.Image = Nothing
+            pb_CodeSignatureImage.Image = Nothing
             TextBox1.Text = ""
             TextBox2.Text = ""
 
@@ -667,7 +750,7 @@ Public Class Form1
             'Si l'image ne fait pas 192x64 pixels, on affiche une erreur
             MsgBox("L'image doit faire exactement 192x64 pixels !", MsgBoxStyle.Critical, "Erreur : dimensions incorrectes")
             imgLoaded = False
-            PictureBox1.Image = Nothing
+            pb_CodeSignatureImage.Image = Nothing
             TextBox1.Text = ""
             TextBox2.Text = ""
 
@@ -679,7 +762,7 @@ Public Class Form1
 
         mustGen = False 'Indique qu'il ne faut pas générer le code automatiquement pour l'instant
 
-        PictureBox1.Image = New Bitmap(BMP2Mono(bmp0, TrackBar1.Value / TrackBar1.Maximum))
+        pb_CodeSignatureImage.Image = New Bitmap(BMP2Mono(bmp0, TrackBar1.Value / TrackBar1.Maximum))
 
         bmp0.Dispose()
 
@@ -687,26 +770,402 @@ Public Class Form1
 
         b_GenerateAR.Select() 'Sélectionne le bouton "Générer"
     End Sub
+
+    Private Sub addControlText(ByVal ctrl As Control)
+        If (Not TypeOf ctrl Is NumericUpDown) _
+           AndAlso ctrl.Text IsNot Nothing _
+           AndAlso ctrl.Name <> "" _
+           AndAlso ctrl.Text <> "" _
+           Then
+            addLngFileLine(ctrl.Name, ctrl.Text)
+        End If
+
+        If tt_Common.GetToolTip(ctrl) IsNot Nothing AndAlso tt_Common.GetToolTip(ctrl) <> "" AndAlso ctrl.Name <> "" Then
+            addLngFileLine(ctrl.Name & ".ToolTip", tt_Common.GetToolTip(ctrl))
+        End If
+
+        For Each c As Control In ctrl.Controls
+            addControlText(c)
+        Next c
+
+        'If ctrl.ContextMenuStrip() IsNot Nothing Then
+        '    For Each i In ctrl.ContextMenuStrip.Items()
+        '        addLngFileLine(i.Name, i.Text)
+        '    Next i
+        'End If
+    End Sub
+
+    Private Sub addLngFileLine(ByVal parameterName As String, ByVal value As String)
+        lngFileLines.Add(parameterName & " = " & value.Replace(newLine, "|"))
+    End Sub
+
+    Private Sub addLngFileLine(ByVal parameterName As String)
+        lngFileLines.Add(parameterName)
+    End Sub
+
+    Private Sub initLanguageFile(ByVal filePath As String)
+        addLngFileLine("# LangName", "Français")
+        addLngFileLine("# LangID", "fr")
+        addLngFileLine("")
+
+        addLngFileLine("# Form1")
+        addControlText(Me)
+        addLngFileLine("ContextMenu_SaveImageAs", tsmi_SaveImageAs.Text)
+        addLngFileLine("ContextMenu_LoadImageToBoxAbove", tsmi_LoadImageAbove.Text)
+        addLngFileLine("OpenImageDialog_Title", ofd_OpenImage.Title)
+        addLngFileLine("OpenSavefileDialog_Title", ofd_OpenSavefile.Title)
+        addLngFileLine("SaveImageDialog_Title", sfd_SaveImageAs.Title)
+        addLngFileLine("SaveSavefileDialog_Title", sfd_SaveSavefileAs.Title)
+        addLngFileLine("OpenImageDialog_Filter", ofd_OpenImage.Filter)
+        addLngFileLine("OpenSavefileDialog_Filter", ofd_OpenSavefile.Filter)
+        addLngFileLine("SaveImageDialog_Filter", sfd_SaveImageAs.Filter)
+        addLngFileLine("SaveSavefileDialog_Filter", sfd_SaveSavefileAs.Filter)
+        addLngFileLine("ActivatorsTooltip_Title", tt_Activators.ToolTipTitle)
+        addLngFileLine("Version_DP", cmb_Version.Items(0))
+        addLngFileLine("Version_Plat", cmb_Version.Items(1))
+        addLngFileLine("Version_HGSS", cmb_Version.Items(2))
+        addLngFileLine("Version_BW", cmb_Version.Items(3))
+
+        addLngFileLine("# Form2")
+        addControlText(Form2)
+
+        addLngFileLine("# Form3")
+        addControlText(Form3)
+        addLngFileLine("AnimateStopText", Form3.animateStopText)
+
+        addLngFileLine("# Misc")
+        addLngFileLine("; Available languages : Fra|0, USA|1, Jap|2, Esp|3, Ita|4, Deu|5, Kor|6")
+        addLngFileLine("DefaultGameLanguage", defaultGameLanguage.ToString())
+        addLngFileLine("ByteUnitSymbol", byteUnitSymbol)
+        addLngFileLine("AboutBoxText", aboutBoxText)
+        addLngFileLine("AboutBoxTitle", aboutBoxTitle)
+
+        File.WriteAllLines(filePath, lngFileLines.ToArray(), System.Text.Encoding.UTF8)
+    End Sub
+
+    Private Sub loadLanguageFile(ByVal filePath As String)
+        If Not File.Exists(filePath) Then Exit Sub
+
+        Dim fileLines As String() = File.ReadAllLines(filePath, System.Text.Encoding.UTF8)
+
+        Dim controlName, text As String
+        Dim currentForm As Form = Me
+
+        For Each line As String In fileLines
+            If line.TrimStart(" ", vbTab).StartsWith(";") Then Continue For
+
+            If line.TrimStart(" ", vbTab).StartsWith("#") Then
+                Dim l As String = line.TrimStart("#", " ", vbTab)
+
+                If l.StartsWith("Form1", StringComparison.OrdinalIgnoreCase) Then
+                    currentForm = Me
+
+                ElseIf l.StartsWith("Form2", StringComparison.OrdinalIgnoreCase) Then
+                    currentForm = Form2
+
+                ElseIf l.StartsWith("Form3", StringComparison.OrdinalIgnoreCase) Then
+                    currentForm = Form3
+                End If
+
+                Continue For
+            End If
+
+            If Not line.Contains("=") Then Continue For
+
+            controlName = line.Substring(0, line.IndexOf("=")).Trim()
+            text = line.Substring(line.IndexOf("=") + 1).TrimStart(" ", vbTab).Replace("\\", "<#²backslash²#>").Replace("\|", "<#²pipe²#>").Replace("|", newLine).Replace("<#²backslash²#>", "\").Replace("<#²pipe²#>", "|")
+
+            Select Case controlName.ToLowerInvariant()
+                Case "form1"
+                    Me.Text = text
+                    Continue For
+
+                Case "form2"
+                    Form2.Text = text
+                    Continue For
+
+                Case "form3"
+                    Form3.Text = text
+                    Continue For
+
+                Case "openimagedialog_title"
+                    ofd_OpenImage.Title = text
+                    Continue For
+
+                Case "opensavefiledialog_title"
+                    ofd_OpenSavefile.Title = text
+                    Continue For
+
+                Case "saveimagedialog_title"
+                    sfd_SaveImageAs.Title = text
+                    Continue For
+
+                Case "savesavefiledialog_title"
+                    sfd_SaveSavefileAs.Title = text
+                    Continue For
+
+                Case "openimagedialog_filter"
+                    Try
+                        ofd_OpenImage.Filter = text
+                    Catch
+                    End Try
+                    Continue For
+
+                Case "opensavefiledialog_filter"
+                    Try
+                        ofd_OpenSavefile.Filter = text
+                    Catch
+                    End Try
+                    Continue For
+
+                Case "saveimagedialog_filter"
+                    Try
+                        sfd_SaveImageAs.Filter = text
+                    Catch
+                    End Try
+                    Continue For
+
+                Case "savesavefiledialog_filter"
+                    Try
+                        sfd_SaveSavefileAs.Filter = text
+                    Catch
+                    End Try
+                    Continue For
+
+                Case "activatorstooltip_title"
+                    tt_Activators.ToolTipTitle = text
+                    Continue For
+
+                Case "contextmenu_saveimageas"
+                    tsmi_SaveImageAs.Text = text
+                    Continue For
+
+                Case "contextmenu_loadimagetoboxabove"
+                    tsmi_LoadImageAbove.Text = text
+                    Continue For
+
+                Case "lbl_sensitivity"
+                    sensitivityText = text
+
+                Case "lbl_size"
+                    sizeText = text
+
+                Case "lbl_currentblock"
+                    currentBlockText = text
+
+                Case "lbl_animate"
+                    Form3.animateStartText = text
+
+                Case "animatestoptext"
+                    Form3.animateStopText = text
+                    Continue For
+
+                Case "byteunitsymbol"
+                    byteUnitSymbol = text
+                    Continue For
+
+                Case "aboutboxtext"
+                    aboutBoxText = text
+                    Continue For
+
+                Case "aboutboxtitle"
+                    aboutBoxTitle = text
+                    Continue For
+
+                Case "version_dp"
+                    cmb_Version.Items(0) = text
+                    Continue For
+
+                Case "version_plat"
+                    cmb_Version.Items(1) = text
+                    Continue For
+
+                Case "version_hgss"
+                    cmb_Version.Items(2) = text
+                    Continue For
+
+                Case "version_bw"
+                    cmb_Version.Items(3) = text
+                    Continue For
+
+                Case "defaultgamelanguage"
+                    Try
+                        If IsNumeric(text) Then
+                            defaultGameLanguage = CInt(text)
+                        Else
+                            defaultGameLanguage = CInt([Enum].Parse(GetType(Langs), text, True))
+                        End If
+                    Catch
+                    End Try
+                    Continue For
+
+            End Select
+
+            If controlName.EndsWith(".ToolTip", StringComparison.OrdinalIgnoreCase) Then
+                For Each c As Control In currentForm.Controls.Find(controlName.Substring(0, controlName.IndexOf(".ToolTip", StringComparison.OrdinalIgnoreCase)), True)
+                    tt_Common.SetToolTip(c, text)
+                Next c
+            Else
+                For Each c As Control In currentForm.Controls.Find(controlName, True)
+                    c.Text = text
+                Next c
+            End If
+        Next line
+
+        lbl_Sensitivity.Left = 487 - lbl_Sensitivity.Width
+        b_Preview.Left = 414 - CInt(Int(b_Preview.Width / 2))
+        b_Activators.Left = 417 - CInt(Int(b_Activators.Width / 2))
+        b_ImportImage.Left = 199 - CInt(Int(b_ImportImage.Width / 2))
+        b_ReloadSave.Left = 417 - CInt(Int(b_ReloadSave.Width / 2))
+
+        With Form2
+            .cb_Up.Left = 81 - CInt(Int(.cb_Up.Width / 2))
+            .cb_Down.Left = 81 - CInt(Int(.cb_Down.Width / 2))
+            .cb_X.Left = 196 - CInt(Int(.cb_X.Width / 2))
+            .cb_B.Left = 196 - CInt(Int(.cb_B.Width / 2))
+            .cb_Left.Left = 70 - .cb_Left.Width
+            .cb_Y.Left = 185 - .cb_Y.Width
+            .cb_L.Left = 124 - .cb_L.Width
+            .cb_Start.Left = 124 - .cb_Start.Width
+        End With
+
+        With Form3
+            .rb_PreviewWhite.Left = 12 + .rb_PreviewBlack.Width
+            .gb_BWPreviewVersion.Width = 18 + .rb_PreviewBlack.Width + .rb_PreviewWhite.Width
+            .gb_BWPreviewVersion.Left = 140 - CInt(Int(.gb_BWPreviewVersion.Width / 2))
+        End With
+    End Sub
+
+    Private Function GetSetting(ByVal settingName As String) As String
+        If Not File.Exists(SettingsFile) Then Return ""
+
+        Dim fileLines As String() = File.ReadAllLines(SettingsFile, System.Text.Encoding.UTF8)
+
+        For Each line As String In fileLines
+            If line.TrimStart(" ", vbTab).StartsWith(";") _
+               OrElse line.TrimStart(" ", vbTab).StartsWith("#") _
+               OrElse Not line.Contains("=") _
+            Then Continue For
+
+            If line.Substring(0, line.IndexOf("=")).Trim().Equals(settingName, StringComparison.OrdinalIgnoreCase) Then Return line.Substring(line.IndexOf("=") + 1).Trim()
+        Next line
+
+        Return ""
+    End Function
+
+    Private Sub SetSetting(ByVal settingName As String, ByVal settingValue As String)
+        If Not File.Exists(SettingsFile) Then
+            File.WriteAllText(SettingsFile, settingName & " = " & settingValue, System.Text.Encoding.UTF8)
+            Exit Sub
+        End If
+
+        Dim fileLines As String() = File.ReadAllLines(SettingsFile, System.Text.Encoding.UTF8)
+        Dim newLines As New List(Of String)
+        Dim settingUpdated As Boolean = False
+
+        For Each line As String In fileLines
+            If line.TrimStart(" ", vbTab).StartsWith(";") _
+               OrElse line.TrimStart(" ", vbTab).StartsWith("#") _
+               OrElse Not line.Contains("=") _
+            Then
+                newLines.Add(line)
+                Continue For
+            End If
+
+            If line.Substring(0, line.IndexOf("=")).Trim().Equals(settingName, StringComparison.OrdinalIgnoreCase) Then
+                newLines.Add(settingName & " = " & settingValue)
+                settingUpdated = True
+            Else
+                newLines.Add(line)
+            End If
+        Next line
+
+        If Not settingUpdated Then
+            newLines.Add(settingName & " = " & settingValue)
+        End If
+
+        File.WriteAllLines(SettingsFile, newLines.ToArray(), System.Text.Encoding.UTF8)
+    End Sub
 #End Region
 
 
 #Region "Events"
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        If Environment.GetCommandLineArgs.Length > 1 AndAlso Environment.GetCommandLineArgs(1).Equals("/generatelangfile", StringComparison.OrdinalIgnoreCase) Then
+            initLanguageFile(Application.StartupPath & "\default.lng")
+            'Console.WriteLine("Default language file ""default.lng"" generated. Now exiting...") ' Doesn't work
+            Application.Exit()
+            Me.Close()
+            Exit Sub
+        End If
+
         'Définit le répertoire initial dans la boîte de dialogue "Ouvrir" comme le dossier "Mes Images" par défaut
-        OpenFileDialog1.InitialDirectory = My.Computer.FileSystem.SpecialDirectories.MyPictures
-        Me.Text = "Pokémon Signature Editor v" & VersionProg() & " - by M@T"
+        ofd_OpenImage.InitialDirectory = My.Computer.FileSystem.SpecialDirectories.MyPictures
 
-        cmb_Version.SelectedIndex = Versions.BW
-        cmb_Language.SelectedIndex = Langs.Fra
+        Try
+            currentLngFile = GetSetting("Language File")
+            If Not File.Exists(Path.Combine(Application.StartupPath, currentLngFile)) Then
+                currentLngFile = ""
+            End If
+        Catch
+            currentLngFile = ""
+        End Try
 
-        PictureBox1.AllowDrop = True
+        Dim currentLng As LanguageFile
+        For Each f As String In Directory.GetFiles(Application.StartupPath, "*.lng", SearchOption.TopDirectoryOnly)
+            currentLng = New LanguageFile(f)
+            If Not currentLng.IsValid() Then Continue For
+
+            lngFiles.Add(currentLng)
+        Next f
+
+        Dim n As Integer = 0
+        For Each lng As LanguageFile In lngFiles
+            cmb_ProgramLanguage.Items.Add(lng.LangName)
+
+            If (currentLngFile = "" AndAlso lng.LangID = currentLocale) OrElse lng.FileName = currentLngFile Then
+                cmb_ProgramLanguage.SelectedIndex = n
+                currentLngFile = lng.FileName
+            End If
+
+            n += 1
+        Next lng
+
+        Try
+            loadLanguageFile(Path.Combine(Application.StartupPath, currentLngFile))
+        Catch
+        End Try
+
+        Try
+            Dim gameVersion As String = GetSetting("Game Version")
+            If IsNumeric(gameVersion) Then
+                cmb_Version.SelectedIndex = CInt(gameVersion)
+            Else
+                cmb_Version.SelectedIndex = CInt([Enum].Parse(GetType(Versions), gameVersion, True))
+            End If
+        Catch
+            cmb_Version.SelectedIndex = Versions.BW
+        End Try
+
+        Try
+            cmb_Language.SelectedIndex = defaultGameLanguage
+        Catch
+            cmb_Language.SelectedIndex = Langs.Fra
+        End Try
+
+        Me.Text = Me.Text.Replace("{version}", VersionProg())
+        aboutBoxText = aboutBoxText.Replace("{version}", VersionProg())
+
+        lbl_Sensitivity.Text = sensitivityText & " " & CDbl(TrackBar1.Value / TrackBar1.Maximum).ToString()
+
+        pb_CodeSignatureImage.AllowDrop = True
 
         formLoaded = True
     End Sub
 
     Private Sub Form1_Activated(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Activated
-        'Workaround for a bug in Windows Vista where the animation stops if the form loses focus and doesn't restart correctly 
+        'Workaround for a bug in Windows Vista where the animation stops and doesn't restart correctly  if the form loses focus
         PictureBox3.Invalidate()
     End Sub
 
@@ -718,7 +1177,7 @@ Public Class Form1
             Exit Sub
         End If
 
-        generateARCode(PictureBox1.Image, cb_SplitCode.Checked()) 'Génère le code
+        generateARCode(pb_CodeSignatureImage.Image, cb_SplitCode.Checked()) 'Génère le code
 
         mustGen = True 'Indique que le code devra se mettre à jour automatiquement
     End Sub
@@ -745,30 +1204,30 @@ Public Class Form1
 
     Private Sub b_OpenImage_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_OpenImage.Click
         'Si l'utilisateur annule, on quitte
-        If Not OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If Not ofd_OpenImage.ShowDialog() = Windows.Forms.DialogResult.OK Then
             Exit Sub
         End If
 
-        imgPath = OpenFileDialog1.FileName()
+        imgPath = ofd_OpenImage.FileName()
         openImage()
     End Sub
 
     Private Sub TrackBar1_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TrackBar1.ValueChanged
-        lbl_Sensib.Text = "Sensibilité : " & CDbl(TrackBar1.Value / TrackBar1.Maximum).ToString
+        lbl_Sensitivity.Text = sensitivityText & " " & CDbl(TrackBar1.Value / TrackBar1.Maximum).ToString()
 
         If imgLoaded Then
             If imgPath = "" Then
-                If PictureBox2.Image Is Nothing Then Exit Sub
+                If pb_SavefileSignatureImage.Image Is Nothing Then Exit Sub
 
-                bmp0 = New Bitmap(PictureBox2.Image)
+                bmp0 = New Bitmap(pb_SavefileSignatureImage.Image)
             Else
                 bmp0 = New Bitmap(imgPath)
             End If
 
-            PictureBox1.Image = New Bitmap(BMP2Mono(bmp0, TrackBar1.Value / TrackBar1.Maximum)) 'Met à jour l'aperçu
+            pb_CodeSignatureImage.Image = New Bitmap(BMP2Mono(bmp0, TrackBar1.Value / TrackBar1.Maximum)) 'Met à jour l'aperçu
 
-            PictureBox1.Refresh()
-            lbl_Sensib.Refresh()
+            pb_CodeSignatureImage.Refresh()
+            lbl_Sensitivity.Refresh()
 
             bmp0.Dispose()
         End If
@@ -783,16 +1242,12 @@ Public Class Form1
         b_Copy2.Enabled() = cb_SplitCode.Checked()
     End Sub
 
-    Private Sub b_Activ_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Activ.Click
+    Private Sub b_Activ_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Activators.Click
         Form2.ShowDialog()
     End Sub
 
     Private Sub b_About_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_About.Click
-        MsgBox("Pokémon Signature Editor v" & VersionProg() & newLine & _
-               "pour Pokémon versions Diamant, Perle, Platine, HeartGold, SoulSilver, Noire & Blanche" & newLine & newLine & _
-               "Par M@T." & newLine & newLine & _
-               "Source libre, si vous la modifiez merci de me prévenir et de laisser les crédits ! ;)" & newLine & newLine & _
-               "http://www.pokemontrash.com/", MsgBoxStyle.Information, "À propos...")
+        MsgBox(aboutBoxText, MsgBoxStyle.Information, aboutBoxTitle)
     End Sub
 
     Private Sub b_Preview_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_Preview.Click
@@ -807,11 +1262,11 @@ Public Class Form1
     End Sub
 
     Private Sub b_OpenSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_OpenSave.Click
-        If Not OpenFileDialog2.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If Not ofd_OpenSavefile.ShowDialog() = Windows.Forms.DialogResult.OK Then
             Exit Sub
         End If
 
-        savePath = OpenFileDialog2.FileName
+        savePath = ofd_OpenSavefile.FileName
 
         loadSave(savePath)
     End Sub
@@ -827,7 +1282,7 @@ Public Class Form1
             Exit Sub
         End If
 
-        PictureBox2.Image = New Bitmap(PictureBox1.Image)
+        pb_SavefileSignatureImage.Image = New Bitmap(pb_CodeSignatureImage.Image)
     End Sub
 
     Private Sub b_SaveAs_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles b_SaveAs.Click
@@ -838,14 +1293,14 @@ Public Class Form1
 
         Dim saveFileInfo As New FileInfo(savePath)
 
-        SaveFileDialog2.InitialDirectory = saveFileInfo.DirectoryName()
-        SaveFileDialog2.FileName = saveFileInfo.Name()
+        sfd_SaveSavefileAs.InitialDirectory = saveFileInfo.DirectoryName()
+        sfd_SaveSavefileAs.FileName = saveFileInfo.Name()
 
-        If Not SaveFileDialog2.ShowDialog() = Windows.Forms.DialogResult.OK Then
+        If Not sfd_SaveSavefileAs.ShowDialog() = Windows.Forms.DialogResult.OK Then
             Exit Sub
         End If
 
-        Dim dest As String = SaveFileDialog2.FileName()
+        Dim dest As String = sfd_SaveSavefileAs.FileName()
         Dim pathOut As String = dest & ".tmp"
 
         Using savIn As New BinaryReader(New FileStream(savePath, FileMode.Open, FileAccess.Read)), _
@@ -861,7 +1316,7 @@ Public Class Form1
 
             Dim gh As GCHandle = GCHandle.Alloc(save, GCHandleType.Pinned)
 
-            Dim signBytes As Byte() = Image2SignBytes(PictureBox2.Image)
+            Dim signBytes As Byte() = Image2SignBytes(pb_SavefileSignatureImage.Image)
 
             Marshal.Copy(signBytes, 0, New IntPtr(gh.AddrOfPinnedObject().ToInt32() + blockOffset + position), &H600)
 
@@ -932,24 +1387,28 @@ Public Class Form1
         TextBox2.Text = ""
 
         mustGen = False
-        PictureBox1.Image = New Bitmap(PictureBox2.Image)
+        pb_CodeSignatureImage.Image = New Bitmap(pb_SavefileSignatureImage.Image)
         imgLoaded = True
     End Sub
 
     Private Sub ComboBox_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles cmb_Version.SelectedIndexChanged, cmb_Language.SelectedIndexChanged
         If formLoaded Then
+            If sender.Equals(cmb_Version) Then
+                SetSetting("Game Version", [Enum].GetName(GetType(Versions), cmb_Version.SelectedIndex))
+            End If
+
             'On régénère le code en vérifiant si les paramètres le permettent
             genVerif()
         End If
     End Sub
 
-    Private Sub PictureBox1_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles PictureBox1.DragDrop
+    Private Sub PictureBox1_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles pb_CodeSignatureImage.DragDrop
         Dim fileNames As String() = DirectCast(e.Data.GetData(DataFormats.FileDrop), String())
         imgPath = fileNames(0)
         openImage()
     End Sub
 
-    Private Sub PictureBox1_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles PictureBox1.DragEnter
+    Private Sub PictureBox1_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles pb_CodeSignatureImage.DragEnter
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             e.Effect = DragDropEffects.Copy
         Else
@@ -957,18 +1416,26 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub TabPage2_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles TabPage2.DragDrop
+    Private Sub TabPage2_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles tp_SaveEditor.DragDrop
         Dim fileNames As String() = DirectCast(e.Data.GetData(DataFormats.FileDrop), String())
         savePath = fileNames(0)
         loadSave(savePath)
     End Sub
 
-    Private Sub TabPage2_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles TabPage2.DragEnter
+    Private Sub TabPage2_DragEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles tp_SaveEditor.DragEnter
         If e.Data.GetDataPresent(DataFormats.FileDrop) Then
             e.Effect = DragDropEffects.Copy
         Else
             e.Effect = DragDropEffects.None
         End If
+    End Sub
+
+    Private Sub cmb_ProgramLanguage_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmb_ProgramLanguage.SelectedIndexChanged
+        If Not formLoaded Then Exit Sub
+
+        SetSetting("Language File", lngFiles(cmb_ProgramLanguage.SelectedIndex).FileName())
+
+        MessageBox.Show("Veuillez relancer le programme pour que la nouvelle langue soit appliquée." & newLine & newLine & "--------" & newLine & newLine & "Please restart the program for the language setting to take effect.", "Veuillez relancer le programme / Please restart the program", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
 #End Region
