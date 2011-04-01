@@ -9,15 +9,18 @@
     ''Déclaration des variables
 
     'Image de l'aperçu de la carte de dresseur
-    Dim bmpTCPreview As Bitmap
+    Private bmpTCPreview As Bitmap
 
-    Dim imageToUse As New Bitmap(192, 64)
+    Private imageToUse As New Bitmap(192, 64)
 
     'Point d'origine de la signature sur l'image de la TCard
-    Dim orig As Point
+    Private orig As Point
 
-    Dim animateBW As Boolean = False
-    Dim secondFrame As Boolean = False
+    Private animateBW As Boolean = False
+    Private secondFrame As Boolean = False
+
+    Friend animateStartText = "Animer !"
+    Friend animateStopText = "Arrêter"
 
     'Couleur de la signature
     Private textColor As System.Drawing.Color ' = Color.FromArgb(TextColors.DPPt)
@@ -32,8 +35,8 @@
     'Retourne une image Bitmap qui est un aperçu de la signature
     'en fonction de l'image monochrome et du nombre d'étoiles voulu sur la carte de dresseur
     Private Function Preview(ByVal img As Bitmap, ByVal nbStars As Integer) As Bitmap
-        If (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage1) AndAlso Form1.cmb_Version.SelectedIndex = Form1.Versions.HGSS) OrElse _
-           (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage2) AndAlso Form1.saveVersion = Form1.Versions.HGSS) Then
+        If (Form1.tc_Main.SelectedTab.Equals(Form1.tp_CodeGenerator) AndAlso Form1.cmb_Version.SelectedIndex = Form1.Versions.HGSS) OrElse _
+           (Form1.tc_Main.SelectedTab.Equals(Form1.tp_SaveEditor) AndAlso Form1.saveVersion = Form1.Versions.HGSS) Then
             'Si la version sélectionnée est HG/SS
             Select Case nbStars
                 Case 0
@@ -63,12 +66,12 @@
             textColor = Color.FromArgb(TextColors.HGSS)
             Me.Size = New Size(282, 147)
             PictureBox1.Size = New Size(252, 71)
-            Label1.Location = New Point(138, 91)
+            lbl_StarNumber.Location = New Point(229 - lbl_StarNumber.Width, 91)
             NumericUpDown1.Location = New Point(231, 89)
 
             resetAnimateButton()
-        ElseIf (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage1) AndAlso Form1.cmb_Version.SelectedIndex = Form1.Versions.BW) OrElse _
-               (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage2) AndAlso Form1.saveVersion = Form1.Versions.BW) Then
+        ElseIf (Form1.tc_Main.SelectedTab.Equals(Form1.tp_CodeGenerator) AndAlso Form1.cmb_Version.SelectedIndex = Form1.Versions.BW) OrElse _
+               (Form1.tc_Main.SelectedTab.Equals(Form1.tp_SaveEditor) AndAlso Form1.saveVersion = Form1.Versions.BW) Then
             'Sinon, si la version sélectionnée est B/W
 
             If animateBW Then
@@ -177,12 +180,12 @@
             textColor = Color.FromArgb(TextColors.BW)
             Me.Size = New Size(286, 192)
             PictureBox1.Size = New Size(256, 84)
-            Label1.Location = New Point(142, 104)
+            lbl_StarNumber.Location = New Point(233 - lbl_StarNumber.Width, 104)
             NumericUpDown1.Location = New Point(235, 102)
 
             PictureBox2.Visible = True
-            Label2.Visible = True
-            GroupBox1.Visible = True
+            lbl_Animate.Visible = True
+            gb_BWPreviewVersion.Visible = True
         Else
             'Sinon, c'est pour D/P/Pt
             Select Case nbStars
@@ -213,7 +216,7 @@
             textColor = Color.FromArgb(TextColors.DPPt)
             Me.Size = New Size(272, 157)
             PictureBox1.Size = New Size(242, 79)
-            Label1.Location = New Point(128, 99)
+            lbl_StarNumber.Location = New Point(219 - lbl_StarNumber.Width, 99)
             NumericUpDown1.Location = New Point(221, 97)
 
             resetAnimateButton()
@@ -260,10 +263,10 @@
 
     Private Sub resetAnimateButton()
         PictureBox2.Visible = False
-        Label2.Visible = False
-        GroupBox1.Visible = False
+        lbl_Animate.Visible = False
+        gb_BWPreviewVersion.Visible = False
         PictureBox2.Image = My.Resources.Play
-        Label2.Text = "Animer !"
+        lbl_Animate.Text = animateStartText
         animateBW = False
         Timer1.Enabled = False
     End Sub
@@ -274,30 +277,22 @@
     End Sub
 
     Private Sub Form3_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        'If (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage1) AndAlso Form1.cmb_Version.SelectedIndex = Form1.Versions.BW) OrElse _
-        '   (Form1.TabControl1.SelectedTab.Equals(Form1.TabPage2) AndAlso Form1.saveVersion = Form1.Versions.BW) Then
-        'NumericUpDown1.Maximum = 4
-        'NumericUpDown1.Value = Math.Min(NumericUpDown1.Value, 4)
-        'Else
-        'NumericUpDown1.Maximum = 5
-        'End If
-
-        If Form1.TabControl1.SelectedTab.Equals(Form1.TabPage1) Then
+        If Form1.tc_Main.SelectedTab.Equals(Form1.tp_CodeGenerator) Then
             If Form1.imgLoaded Then
-                imageToUse = DirectCast(Form1.PictureBox1.Image.Clone(), Bitmap)
+                imageToUse = DirectCast(Form1.pb_CodeSignatureImage.Image.Clone(), Bitmap)
             Else
                 imageToUse = New Bitmap(192, 64)
             End If
-        ElseIf Form1.TabControl1.SelectedTab.Equals(Form1.TabPage2) Then
+        ElseIf Form1.tc_Main.SelectedTab.Equals(Form1.tp_SaveEditor) Then
             If Form1.saveLoaded Then
-                imageToUse = DirectCast(Form1.PictureBox2.Image.Clone(), Bitmap)
+                imageToUse = DirectCast(Form1.pb_SavefileSignatureImage.Image.Clone(), Bitmap)
             Else
                 imageToUse = New Bitmap(192, 64)
             End If
         Else
             'MsgBox("Fallback")
             If Form1.imgLoaded Then
-                imageToUse = DirectCast(Form1.PictureBox1.Image.Clone(), Bitmap)
+                imageToUse = DirectCast(Form1.pb_CodeSignatureImage.Image.Clone(), Bitmap)
             Else
                 imageToUse = New Bitmap(192, 64)
             End If
@@ -337,13 +332,13 @@
 
         If animateBW Then
             PictureBox2.Image = My.Resources.Play
-            Label2.Text = "Animer !"
+            lbl_Animate.Text = animateStartText
             Timer1.Enabled = False
             animateBW = False
             secondFrame = False
         Else
             PictureBox2.Image = My.Resources.Pause
-            Label2.Text = "Arrêter"
+            lbl_Animate.Text = animateStopText
             Timer1.Enabled = True
             animateBW = True
         End If

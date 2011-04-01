@@ -141,7 +141,7 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cb_Select.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+    <value>gb_ActivatorList</value>
   </data>
   <data name="&gt;&gt;cb_Select.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -171,7 +171,7 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cb_Start.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+    <value>gb_ActivatorList</value>
   </data>
   <data name="&gt;&gt;cb_Start.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -198,7 +198,7 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cb_R.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+    <value>gb_ActivatorList</value>
   </data>
   <data name="&gt;&gt;cb_R.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -228,7 +228,7 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cb_L.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+    <value>gb_ActivatorList</value>
   </data>
   <data name="&gt;&gt;cb_L.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -258,66 +258,66 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cb_B.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+    <value>gb_ActivatorList</value>
   </data>
   <data name="&gt;&gt;cb_B.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="cb_Bas.AutoSize" type="System.Boolean, mscorlib">
+  <data name="cb_Down.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="cb_Bas.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="cb_Down.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>TopCenter</value>
   </data>
-  <data name="cb_Bas.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="cb_Down.Location" type="System.Drawing.Point, System.Drawing">
     <value>67, 70</value>
   </data>
-  <data name="cb_Bas.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="cb_Down.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 31</value>
   </data>
-  <data name="cb_Bas.TabIndex" type="System.Int32, mscorlib">
+  <data name="cb_Down.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="cb_Bas.Text" xml:space="preserve">
+  <data name="cb_Down.Text" xml:space="preserve">
     <value>Bas</value>
   </data>
-  <data name="&gt;&gt;cb_Bas.Name" xml:space="preserve">
-    <value>cb_Bas</value>
+  <data name="&gt;&gt;cb_Down.Name" xml:space="preserve">
+    <value>cb_Down</value>
   </data>
-  <data name="&gt;&gt;cb_Bas.Type" xml:space="preserve">
+  <data name="&gt;&gt;cb_Down.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;cb_Bas.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+  <data name="&gt;&gt;cb_Down.Parent" xml:space="preserve">
+    <value>gb_ActivatorList</value>
   </data>
-  <data name="&gt;&gt;cb_Bas.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;cb_Down.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="cb_Droite.AutoSize" type="System.Boolean, mscorlib">
+  <data name="cb_Right.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="cb_Droite.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="cb_Right.Location" type="System.Drawing.Point, System.Drawing">
     <value>92, 53</value>
   </data>
-  <data name="cb_Droite.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="cb_Right.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 17</value>
   </data>
-  <data name="cb_Droite.TabIndex" type="System.Int32, mscorlib">
+  <data name="cb_Right.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="cb_Droite.Text" xml:space="preserve">
+  <data name="cb_Right.Text" xml:space="preserve">
     <value>Droite</value>
   </data>
-  <data name="&gt;&gt;cb_Droite.Name" xml:space="preserve">
-    <value>cb_Droite</value>
+  <data name="&gt;&gt;cb_Right.Name" xml:space="preserve">
+    <value>cb_Right</value>
   </data>
-  <data name="&gt;&gt;cb_Droite.Type" xml:space="preserve">
+  <data name="&gt;&gt;cb_Right.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;cb_Droite.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+  <data name="&gt;&gt;cb_Right.Parent" xml:space="preserve">
+    <value>gb_ActivatorList</value>
   </data>
-  <data name="&gt;&gt;cb_Droite.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;cb_Right.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
   <data name="cb_A.AutoSize" type="System.Boolean, mscorlib">
@@ -342,69 +342,69 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cb_A.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+    <value>gb_ActivatorList</value>
   </data>
   <data name="&gt;&gt;cb_A.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="cb_Gauche.AutoSize" type="System.Boolean, mscorlib">
+  <data name="cb_Left.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="cb_Gauche.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="cb_Left.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleRight</value>
   </data>
-  <data name="cb_Gauche.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="cb_Left.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 53</value>
   </data>
-  <data name="cb_Gauche.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="cb_Left.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 17</value>
   </data>
-  <data name="cb_Gauche.TabIndex" type="System.Int32, mscorlib">
+  <data name="cb_Left.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="cb_Gauche.Text" xml:space="preserve">
+  <data name="cb_Left.Text" xml:space="preserve">
     <value>Gauche</value>
   </data>
-  <data name="&gt;&gt;cb_Gauche.Name" xml:space="preserve">
-    <value>cb_Gauche</value>
+  <data name="&gt;&gt;cb_Left.Name" xml:space="preserve">
+    <value>cb_Left</value>
   </data>
-  <data name="&gt;&gt;cb_Gauche.Type" xml:space="preserve">
+  <data name="&gt;&gt;cb_Left.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;cb_Gauche.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+  <data name="&gt;&gt;cb_Left.Parent" xml:space="preserve">
+    <value>gb_ActivatorList</value>
   </data>
-  <data name="&gt;&gt;cb_Gauche.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;cb_Left.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="cb_Haut.AutoSize" type="System.Boolean, mscorlib">
+  <data name="cb_Up.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="cb_Haut.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="cb_Up.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>BottomCenter</value>
   </data>
-  <data name="cb_Haut.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="cb_Up.Location" type="System.Drawing.Point, System.Drawing">
     <value>64, 19</value>
   </data>
-  <data name="cb_Haut.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="cb_Up.Size" type="System.Drawing.Size, System.Drawing">
     <value>34, 31</value>
   </data>
-  <data name="cb_Haut.TabIndex" type="System.Int32, mscorlib">
+  <data name="cb_Up.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="cb_Haut.Text" xml:space="preserve">
+  <data name="cb_Up.Text" xml:space="preserve">
     <value>Haut</value>
   </data>
-  <data name="&gt;&gt;cb_Haut.Name" xml:space="preserve">
-    <value>cb_Haut</value>
+  <data name="&gt;&gt;cb_Up.Name" xml:space="preserve">
+    <value>cb_Up</value>
   </data>
-  <data name="&gt;&gt;cb_Haut.Type" xml:space="preserve">
+  <data name="&gt;&gt;cb_Up.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;cb_Haut.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+  <data name="&gt;&gt;cb_Up.Parent" xml:space="preserve">
+    <value>gb_ActivatorList</value>
   </data>
-  <data name="&gt;&gt;cb_Haut.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;cb_Up.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
   <data name="cb_Y.AutoSize" type="System.Boolean, mscorlib">
@@ -432,7 +432,7 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cb_Y.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+    <value>gb_ActivatorList</value>
   </data>
   <data name="&gt;&gt;cb_Y.ZOrder" xml:space="preserve">
     <value>10</value>
@@ -462,108 +462,108 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;cb_X.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+    <value>gb_ActivatorList</value>
   </data>
   <data name="&gt;&gt;cb_X.ZOrder" xml:space="preserve">
     <value>11</value>
   </data>
-  <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="gb_ActivatorList.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 12</value>
   </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="gb_ActivatorList.Size" type="System.Drawing.Size, System.Drawing">
     <value>247, 153</value>
   </data>
-  <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
+  <data name="gb_ActivatorList.TabIndex" type="System.Int32, mscorlib">
     <value>1001</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
+  <data name="gb_ActivatorList.Text" xml:space="preserve">
     <value>Touches à presser</value>
   </data>
-  <data name="&gt;&gt;GroupBox1.Name" xml:space="preserve">
-    <value>GroupBox1</value>
+  <data name="&gt;&gt;gb_ActivatorList.Name" xml:space="preserve">
+    <value>gb_ActivatorList</value>
   </data>
-  <data name="&gt;&gt;GroupBox1.Type" xml:space="preserve">
+  <data name="&gt;&gt;gb_ActivatorList.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;GroupBox1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;gb_ActivatorList.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;GroupBox1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;gb_ActivatorList.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="b_ToutDecoch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>168, 171</value>
+  <data name="b_UncheckAll.Location" type="System.Drawing.Point, System.Drawing">
+    <value>149, 171</value>
   </data>
-  <data name="b_ToutDecoch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>91, 23</value>
+  <data name="b_UncheckAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 23</value>
   </data>
-  <data name="b_ToutDecoch.TabIndex" type="System.Int32, mscorlib">
+  <data name="b_UncheckAll.TabIndex" type="System.Int32, mscorlib">
     <value>1005</value>
   </data>
-  <data name="b_ToutDecoch.Text" xml:space="preserve">
+  <data name="b_UncheckAll.Text" xml:space="preserve">
     <value>Tout décocher</value>
   </data>
-  <data name="&gt;&gt;b_ToutDecoch.Name" xml:space="preserve">
-    <value>b_ToutDecoch</value>
+  <data name="&gt;&gt;b_UncheckAll.Name" xml:space="preserve">
+    <value>b_UncheckAll</value>
   </data>
-  <data name="&gt;&gt;b_ToutDecoch.Type" xml:space="preserve">
+  <data name="&gt;&gt;b_UncheckAll.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;b_ToutDecoch.Parent" xml:space="preserve">
+  <data name="&gt;&gt;b_UncheckAll.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;b_ToutDecoch.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;b_UncheckAll.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="b_Valider.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="b_Validate.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
   </data>
-  <data name="b_Valider.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="b_Validate.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 200</value>
   </data>
-  <data name="b_Valider.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="b_Validate.Size" type="System.Drawing.Size, System.Drawing">
     <value>247, 23</value>
   </data>
-  <data name="b_Valider.TabIndex" type="System.Int32, mscorlib">
+  <data name="b_Validate.TabIndex" type="System.Int32, mscorlib">
     <value>1006</value>
   </data>
-  <data name="b_Valider.Text" xml:space="preserve">
+  <data name="b_Validate.Text" xml:space="preserve">
     <value>Valider</value>
   </data>
-  <data name="&gt;&gt;b_Valider.Name" xml:space="preserve">
-    <value>b_Valider</value>
+  <data name="&gt;&gt;b_Validate.Name" xml:space="preserve">
+    <value>b_Validate</value>
   </data>
-  <data name="&gt;&gt;b_Valider.Type" xml:space="preserve">
+  <data name="&gt;&gt;b_Validate.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;b_Valider.Parent" xml:space="preserve">
+  <data name="&gt;&gt;b_Validate.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;b_Valider.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;b_Validate.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="b_Retablir.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="b_Reset.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 171</value>
   </data>
-  <data name="b_Retablir.Size" type="System.Drawing.Size, System.Drawing">
-    <value>52, 23</value>
+  <data name="b_Reset.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 23</value>
   </data>
-  <data name="b_Retablir.TabIndex" type="System.Int32, mscorlib">
+  <data name="b_Reset.TabIndex" type="System.Int32, mscorlib">
     <value>1007</value>
   </data>
-  <data name="b_Retablir.Text" xml:space="preserve">
+  <data name="b_Reset.Text" xml:space="preserve">
     <value>Rétablir</value>
   </data>
-  <data name="&gt;&gt;b_Retablir.Name" xml:space="preserve">
-    <value>b_Retablir</value>
+  <data name="&gt;&gt;b_Reset.Name" xml:space="preserve">
+    <value>b_Reset</value>
   </data>
-  <data name="&gt;&gt;b_Retablir.Type" xml:space="preserve">
+  <data name="&gt;&gt;b_Reset.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;b_Retablir.Parent" xml:space="preserve">
+  <data name="&gt;&gt;b_Reset.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;b_Retablir.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;b_Reset.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
