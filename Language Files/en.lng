@@ -1,5 +1,6 @@
 ﻿# LangName = English
 # LangID = en
+; Translation v1.1
 
 # Form1
 Form1 = Pokémon Signature Editor v{version} - by M@T
@@ -12,8 +13,8 @@ cmb_Language.ToolTip = The language of the game for which the code will be gener
 b_Copy1 = Copy the first part
 b_Copy1.ToolTip = Copy the first part of the code into the clipboard.
 gb_CodeVersion = Version
-gb_CodeVersion.ToolTip = Choisissez votre version de Pokémon...
-cmb_Version.ToolTip = La version du jeu pour laquelle le code AR sera généré.
+gb_CodeVersion.ToolTip = Choose the Pokémon version you want.
+cmb_Version.ToolTip = The version of the game for which the code will be generated.
 cb_SplitCode = Cut the code into two|(No$GBA)
 cb_SplitCode.ToolTip = Split the code into two shorter parts in order to use it on emulators such as No$GBA.|Enter each part as a separate code.
 b_Activators = Activators...

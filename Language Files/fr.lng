@@ -1,5 +1,6 @@
-﻿# langName = Français
-# langID = fr
+﻿# LangName = Français
+# LangID = fr
+; Translation v1.0
 
 # Form1
 Form1 = Pokémon Signature Editor v{version} - par M@T
