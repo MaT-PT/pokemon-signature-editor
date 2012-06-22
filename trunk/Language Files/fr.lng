@@ -66,6 +66,7 @@ Version_DP = Diamant/Perle
 Version_Plat = Platine
 Version_HGSS = HeartGold/SoulSilver
 Version_BW = Noire/Blanche
+Version_B2W2 = Noire 2/Blanche 2
 # Form2
 Form2 = Touches à presser
 b_Reset = Rétablir

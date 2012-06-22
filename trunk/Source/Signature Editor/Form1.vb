@@ -111,6 +111,7 @@ Public Class Form1
         Platinum = 1
         HGSS = 2
         BW = 3
+        B2W2 = 4
     End Enum
 
     Friend Enum Langs As Byte
@@ -136,6 +137,7 @@ Public Class Form1
         Block_1 = &H0
         Block_2 = &H40000
         Block_2_BW = &H24000
+        Block_2_B2W2 = &H26000
     End Enum
 
     Friend Enum OffsetsSavCnt As UInteger
@@ -420,7 +422,13 @@ Public Class Form1
                         If ByteArraysEqual(sav.ReadBytes(4), comp) Then
                             GetVersion = Versions.BW
                         Else
-                            GetVersion = Versions.Unknown
+                            sav.BaseStream.Seek(&H21400 + offset, SeekOrigin.Begin)
+
+                            If ByteArraysEqual(sav.ReadBytes(4), comp) Then
+                                GetVersion = Versions.B2W2
+                            Else
+                                GetVersion = Versions.Unknown
+                            End If
                         End If
                     End If
                 End If
@@ -703,10 +711,9 @@ Public Class Form1
         '                             Français    EN/US/Aus   Japanese    Español     Italiano    Deutch      Korean
         Dim pointers As String(,) = {{"B21C4EA8", "B21C4D28", "B21C6588", "B21C4EC8", "B21C4E08", "B21C4E68", "B21C2328"}, _
                                      {"B2101F20", "B2101D40", "B2101140", "B2101F40", "B2101EA0", "B2101EE0", "B2102C40"}, _
-                                     {"B21118A0", "B2111880", "B2110DC0", "B21118C0", "B2111820", "B2111860", "B2112280"}, _
-                                     {"B2000024", "B2000024", "B2000024", "B2000024", "B2000024", "B2000024", "B2000024"}}
+                                     {"B21118A0", "B2111880", "B2110DC0", "B21118C0", "B2111820", "B2111860", "B2112280"}}
 
-        pointer = pointers(cmb_Version.SelectedIndex(), cmb_Language.SelectedIndex()) & " 00000000" & newLine
+        pointer = If(cmb_Version.SelectedIndex() >= 3, "B2000024", pointers(cmb_Version.SelectedIndex(), cmb_Language.SelectedIndex())) & " 00000000" & newLine
 
         Select Case cmb_Version.SelectedIndex()
             Case Versions.DP
@@ -725,6 +732,10 @@ Public Class Form1
             Case Versions.BW
                 addr1 = "E001C9BC"
                 addr2 = "E001CCBC"
+
+            Case Versions.B2W2
+                addr1 = "E001CA20"
+                addr2 = "E001CD20"
 
             Case Else
                 cmb_Version.SelectedIndex = Versions.BW
@@ -825,6 +836,7 @@ Public Class Form1
         addLngFileLine("Version_Plat", cmb_Version.Items(1))
         addLngFileLine("Version_HGSS", cmb_Version.Items(2))
         addLngFileLine("Version_BW", cmb_Version.Items(3))
+        addLngFileLine("Version_B2W2", cmb_Version.Items(4))
 
         addLngFileLine("# Form2")
         addControlText(Form2)
@@ -986,6 +998,10 @@ Public Class Form1
 
                 Case "version_bw"
                     cmb_Version.Items(3) = text
+                    Continue For
+
+                Case "version_b2w2"
+                    cmb_Version.Items(4) = text
                     Continue For
 
                 Case "defaultgamelanguage"
