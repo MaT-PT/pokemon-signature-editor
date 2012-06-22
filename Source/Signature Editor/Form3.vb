@@ -70,8 +70,8 @@
             NumericUpDown1.Location = New Point(231, 89)
 
             resetAnimateButton()
-        ElseIf (Form1.tc_Main.SelectedTab.Equals(Form1.tp_CodeGenerator) AndAlso Form1.cmb_Version.SelectedIndex = Form1.Versions.BW) OrElse _
-               (Form1.tc_Main.SelectedTab.Equals(Form1.tp_SaveEditor) AndAlso Form1.saveVersion = Form1.Versions.BW) Then
+        ElseIf (Form1.tc_Main.SelectedTab.Equals(Form1.tp_CodeGenerator) AndAlso (Form1.cmb_Version.SelectedIndex = Form1.Versions.BW OrElse Form1.cmb_Version.SelectedIndex = Form1.Versions.B2W2)) OrElse _
+               (Form1.tc_Main.SelectedTab.Equals(Form1.tp_SaveEditor) AndAlso (Form1.saveVersion = Form1.Versions.BW OrElse Form1.saveVersion = Form1.Versions.B2W2)) Then
             'Sinon, si la version sélectionnée est B/W
 
             If animateBW Then

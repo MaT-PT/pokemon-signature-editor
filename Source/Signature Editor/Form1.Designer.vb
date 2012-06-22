@@ -271,7 +271,7 @@ Partial Class Form1
         Me.cmb_Version.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmb_Version.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmb_Version.FormattingEnabled = True
-        Me.cmb_Version.Items.AddRange(New Object() {"Diamant/Perle", "Platine", "HeartGold/SoulSilver", "Noire/Blanche"})
+        Me.cmb_Version.Items.AddRange(New Object() {"Diamant/Perle", "Platine", "HeartGold/SoulSilver", "Noire/Blanche", "Noire 2/Blanche 2"})
         Me.cmb_Version.Location = New System.Drawing.Point(6, 19)
         Me.cmb_Version.Name = "cmb_Version"
         Me.cmb_Version.Size = New System.Drawing.Size(125, 21)

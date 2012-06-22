@@ -66,6 +66,7 @@ Version_DP = Diamond/Pearl
 Version_Plat = Platinum
 Version_HGSS = HeartGold/SoulSilver
 Version_BW = Black/White
+Version_B2W2 = Black 2/White 2
 # Form2
 Form2 = Activators
 b_Reset = Reset
