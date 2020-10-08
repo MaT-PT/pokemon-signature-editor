@@ -4,6 +4,8 @@ Un éditeur de signature pour les jeux Pokémon sur NDS (la signature est celle 
 
 \--> **[Téléchargements](http://code.google.com/p/pokemon-signature-editor/downloads/list?can=3)** <--
 
+Explications, fonctionnement : https://www.pokemontrash.com/rom-pokemon/pokemon-signature-editor.php
+
 * * *
 
 A signature editor for NDS Pokémon games (the signature is the one at the back of the trainer card).
